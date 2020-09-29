@@ -1,0 +1,131 @@
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Sou Aluno
+            </h6>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" class="form-control" id="nome" placeholder="Digite seu nome aqui">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="cep">CEP</label>
+                        <input type="text" class="form-control" id="cep" placeholder="00000-000">
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="logradouro">Logradouro</label>
+                        <input type="text" class="form-control" id="logradouro" placeholder="rua / avenida / viela / travessa">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="numero">Número</label>
+                        <input type="text" class="form-control" id="numero" placeholder="ex 425">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" class="form-control" id="bairro" placeholder="Jardim dos Reis">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" class="form-control" id="cidade" placeholder="Franco da Rocha">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" class="form-control" id="complemento" placeholder="ex: bloco A ap 320">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="telefone-fixo">Telefone Fixo</label>
+                        <input type="tel" class="form-control" id="telefone-fixo" placeholder="(00)0000-0000">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="telefone-celular">Telefone Celular</label>
+                        <input type="tel" class="form-control" id="telefone-celular" placeholder="(99)99999-9999">
+                    </div>
+                    <div class="form-group col-md-6">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Escola:</label>
+                        <input type="text" class="form-control" id="escola">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Serie:</label>
+                        <input type="text" class="form-control" id="serie">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Turno:</label>
+                        <input type="text" class="form-control" id="turno">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Turma:</label>
+                        <input type="text" class="form-control" id="turma">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Tipo de Equipamento:</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="equipamento" id="notebook" value="notebook">
+                                <label class="form-check-label" for="notebook">Notebook</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="equipamento" id="desktop" value="desktop">
+                                <label class="form-check-label" for="desktop">Desktop</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="equipamento" id="celular" value="celular">
+                                <label class="form-check-label" for="celular">Celular</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="equipamento" id="tablet" value="tablet">
+                                <label class="form-check-label" for="tablet">Tablet</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Declaração:</label>
+                        <textarea class="form-control" id="declaracaoTexto" rows="5" readonly>
+                            Declaro para os devidos fins, que sou aluno de escola pública. 
+                            - Não possuo renda acima de meio salário mínimo por pessoa. 
+                            - Não possuo equipamento para acesso a aula virtual.
+                        </textarea>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="declaracao">
+                            <label class="form-check-label">
+                                Declaro que Li e Aceito
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
