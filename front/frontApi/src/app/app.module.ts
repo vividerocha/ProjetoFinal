@@ -14,6 +14,7 @@ import { SobreProjetoComponent } from './sobre-projeto/sobre-projeto.component';
 import { CadastroTecnicoComponent} from './cadastro-tecnico/cadastro-tecnico.component';
 import { ContatoComponent } from './contato/contato.component';
 import { LoginComponent } from './login/login.component';
+import { ToastComponent } from './toast/toast.component';
 
 
 const appRoutes: Routes = [
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     SobreProjetoComponent,
     CadastroTecnicoComponent,
     ContatoComponent,
-    LoginComponent
+    LoginComponent,
+    ToastComponent
   ],
   imports: [
   BrowserModule,
