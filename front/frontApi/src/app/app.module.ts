@@ -15,6 +15,7 @@ import { CadastroTecnicoComponent} from './cadastro-tecnico/cadastro-tecnico.com
 import { ContatoComponent } from './contato/contato.component';
 import { LoginComponent } from './login/login.component';
 import { ToastComponent } from './toast/toast.component';
+import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-usuario.component';
 
 
 const appRoutes: Routes = [
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
    { path : 'page-doador', component : FormDoadorComponent },
    { path : 'cadastro-tecnico', component : CadastroTecnicoComponent },
    { path : 'contato', component : ContatoComponent },
-   { path : 'login', component : LoginComponent }
+   { path : 'login', component : LoginComponent },
+   { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent}
 ];
 
 @NgModule({
@@ -41,7 +43,7 @@ const appRoutes: Routes = [
     ToastComponent
   ],
   imports: [
-  BrowserModule,
+BrowserModule,
   FormsModule,
   HttpClientModule,
     RouterModule.forRoot(appRoutes)
