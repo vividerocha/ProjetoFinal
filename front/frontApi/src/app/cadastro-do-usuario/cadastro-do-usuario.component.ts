@@ -68,9 +68,20 @@ export class CadastroDoUsuarioComponent implements OnInit {
         console.log(params); // { order: "popular" }
         this.tipoPessoa = params.id;
         if(this.tipoPessoa == "1"){
-          console.log("entrei aqui");
           this.zone.run(() => {
             this.router.navigate(['/page-doador']);
+          });
+        }else if(this.tipoPessoa == "2"){
+          this.zone.run(() => {
+            this.router.navigate(['/cadastro-tecnico']);
+          });
+        }else if(this.tipoPessoa == "3"){
+          this.zone.run(() => {
+            this.router.navigate(['/cadastro-aluno']);
+          });
+        }else{
+          this.zone.run(() => {
+            this.router.navigate(['/home']);
           });
         }
       }
