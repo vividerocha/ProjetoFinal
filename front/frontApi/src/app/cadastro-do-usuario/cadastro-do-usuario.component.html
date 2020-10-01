@@ -9,42 +9,43 @@
         
         <div class="card-body">
             <div class="form-group">
-                <form>
+                <form [formGroup]="formUsuario" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                     <div class="form-group">
-                      <label for="username">Digite um nome de usuário:</label>
+                      <label for="nome">Digite um nome de usuário:</label>
                       <input
                       type="text"
                       class="form-control"
-                      id="username"
-                      placeholder="username"
-                      [(ngModel)]="novoUser.username" [ngModelOptions]="{standalone: true}">
+                      id="nome"
+                      placeholder="nome"
+                      name="nome"
+                      formControlName="nome"
+                      >
                     </div>
                     <div class="form-group">
-                      <label for="email-novo-user">Email</label>
+                      <label for="email">Email</label>
                       <input
                       type="email"
                       class="form-control"
-                      id="email-novo-user"
+                      id="email"
                       placeholder="exemplo@exemplo.com.br"
-                      [(ngModel)]="novoUser.email" [ngModelOptions]="{standalone: true}">
+                      formControlName="email">
                     </div>
                     <div class="form-group">
-                      <label for="senha-novo">Digite uma senha</label>
+                      <label for="senha">Digite uma senha</label>
                       <input
                       type="password"
                       class="form-control"
-                      id="senha-novo"
-                      placeholder="senha"
-                      [(ngModel)]="novoUser.senha" [ngModelOptions]="{standalone: true}"
+                      id="senha"
+                      formControlName="senha"
                       (blur)="capturaSenha($event.target.value)">
                     </div>
                     <div class="form-group">
-                      <label for="senha-repete">Repita a senha</label>
+                      <label for="confirmaSenha">Repita a senha</label>
                       <input
                       type="password"
                       class="form-control"
-                      id="senha-repete"
-                      placeholder="repita a senha"
+                      id="confirmaSenha"
+                      formControlName="confirmaSenha"
                       (keyup)="compara($event.target.value)">
                     </div>
                     <div [hidden]="mostraMsgErroSenha" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -52,7 +53,7 @@
                     </div>
                     <div class="form-row">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button [hidden]="botaoLiberado" type="button" class="btn btn-primary" (click)="adicionarUser()" data-dismiss="modal">Cadastrar</button>
+                        <button [hidden]="botaoLiberado" type="submit" class="btn btn-primary" data-dismiss="modal">Cadastrar</button>
                       </div>
                 </form>
                 

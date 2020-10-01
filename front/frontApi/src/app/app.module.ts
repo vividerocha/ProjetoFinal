@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -16,6 +16,7 @@ import { ContatoComponent } from './contato/contato.component';
 import { LoginComponent } from './login/login.component';
 import { ToastComponent } from './toast/toast.component';
 import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-usuario.component';
+
 
 
 const appRoutes: Routes = [
@@ -40,11 +41,13 @@ const appRoutes: Routes = [
     CadastroTecnicoComponent,
     ContatoComponent,
     LoginComponent,
-    ToastComponent
+    ToastComponent,
+    CadastroDoUsuarioComponent
   ],
   imports: [
 BrowserModule,
   FormsModule,
+  ReactiveFormsModule,
   HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],

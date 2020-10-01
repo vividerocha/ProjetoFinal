@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { environment } from './../../environments/environment';
+import { Usuario } from './usuario';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -7,11 +13,33 @@ import { HttpClient } from '@angular/common/http';
 
 export class CadastroDoUsuarioService {
 
-    apiUrl = "http://localhost:8080/usuarios";
+    apiUrl = environment.URLSERVIDOR + "usuarios";
 
     constructor(private httpClient: HttpClient) { }
 
-    salvar(novoUser: any) {
-        return this.httpClient.post(this.apiUrl, novoUser);
+    // Headers
+    httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+     }
+
+    salvar(novoUser: Usuario): Observable<Usuario>{
+        return this.httpClient.post<Usuario>(this.apiUrl, JSON.stringify(novoUser), this.httpOptions)
+        .pipe(retry(2),catchError(this.handleError)
+      )
+        //return this.httpClient.post(this.apiUrl, novoUser);
     }
+
+    // Manipulação de erros
+    handleError(error: HttpErrorResponse) {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+        // Erro ocorreu no lado do client
+        errorMessage = error.error.message;
+        } else {
+        // Erro ocorreu no lado do servidor
+        errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
+        }
+        console.log(errorMessage);
+        return throwError(errorMessage);
+    };
 }

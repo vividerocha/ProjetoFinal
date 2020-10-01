@@ -1,5 +1,7 @@
+import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from './../../cadastro-do-usuario/usuario';
 
 @Component({
   selector: 'app-form-doador',
@@ -8,14 +10,18 @@ import { Router } from '@angular/router';
 })
 export class FormDoadorComponent implements OnInit {
 
+  usuarioLogado: string;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
 
-    let usuarioLogado : boolean = false;
+    this.usuarioLogado = localStorage.getItem('isLogado');
+    console.log(this.usuarioLogado);
 
-    if(usuarioLogado == false){
-      this.router.navigate(['/cadastro-usuario']);
+    if(this.usuarioLogado == "" || this.usuarioLogado == null){
+      //this.router.navigate(['/cadastro-usuario?id=1']);
+      this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
     }
   }
 
