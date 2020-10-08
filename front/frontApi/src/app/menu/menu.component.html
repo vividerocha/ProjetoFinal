@@ -17,7 +17,7 @@
                 <a class="nav-link" routerLink="/cadastro-tecnico">Sou Técnico</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" routerLink="/cadastro-aluno">Sou Aluno</a>
+                  <a class="nav-link" routerLink="/cadastro-aluno"[queryParams]="{ id: '3'}" queryParamsHandling="merge">Sou Aluno</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" routerLink="/contato">Contato</a>
