@@ -17,7 +17,7 @@ export class CadastroDoUsuarioComponent implements OnInit {
   usuarios: Usuario[];
   tipoPessoa: string;
   senha: any;
-  mostraMsgErroSenha: boolean = false;
+  mostraMsgErroSenha: boolean = true;
   botaoLiberado = true;
 
   formUsuario: FormGroup;
@@ -28,6 +28,8 @@ export class CadastroDoUsuarioComponent implements OnInit {
       private zone: NgZone) { }
 
   ngOnInit() {
+    let headers = new Headers();
+    headers.append('Accept', 'q=0.8;application/json;q=0.9');
     this.createForm();
     
   }
@@ -43,23 +45,29 @@ export class CadastroDoUsuarioComponent implements OnInit {
 
   onSubmit(form: NgForm){
     
-      /*if (this.usuario.nome !== undefined) {
-        this.usuarioService.updateCar(this.car).subscribe(() => {
-          this.cleanForm(form);
-        });
-      } else {
-        */
-        this.usuarioService.salvar(this.formUsuario.value).subscribe(() => {
-          //this.cleanForm(form);
-          //após salvar redireciona para a página de cadastro referente ao id
-          localStorage.setItem('isLogado', 'true');
-          this.goRota();
-          
-          //this.router.navigateByUrl('/page-doador');
-        });
-        
-      //}
     
+      //const data = {
+      //  title: this.tutorial.title,
+      //  description: this.tutorial.description
+      //};
+      const dados = {
+        nome: this.formUsuario.value.nome,
+        senha: this.formUsuario.value.senha,
+        email: this.formUsuario.value.email
+      } as Usuario;
+      
+      this.usuarioService.salvar(dados)
+      .subscribe(
+        response => {
+          console.log(response);
+          //this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
+        localStorage.setItem('isLogado', 'true');
+        localStorage.setItem('email', dados.email);
+        this.goRota();
   }
 
   goRota(){

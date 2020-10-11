@@ -19,6 +19,7 @@ import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-us
 
 
 
+
 const appRoutes: Routes = [
    {path: '', redirectTo: 'home', pathMatch: 'full'},
    { path : 'home', component : HomeComponent },
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
    { path : 'contato', component : ContatoComponent },
    { path : 'login', component : LoginComponent },
    { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent}
+   
 ];
 
 @NgModule({
@@ -42,9 +44,12 @@ const appRoutes: Routes = [
     ContatoComponent,
     LoginComponent,
     ToastComponent,
-    CadastroDoUsuarioComponent
+    CadastroDoUsuarioComponent,
+    FormDoadorComponent
+  
   ],
   imports: [
+  
 BrowserModule,
   FormsModule,
   ReactiveFormsModule,

@@ -46,7 +46,8 @@
                       class="form-control"
                       id="confirmaSenha"
                       formControlName="confirmaSenha"
-                      (keyup)="compara($event.target.value)">
+                      (keyup)="compara($event.target.value)"
+                      >
                     </div>
                     <div [hidden]="mostraMsgErroSenha" class="alert alert-danger alert-dismissible fade show" role="alert">
                       As senhas não são iguais.
@@ -61,4 +62,5 @@
         </div>
     </div>
 </div>
+
 
