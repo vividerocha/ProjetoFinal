@@ -81,6 +81,7 @@ export class FormDoadorComponent implements OnInit {
         this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
     }
   }
+<<<<<<< HEAD
 
   populaForm(dados){
     this.formDoador.patchValue({
@@ -118,4 +119,6 @@ export class FormDoadorComponent implements OnInit {
     );
 
   }
+=======
+>>>>>>> 888c525e07cdf663afd2d0b4ce7c9c0177096ea7
 }
