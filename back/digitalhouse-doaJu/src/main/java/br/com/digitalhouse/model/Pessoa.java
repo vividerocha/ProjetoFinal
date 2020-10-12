@@ -4,12 +4,10 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,7 +39,7 @@ public class Pessoa {
 		@Column
 		private String cidade;
 		@Column
-		private String uf;
+		private String estado;
 		@Column
 		private String complemento;
 		@Column
@@ -55,14 +53,13 @@ public class Pessoa {
 		@Column(name="data_cadastro")
 		private LocalDate dataCadastro;
 		
-		@OneToOne(fetch = FetchType.LAZY)
-		@JoinColumn(name = "idUsuario")
-		private Usuario usuario;
+		@Column
+		private int id_usuario;
 		
 		public Pessoa(int tipoPessoa, String nomeCompleto, String cep,
 						String logradouro, int numeroCasa, String bairro,
-						String cidade, String uf, String complemento, String telefoneFixo,
-						String telefoneCelular, boolean termo) {
+						String cidade, String estado, String complemento, String telefoneFixo,
+						String telefoneCelular, boolean termo, int id_usuario) {
 			//1 - Doador
 			//2 - Tecnico
 			//3 - Aluno
@@ -73,10 +70,11 @@ public class Pessoa {
 	        this.numeroCasa = numeroCasa;
 	        this.bairro = bairro;
 	        this.cidade = cidade;
-	        this.uf = uf;
+	        this.estado = estado;
 	        this.complemento = complemento;
 	        this.telefoneFixo = telefoneFixo;
 	        this.telefoneCelular = telefoneCelular;
 	        this.termo = termo;
+	        this.id_usuario = id_usuario;
 	    }
 }

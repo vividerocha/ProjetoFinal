@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,9 +35,16 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Usuario> salvar(@RequestBody UsuarioDTO dto) {
-	    Usuario usuario = usuarioService.salvar(dto.transformaParaObjeto());
-	    return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+	public ResponseEntity<?> salvar(@RequestBody UsuarioDTO dto) {
+		
+		Usuario usuario = usuarioService.buscarEmail(dto.getEmail());
+		if (usuario != null)
+	    {
+			return ResponseEntity.badRequest().body("Já existe um usuário cadastrado para esse email!");
+	    }else {
+	    	usuarioService.salvar(dto.transformaParaObjeto());
+		    return ResponseEntity.ok("Usuário cadastrado com sucesso!");	
+	    }
 	}
 	@GetMapping
 	public List<Usuario> listar(){
@@ -87,5 +93,19 @@ public class UsuarioController {
 			
 		return ResponseEntity.notFound().build();
 	}
+	
+	@GetMapping("/{email}")
+	public ResponseEntity<Usuario> buscarEmail(@PathVariable String email) {
+		
+		Usuario usuario = usuarioService.buscarEmail(email);
+		
+		if (usuario != null) {
+			return ResponseEntity.ok(usuario);
+		}
+		
+		return ResponseEntity.notFound().build();
+	
+	}
+	
 
 }

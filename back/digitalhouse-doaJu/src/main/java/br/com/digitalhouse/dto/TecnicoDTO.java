@@ -13,14 +13,15 @@ public class TecnicoDTO {
 	private int numeroCasa;
 	private String bairro;
 	private String cidade;
-	private String uf;
+	private String estado;
 	private String complemento;
 	private String telefoneFixo;
 	private String telefoneCelular;
 	private boolean termo;
+	private int id_usuario;
 
 	public Tecnico transformaParaObjeto() {
 		return new Tecnico(tipoPessoa, nomeCompleto, cep, logradouro, numeroCasa, bairro,
-				cidade, uf, complemento, telefoneFixo, telefoneCelular, termo);
+				cidade, estado, complemento, telefoneFixo, telefoneCelular, termo, id_usuario);
 	}
 }

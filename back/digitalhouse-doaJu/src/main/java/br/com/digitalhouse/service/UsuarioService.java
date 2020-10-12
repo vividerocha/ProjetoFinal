@@ -34,6 +34,10 @@ public class UsuarioService {
 		return usuarioRepository.findById(id);
 	}
     
+    public Usuario buscarEmail(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
+    
     @Transactional
 	public void excluir(Long id) {
 		
