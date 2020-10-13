@@ -43,9 +43,9 @@ public class Pessoa {
 		@Column
 		private String complemento;
 		@Column
-		private String telefoneFixo;
+		private String telefone;
 		@Column
-		private String telefoneCelular;
+		private String celular;
 		@Column
 		private boolean termo;
 		
@@ -58,8 +58,8 @@ public class Pessoa {
 		
 		public Pessoa(int tipoPessoa, String nomeCompleto, String cep,
 						String logradouro, int numeroCasa, String bairro,
-						String cidade, String estado, String complemento, String telefoneFixo,
-						String telefoneCelular, boolean termo, int id_usuario) {
+						String cidade, String estado, String complemento, String telefone,
+						String celular, boolean termo, int id_usuario) {
 			//1 - Doador
 			//2 - Tecnico
 			//3 - Aluno
@@ -72,8 +72,8 @@ public class Pessoa {
 	        this.cidade = cidade;
 	        this.estado = estado;
 	        this.complemento = complemento;
-	        this.telefoneFixo = telefoneFixo;
-	        this.telefoneCelular = telefoneCelular;
+	        this.telefone = telefone;
+	        this.celular = celular;
 	        this.termo = termo;
 	        this.id_usuario = id_usuario;
 	    }

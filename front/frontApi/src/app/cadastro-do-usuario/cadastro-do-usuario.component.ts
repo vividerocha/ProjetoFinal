@@ -1,9 +1,10 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { CadastroDoUsuarioService } from './cadastro-do-usuario.service';
-import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 
 import { Usuario } from './usuario';
 import { ActivatedRoute, Router } from '@angular/router';
+
 
 
 @Component({
@@ -36,8 +37,8 @@ export class CadastroDoUsuarioComponent implements OnInit {
  
   createForm() {
     this.formUsuario = this.fb.group({
-      nome: new FormControl(''),
-      email: new FormControl(''),
+      nome: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       senha: new FormControl(''),
       confirmaSenha: new FormControl('')
     });
@@ -45,11 +46,9 @@ export class CadastroDoUsuarioComponent implements OnInit {
 
   onSubmit(form: NgForm){
     
-    
-      //const data = {
-      //  title: this.tutorial.title,
-      //  description: this.tutorial.description
-      //};
+    if (this.formUsuario.valid) {
+      console.log('form submitted');
+        
       const dados = {
         nome: this.formUsuario.value.nome,
         senha: this.formUsuario.value.senha,
@@ -68,6 +67,11 @@ export class CadastroDoUsuarioComponent implements OnInit {
         localStorage.setItem('isLogado', 'true');
         localStorage.setItem('email', dados.email);
         this.goRota();
+    } else {
+      // validate all form fields
+      console.log('form invalido');
+    }
+    
   }
 
   goRota(){
@@ -119,4 +123,13 @@ export class CadastroDoUsuarioComponent implements OnInit {
     form.resetForm();
     this.usuario = {} as Usuario;
   }
+
+  get nome() { 
+    return this.formUsuario.get('nome');
+  }
+
+  get email(){
+     return this.formUsuario.get('email');
+  }
+
 }

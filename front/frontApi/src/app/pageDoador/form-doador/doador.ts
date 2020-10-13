@@ -1,5 +1,5 @@
 export interface Doador {
-    nome: string;
+    nomeCompleto: string;
     cep: string;
     logradouro: string;
     numeroCasa: number;

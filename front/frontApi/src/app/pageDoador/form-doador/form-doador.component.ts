@@ -59,7 +59,7 @@ export class FormDoadorComponent implements OnInit {
 
   createForm() {
     this.formDoador = this.fb.group({
-      nome: new FormControl(''),
+      nomeCompleto: new FormControl(''),
       cep: new FormControl(''),
       estado: new FormControl(''),
       logradouro: new FormControl(''),

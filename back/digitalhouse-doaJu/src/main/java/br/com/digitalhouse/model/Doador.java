@@ -10,11 +10,11 @@ public class Doador extends Pessoa{
 
 	public Doador(int tipoPessoa, String nomeCompleto, String cep,
 			String logradouro, int numeroCasa, String bairro,
-			String cidade, String uf, String complemento, String telefoneFixo,
-			String telefoneCelular, boolean termo, int idUsuario) {
+			String cidade, String uf, String complemento, String telefone,
+			String celular, boolean termo, int idUsuario) {
 
 		//tipo pessoa 1 - Doador
 		super(1,nomeCompleto, cep, logradouro, numeroCasa, bairro,
-				cidade, uf, complemento, telefoneFixo, telefoneCelular, termo, idUsuario);
+				cidade, uf, complemento, telefone, celular, termo, idUsuario);
 	}
 }
