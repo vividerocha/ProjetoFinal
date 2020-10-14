@@ -1,16 +1,22 @@
 package br.com.digitalhouse.dto;
 
-import br.com.digitalhouse.model.Usuario;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class UsuarioDTO {
 
+	private Long id;
     private String nome;
     private String email;
     private String senha;
     
-    public Usuario transformaParaObjeto(){
-        return new Usuario(nome, email, senha);
-    }
+//    public Usuario transformaParaObjeto(){
+//        return new Usuario(nome, email, senha);
+//    }
+//
+//	@Override
+//	public String toString() {
+//		return "UsuarioDTO [nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+//	}
+    
 }

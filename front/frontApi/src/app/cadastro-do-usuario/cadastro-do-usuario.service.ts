@@ -28,7 +28,8 @@ export class CadastroDoUsuarioService {
       }
 
     verificaEmail(email: String): Observable<any>{
-        return this.httpClient.get<Usuario>(this.apiUrl + '?email=' + email);
+        console.log(this.apiUrl + '/email/' + email);
+        return this.httpClient.get<Usuario>(this.apiUrl + '/email/' + email);
     }
 
     // Manipulação de erros

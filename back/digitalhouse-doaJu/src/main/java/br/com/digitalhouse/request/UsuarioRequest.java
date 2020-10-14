@@ -2,9 +2,10 @@ package br.com.digitalhouse.request;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+//@Getter
+@Data
 public class UsuarioRequest {
 	
 	private Long id;

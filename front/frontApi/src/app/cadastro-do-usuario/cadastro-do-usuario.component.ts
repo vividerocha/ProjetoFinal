@@ -22,19 +22,19 @@ export class CadastroDoUsuarioComponent implements OnInit {
   botaoLiberado = true;
 
   formUsuario: FormGroup;
-  
-  constructor(private usuarioService: CadastroDoUsuarioService, 
-      private fb:FormBuilder, private router: Router, 
-      private activatedRoute: ActivatedRoute,
-      private zone: NgZone) { }
+
+  constructor(private usuarioService: CadastroDoUsuarioService,
+    private fb: FormBuilder, private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private zone: NgZone) { }
 
   ngOnInit() {
     let headers = new Headers();
     headers.append('Accept', 'q=0.8;application/json;q=0.9');
     this.createForm();
-    
+
   }
- 
+
   createForm() {
     this.formUsuario = this.fb.group({
       nome: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -44,76 +44,80 @@ export class CadastroDoUsuarioComponent implements OnInit {
     });
   }
 
-  onSubmit(form: NgForm){
-    
+  onSubmit(form: NgForm) {
+
     if (this.formUsuario.valid) {
       console.log('form submitted');
-        
+
       const dados = {
         nome: this.formUsuario.value.nome,
         senha: this.formUsuario.value.senha,
         email: this.formUsuario.value.email
       } as Usuario;
-      
+
       this.usuarioService.salvar(dados)
-      .subscribe(
-        response => {
-          console.log(response);
-          //this.submitted = true;
-        },
-        error => {
-          console.log(error);
-        });
-        localStorage.setItem('isLogado', 'true');
-        localStorage.setItem('email', dados.email);
-        this.goRota();
+        .subscribe(
+          response => {
+            console.log(response);
+            localStorage.setItem('isLogado', 'true');
+            localStorage.setItem('email', dados.email);
+            //cad aluno estou usando session ao inves de local
+            sessionStorage.setItem('isLogado', 'true');
+            sessionStorage.setItem('email', dados.email);
+            this.goRota();
+            //this.submitted = true;
+          },
+          error => {
+            console.log(error);
+          });
+
     } else {
       // validate all form fields
       console.log('form invalido');
     }
-    
+
   }
 
-  goRota(){
+  goRota() {
     this.activatedRoute.queryParams
       .subscribe(params => {
         console.log(params); // { order: "popular" }
         this.tipoPessoa = params.id;
-        if(this.tipoPessoa == "1"){
+        if (this.tipoPessoa == "1") {
           this.zone.run(() => {
             this.router.navigate(['/page-doador']);
           });
-        }else if(this.tipoPessoa == "2"){
+        } else if (this.tipoPessoa == "2") {
           this.zone.run(() => {
             this.router.navigate(['/cadastro-tecnico']);
           });
-        }else if(this.tipoPessoa == "3"){
+        } else if (this.tipoPessoa == "3") {
           this.zone.run(() => {
             this.router.navigate(['/cadastro-aluno']);
           });
-        }else{
+        } else {
           this.zone.run(() => {
             this.router.navigate(['/home']);
           });
         }
       }
-    );
+      );
 
-    
+
   }
 
-  compara(digitado){
-    if (this.formUsuario.value.confirmaSenha != ""){
-      if(this.senha == digitado){
+  compara(digitado) {
+    if (this.formUsuario.value.confirmaSenha != "") {
+      if (this.senha == digitado) {
         this.mostraMsgErroSenha = true;
         this.botaoLiberado = false;
-      }else{
+      } else {
         this.mostraMsgErroSenha = false;
       }
     }
   }
 
-  capturaSenha(senha){
+  capturaSenha(senha) {
     this.senha = senha;
   }
 
@@ -124,12 +128,12 @@ export class CadastroDoUsuarioComponent implements OnInit {
     this.usuario = {} as Usuario;
   }
 
-  get nome() { 
+  get nome() {
     return this.formUsuario.get('nome');
   }
 
-  get email(){
-     return this.formUsuario.get('email');
+  get email() {
+    return this.formUsuario.get('email');
   }
 
 }
