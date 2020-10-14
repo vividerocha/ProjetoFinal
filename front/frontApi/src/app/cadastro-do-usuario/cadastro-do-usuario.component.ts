@@ -59,16 +59,14 @@ export class CadastroDoUsuarioComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          //this.submitted = true;
         },
         error => {
           console.log(error);
         });
-        localStorage.setItem('isLogado', 'true');
-        localStorage.setItem('email', dados.email);
+        sessionStorage.setItem('isLogado', 'true');
+        sessionStorage.setItem('email', dados.email);
         this.goRota();
     } else {
-      // validate all form fields
       console.log('form invalido');
     }
     
@@ -77,7 +75,6 @@ export class CadastroDoUsuarioComponent implements OnInit {
   goRota(){
     this.activatedRoute.queryParams
       .subscribe(params => {
-        console.log(params); // { order: "popular" }
         this.tipoPessoa = params.id;
         if(this.tipoPessoa == "1"){
           this.zone.run(() => {
