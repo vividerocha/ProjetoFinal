@@ -17,16 +17,25 @@ import br.com.digitalhouse.request.UsuarioRequest;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
 	private UsuarioRepository repository;
 	@Autowired
 	private UsuarioMapper mapper;
-	
+
 	public UsuarioDTO salvar(UsuarioRequest usuario) {
 		Usuario user = mapper.dtoRequestToModel(usuario);
-		System.out.println(user.toString());
-		return mapper.modelToDto(repository.save(user));
+		Usuario userMail = buscarEmail(user.getEmail());
+		if (userMail == null) {
+			System.out.println("voltou nulo");
+			return mapper.modelToDto(repository.save(user));
+		}
+		return null;		
+	}
+
+	public Usuario buscarEmail(String email) {
+		return repository.findByEmailEquals(email);
+
 	}
 
 //    private final UsuarioRepository usuarioRepository;

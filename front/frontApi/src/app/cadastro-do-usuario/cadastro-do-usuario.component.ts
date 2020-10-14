@@ -69,6 +69,7 @@ export class CadastroDoUsuarioComponent implements OnInit {
           },
           error => {
             console.log(error);
+            alert(error.error);
           });
 
     } else {

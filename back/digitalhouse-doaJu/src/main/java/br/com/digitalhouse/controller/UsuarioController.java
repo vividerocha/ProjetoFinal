@@ -29,15 +29,19 @@ import jdk.jfr.BooleanFlag;
 @RequestMapping("/usuarios")
 @RestController
 public class UsuarioController {
-	
+
 	@Autowired
 	private UsuarioService service;
-	
+
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody UsuarioRequest usuario){
+	public ResponseEntity<?> salvar(@RequestBody UsuarioRequest usuario) {
 		try {
 			UsuarioDTO usuarioDTO = service.salvar(usuario);
-			return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
+			if (usuarioDTO == null) {
+				return ResponseEntity.badRequest().body("Já existe um usuário cadastrado para esse email!");
+			} else {
+				return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
+			}
 		} catch (Exception ex) {
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}
