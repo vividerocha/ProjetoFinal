@@ -94,16 +94,19 @@ public class UsuarioController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping("/{email}")
+	@GetMapping("/email/{email}")
 	public ResponseEntity<Usuario> buscarEmail(@PathVariable String email) {
 		
 		Usuario usuario = usuarioService.buscarEmail(email);
-		
-		if (usuario != null) {
-			return ResponseEntity.ok(usuario);
+		if(email != "") {
+			if (usuario != null) {
+				return ResponseEntity.ok(usuario);
+			}
+			
+			return ResponseEntity.notFound().build();
+		}else {
+			return ResponseEntity.notFound().build();
 		}
-		
-		return ResponseEntity.notFound().build();
 	
 	}
 	

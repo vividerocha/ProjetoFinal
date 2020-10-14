@@ -48,7 +48,8 @@ export class FormDoadorComponent implements OnInit {
 
     if(this.usuarioLogado != ""){
       this.usuarioService.verificaEmail(this.usuarioLogadoEmail).subscribe(dados =>{
-        this.idUsuario = dados[0].id;
+        this.idUsuario = dados.id;
+        console.log(dados);
         this.formDoador.get('id_usuario').setValue(this.idUsuario);
         }
       );
