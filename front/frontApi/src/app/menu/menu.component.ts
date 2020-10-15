@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuService } from './menu.service';
+import { CommonModule } from '@angular/common';  
+import { BrowserModule } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +11,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  idUsuario: string;
+  logado: Boolean = false;
+  nomeUsuario: string;
+  tipoUsuario: string;
+
+  constructor(private menuService: MenuService,private router: Router) { }
 
   ngOnInit(): void {
+    this.idUsuario = sessionStorage.getItem('user');
+    //sessionStorage.setItem('user', null);
+    console.log(this.idUsuario);
+    console.log(this.logado);
+    if(this.idUsuario == "" || this.idUsuario == null){
+      this.logado = false;
+      this.tipoUsuario = "0";
+    }else{
+      this.logado = true;
+      this.consultaUsuario();
+    }
+  }
+
+  consultaUsuario(){
+    this.menuService.getUsuario(this.idUsuario)
+    .subscribe(dados =>{
+        console.log(dados);
+        this.nomeUsuario = dados.nome;
+        this.tipoUsuario = dados.tipoUsuario;
+      },
+    error => {
+      console.log(error);
+      this.tipoUsuario = "0";
+    });
+  }
+
+  logout(){
+        sessionStorage.setItem('isLogado', null);
+        sessionStorage.setItem('user', null);
+        this.router.navigate(['/home']);
   }
 
 }

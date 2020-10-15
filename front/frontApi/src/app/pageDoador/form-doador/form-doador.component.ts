@@ -36,7 +36,8 @@ export class FormDoadorComponent implements OnInit {
     this.usuarioLogadoEmail = sessionStorage.getItem('email');
     
     //this.usuarioLogado = "false"
-
+    console.log(this.usuarioLogado);
+    console.log(this.usuarioLogadoEmail);
     if(this.usuarioLogado == "" || this.usuarioLogado == null){
       //this.router.navigate(['/cadastro-usuario?id=1']);
       this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
@@ -46,7 +47,6 @@ export class FormDoadorComponent implements OnInit {
 
     console.log(this.usuarioLogadoEmail);
     if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
-      console.log(this.usuarioLogadoEmail)
       this.usuarioService.verificaEmail(this.usuarioLogadoEmail).subscribe(dados =>{
         this.idUsuario = dados.id;
         console.log(dados);

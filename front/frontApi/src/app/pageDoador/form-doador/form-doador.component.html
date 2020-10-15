@@ -9,7 +9,7 @@
             <form [formGroup]="formDoador" #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="nomeCompleto">Nome Completo</label>
+                        <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control"
                         id="nomeCompleto" 
                         formControlName="nomeCompleto"
@@ -19,20 +19,21 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-2">
-                        <label for="cep">CEP</label>
-                        <input type="text" class="form-control" id="cep" 
+                        <label for="cep">CEP: <span style="color:red;">*</span></label>
+                        <input type="text" maxlength="8" class="form-control" id="cep" 
                         formControlName="cep"
-                        (blur)="consultaCep()">
+                        (blur)="consultaCep()"
+                        onkeypress="return SomenteNumero(event);">
                     </div>
                     <div class="form-group col-md-8">
-                        <label for="logradouro">Logradouro</label>
+                        <label for="logradouro">Logradouro: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="logradouro" 
                         formControlName="logradouro"
                         [readonly]="true"
                         >
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="numeroCasa">Número</label>
+                        <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" 
                         formControlName="numeroCasa"
                         id="numero" >
@@ -42,15 +43,15 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="bairro">Bairro</label>
+                        <label for="bairro">Bairro: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="bairro" formControlName="bairro" [readonly]="true">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="cidade">Cidade</label>
+                        <label for="cidade">Cidade: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="cidade" formControlName="cidade" [readonly]="true">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="estado">Estado</label>
+                        <label for="estado">Estado: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="estado" formControlName="estado" [readonly]="true">
                     </div>
                     
@@ -58,22 +59,25 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="complemento">Complemento</label>
+                        <label for="complemento">Complemento: </label>
                         <input type="text" class="form-control" id="complemento" formControlName="complemento">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="telefone">Telefone Fixo</label>
-                        <input type="tel" class="form-control" id="telefone" formControlName="telefone" placeholder="(00)0000-0000">
+                        <label for="telefone">Telefone Fixo: </label>
+                        <input type="tel" class="form-control" id="telefone" formControlName="telefone"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="celular">Telefone Celular</label>
-                        <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(99)99999-9999">
+                        <label for="celular">Telefone Celular:  <span style="color:red;">*</span></label>
+                        <input type="tel" class="form-control" id="celular" 
+                        formControlName="celular"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
                     </div>
                     <div class="form-group col-md-6">
-                        <input [hidden]="false" type="text" class="form-control" id="idUsuario" formControlName="id_usuario">
+                        <input [hidden]="true" type="text" class="form-control" id="idUsuario" formControlName="id_usuario">
                     </div>
                 </div>
 

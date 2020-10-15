@@ -37,6 +37,11 @@ public class UsuarioService {
 		return repository.findByEmailEquals(email);
 
 	}
+	
+	public Usuario login(String email, String senha) {
+		return repository.findByEmailSenha(email, senha);
+
+	}
 
 //    private final UsuarioRepository usuarioRepository;
 //
@@ -53,9 +58,9 @@ public class UsuarioService {
 //		return usuarioRepository.findAll();	
 //	}
 //    
-//    public Optional<Usuario> buscar(Long id) {
-//		return usuarioRepository.findById(id);
-//	}
+    public Optional<Usuario> buscarPorId(Long id) {
+		return repository.findById(id);
+	}
 //    
 //    public Usuario buscarEmail(String email) {
 //    	return usuarioRepository.findByEmailEquals(email);

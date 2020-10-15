@@ -31,12 +31,12 @@ import jdk.jfr.BooleanFlag;
 public class UsuarioController {
 
 	@Autowired
-	private UsuarioService service;
+	private UsuarioService usuarioService;
 
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody UsuarioRequest usuario) {
 		try {
-			UsuarioDTO usuarioDTO = service.salvar(usuario);
+			UsuarioDTO usuarioDTO = usuarioService.salvar(usuario);
 			if (usuarioDTO == null) {
 				return ResponseEntity.badRequest().body("Já existe um usuário cadastrado para esse email!");
 			} else {
@@ -71,19 +71,19 @@ public class UsuarioController {
 //		return usuarioService.listar();
 //	}
 //	
-//	@GetMapping("/{id}")
-//	public ResponseEntity<Usuario> buscar(@PathVariable Long id) {
-//		
-//		Optional<Usuario> usuario = usuarioService.buscar(id);
-//		
-//		if (usuario.isPresent()) {
-//			return ResponseEntity.ok(usuario.get());
-//		}
-//		
-//		return ResponseEntity.notFound().build();
-//	
-//	}
-//	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> buscar(@PathVariable Long id) {
+		
+		Optional<Usuario> usuario = usuarioService.buscarPorId(id);
+		
+		if (usuario.isPresent()) {
+			return ResponseEntity.ok(usuario.get());
+		}
+		
+		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+	
+	}
+	
 //	@DeleteMapping("/{id}")
 //	public ResponseEntity<Usuario> excluir(@PathVariable Long id) {
 //		try {
@@ -114,21 +114,40 @@ public class UsuarioController {
 //		return ResponseEntity.notFound().build();
 //	}
 //	
-//	@GetMapping("/email/{email}")
-//	public ResponseEntity<Usuario> buscarEmail(@PathVariable String email) {
-//		
-//		Usuario usuario = usuarioService.buscarEmail(email);
-//		if(email != "") {
-//			if (usuario != null) {
-//				return ResponseEntity.ok(usuario);
-//			}
-//			
-//			return ResponseEntity.notFound().build();
-//		}else {
-//			return ResponseEntity.notFound().build();
-//		}
-//	
-//	}
-//	
+
+	@GetMapping("/login/{dadosUsuario}")
+	public ResponseEntity<?> login(@PathVariable String dadosUsuario) {
+		String[] dados = dadosUsuario.split("&");
+		String email = dados[0].toString();
+		String senha = dados[1].toString();
+
+		Usuario usuario = usuarioService.login(email, senha);
+
+		if (usuario != null) {
+			return ResponseEntity.ok(usuario);
+		} else {
+			// return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().body("Email ou Senha inválido!");
+		}
+
+	}
+
+	@GetMapping("/email/{email}")
+	public ResponseEntity<?> buscarEmail(@PathVariable String email) {
+
+		Usuario usuario = usuarioService.buscarEmail(email);
+		if (email != "") {
+			if (usuario != null) {
+				return ResponseEntity.ok(usuario);
+			} else {
+				// return ResponseEntity.notFound().build();
+				return ResponseEntity.badRequest().body("Não existe um usuário cadastrado para esse email!");
+			}
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
 
 }
