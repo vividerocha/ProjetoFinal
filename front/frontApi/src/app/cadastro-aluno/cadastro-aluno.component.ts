@@ -13,7 +13,7 @@ export class CadastroAlunoComponent implements OnInit {
   usuarioLogado: string;
   usuarioLogadoEmail: string;
   idUsuario:Number;
-  formDoador: FormGroup;
+  formAluno: FormGroup;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -32,6 +32,60 @@ export class CadastroAlunoComponent implements OnInit {
       this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '3' }, queryParamsHandling: 'merge' });
     }
 
+    this.criaForm();    
+
+  }
+  criaForm(){
+    this.formAluno = this.fb.group({
+      nomeCompleto: new FormControl(''),
+      cep: new FormControl(''),
+      estado: new FormControl(''),
+      logradouro: new FormControl(''),
+      numeroCasa: new FormControl(''),
+      bairro: new FormControl(''),
+      cidade: new FormControl(''),
+      complemento: new FormControl(''),
+      telefone: new FormControl(''),
+      celular: new FormControl(''),
+      id_usuario: new FormControl(''),
+      escola: new FormControl(''),
+      serie: new FormControl(''),
+      turno: new FormControl(''),
+      turma: new FormControl(''),
+      notebook: new FormControl(''),
+      desktop: new FormControl(''),
+      celularEquip: new FormControl(''),
+      tablet: new FormControl(''),
+      declaracao: new FormControl('')
+    })
   }
 
+  consultaCep(){
+    let cep = this.formAluno.get('cep').value;
+    console.log(cep);
+    
+    if(cep != null && cep !== ''){
+        this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
+    }
+  }
+
+  populaForm(dados){
+    this.formAluno.patchValue({
+      cep: dados.cep,
+      logradouro: dados.logradouro,
+      estado: dados.uf,
+      bairro: dados.bairro,
+      cidade: dados.localidade
+    })
+  }
+
+  onSubmit(form: NgForm){
+    if(this.formAluno.get('declaracao').value){
+      alert('Marcado');
+    }else{
+      alert('Não Marcado');
+    }
+    
+    
+  }
 }
