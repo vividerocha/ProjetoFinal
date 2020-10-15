@@ -1,5 +1,8 @@
-import { DoajuService } from './../doaju.service.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Login } from './login';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -7,46 +10,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  senha: any;
-  mostraMsgErroSenha: boolean = true;
-  botaoLiberado = true;
-
-  novoUser = {
-    username:'',
-    email:'',
-    senha:'',
-    dataCad:''
-  };
+  formLogin: FormGroup;
+  escondeMensagemErro: Boolean;
   
-  constructor(private doajuService: DoajuService) { }
+
+  constructor(private fb: FormBuilder, private router: Router,
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.createForm();
+    this.escondeMensagemErro = true;
   }
 
-  adicionarUser(){
-    this.doajuService.adicionar(this.novoUser).subscribe(()=>{
-      this.novoUser = {
-        username:'',
-        email:'',
-        senha:'',
-        dataCad:''
-      }
+  createForm() {
+    this.formLogin = this.fb.group({
+      email: new FormControl(''),
+      senha: new FormControl('')
     });
   }
+  onSubmit(form: NgForm) {
 
-  compara(digitado){
-   console.log(this.senha == digitado? "igual":"diferente");
-   if(this.senha == digitado){
-    this.mostraMsgErroSenha = true;
-    this.botaoLiberado = false;
-   }else{
-     this.mostraMsgErroSenha = false;
-   }
-  }
+    if (this.formLogin.valid) {
+      console.log('form submitted');
+      this.loginService.login(this.formLogin.value.email, this.formLogin.value.senha)
+        .subscribe(
+          response => {
+            console.log(response.id);
+            sessionStorage.setItem('isLogado', 'true');
+            sessionStorage.setItem('user', response.id);
+            this.router.navigate(['/home']);
+          },
+          error => {
+            console.log(error);
+            this.escondeMensagemErro = false;
+          });
 
-  capturaSenha(senha){
-    this.senha = senha;
+    } else {
+      console.log('form invalido');
+      this.escondeMensagemErro = false;
+    }
+
   }
 
 }

@@ -18,8 +18,10 @@ export class CadastroDoUsuarioComponent implements OnInit {
   usuarios: Usuario[];
   tipoPessoa: string;
   senha: any;
-  mostraMsgErroSenha: boolean = true;
-  botaoLiberado = true;
+  escondeMsgErroSenha: boolean;
+  escondeMsgErroEmail: boolean;
+  desabilitaBotao: boolean;
+  idUsuarioEncontrado: number = 0;
 
   formUsuario: FormGroup;
 
@@ -32,7 +34,9 @@ export class CadastroDoUsuarioComponent implements OnInit {
     let headers = new Headers();
     headers.append('Accept', 'q=0.8;application/json;q=0.9');
     this.createForm();
-
+    this.desabilitaBotao = true;
+    this.escondeMsgErroSenha = true;
+    this.escondeMsgErroEmail = true;
   }
 
   createForm() {
@@ -59,9 +63,6 @@ export class CadastroDoUsuarioComponent implements OnInit {
         .subscribe(
           response => {
             console.log(response);
-            localStorage.setItem('isLogado', 'true');
-            localStorage.setItem('email', dados.email);
-            //cad aluno estou usando session ao inves de local
             sessionStorage.setItem('isLogado', 'true');
             sessionStorage.setItem('email', dados.email);
             this.goRota();
@@ -73,8 +74,8 @@ export class CadastroDoUsuarioComponent implements OnInit {
           });
 
     } else {
-      // validate all form fields
       console.log('form invalido');
+      this.desabilitaBotao = true;
     }
 
   }
@@ -82,7 +83,6 @@ export class CadastroDoUsuarioComponent implements OnInit {
   goRota() {
     this.activatedRoute.queryParams
       .subscribe(params => {
-        console.log(params); // { order: "popular" }
         this.tipoPessoa = params.id;
         if (this.tipoPessoa == "1") {
           this.zone.run(() => {
@@ -110,10 +110,15 @@ export class CadastroDoUsuarioComponent implements OnInit {
   compara(digitado) {
     if (this.formUsuario.value.confirmaSenha != "") {
       if (this.senha == digitado) {
-        this.mostraMsgErroSenha = true;
-        this.botaoLiberado = false;
+        this.escondeMsgErroSenha = true;
+        if(this.escondeMsgErroEmail == true){
+          this.desabilitaBotao = false;
+        }
       } else {
-        this.mostraMsgErroSenha = false;
+        this.escondeMsgErroSenha = false;
+        if(this.escondeMsgErroEmail == false){
+          this.desabilitaBotao = true;
+        }
       }
     }
   }
@@ -135,6 +140,26 @@ export class CadastroDoUsuarioComponent implements OnInit {
 
   get email() {
     return this.formUsuario.get('email');
+  }
+
+  verificaEmailExiste(digitado){
+    this.usuarioService.verificaEmail(digitado)
+    .subscribe(dados =>{
+        console.log(dados.id);
+        this.idUsuarioEncontrado = dados.id;
+        this.escondeMsgErroEmail = false;
+        if(this.escondeMsgErroSenha == false){
+          this.desabilitaBotao = true;
+        }
+      },
+    error => {
+      console.log(error);
+      this.escondeMsgErroEmail = true;
+      if(this.escondeMsgErroSenha == true){
+        this.desabilitaBotao = false;
+      }
+    });
+
   }
 
 }

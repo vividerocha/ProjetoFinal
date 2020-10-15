@@ -3,29 +3,46 @@
     <div class="container">
       <nav class="navbar navbar-expand-md navbar-dark bg-primary">
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" routerLink="/home">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="/sobre-projeto">Sobre o Projeto</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/page-doador" [queryParams]="{ id: '1'}" queryParamsHandling="merge">Quero Doar</a>
-              </li>
+              <div *ngIf="tipoUsuario == '1' || tipoUsuario == '0'">
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/page-doador" [queryParams]="{ id: '1'}" queryParamsHandling="merge">Quero Doar</a>
+                </li>
+              </div>
+              <div *ngIf="tipoUsuario == '2' || tipoUsuario == '0'">
               <li class="nav-item">
                 <a class="nav-link" routerLink="/cadastro-tecnico">Sou Técnico</a>
               </li>
-              <li class="nav-item">
+              </div>
+              <div *ngIf="tipoUsuario == '3' || tipoUsuario == '0'">
+                <li class="nav-item">
                   <a class="nav-link" routerLink="/cadastro-aluno"[queryParams]="{ id: '3'}" queryParamsHandling="merge">Sou Aluno</a>
-              </li>
+                </li>
+              </div>
               <li class="nav-item">
                   <a class="nav-link" routerLink="/contato">Contato</a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" routerLink="/login">Login</a>
-              </li>
             </ul>
+            <form *ngIf="logado" class="form-inline my-2 my-lg-0">
+              
+                <div>
+                  <a style="color:white;" routerLink="/login">Login</a>
+                </div>
+              
+            </form>
+            <form *ngIf="!logado" class="form-inline my-2 my-lg-0">
+              
+                <div>
+                  <a href="#" style="color:white;" (click)="logout()">{{nomeUsuario}} / Logout</a>
+                </div>
+              
+            </form>
           </div>
         </nav>
         </div>

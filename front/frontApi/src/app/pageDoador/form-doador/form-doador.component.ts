@@ -32,13 +32,12 @@ export class FormDoadorComponent implements OnInit {
   ngOnInit(): void {
 
     //localStorage.setItem('isLogado', '');
-    this.usuarioLogado = localStorage.getItem('isLogado');
-    this.usuarioLogadoEmail = localStorage.getItem('email');
-    console.log("email: " + this.usuarioLogadoEmail);
+    this.usuarioLogado = sessionStorage.getItem('isLogado');
+    this.usuarioLogadoEmail = sessionStorage.getItem('email');
     
     //this.usuarioLogado = "false"
     console.log(this.usuarioLogado);
-
+    console.log(this.usuarioLogadoEmail);
     if(this.usuarioLogado == "" || this.usuarioLogado == null){
       //this.router.navigate(['/cadastro-usuario?id=1']);
       this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
@@ -46,7 +45,8 @@ export class FormDoadorComponent implements OnInit {
 
     this.createForm();
 
-    if(this.usuarioLogado != ""){
+    console.log(this.usuarioLogadoEmail);
+    if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
       this.usuarioService.verificaEmail(this.usuarioLogadoEmail).subscribe(dados =>{
         this.idUsuario = dados.id;
         console.log(dados);
@@ -95,13 +95,11 @@ export class FormDoadorComponent implements OnInit {
 
   onSubmit(form: NgForm){
 
-      
-
       this.doadorService.salvar(this.formDoador.value).subscribe(() => {
         //após cadastrar na tabela de pessoas, o usuário será redirecionado para a tela de login
         console.log(this.formDoador.value);
-        localStorage.setItem('isLogado', '');
-        localStorage.setItem('email', '');
+        sessionStorage.setItem('isLogado', '');
+        sessionStorage.setItem('email', '');
         this.router.navigateByUrl('/login');
       });
       
