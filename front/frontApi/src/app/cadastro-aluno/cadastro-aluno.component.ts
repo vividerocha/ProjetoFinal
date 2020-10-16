@@ -28,9 +28,9 @@ export class CadastroAlunoComponent implements OnInit {
     //apagar a linha abaixo depois. Só para testar estado da variavel antes de mais nada.
     console.log(`Pagina cadastro de aluno. Variável ususarioLogado: ${this.usuarioLogado}`);
 
-    if(this.usuarioLogado == "" || this.usuarioLogado == null){
-      this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '3' }, queryParamsHandling: 'merge' });
-    }
+    //if(this.usuarioLogado == "" || this.usuarioLogado == null){
+    //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '3' }, queryParamsHandling: 'merge' });
+    //}
 
   }
 

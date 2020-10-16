@@ -12,12 +12,13 @@ import br.com.digitalhouse.request.DoadorRequest;
 public class DoadorMapper {
 	@Autowired
     private ModelMapper modelMapper;
-	
-	public DoadorDTO modelToDto(Doador doador) {
+
+    public Doador requestToModel(DoadorRequest doadorRequest) {
+        return modelMapper.map(doadorRequest, Doador.class);
+    }
+    
+    public DoadorDTO modelToDTO(Doador doador) {
         return modelMapper.map(doador, DoadorDTO.class);
     }
 
-    public Doador dtoRequestToModel(DoadorRequest request) {
-        return modelMapper.map(request, Doador.class);
-    }
 }

@@ -34,18 +34,13 @@ export class FormDoadorComponent implements OnInit {
     //localStorage.setItem('isLogado', '');
     this.usuarioLogado = sessionStorage.getItem('isLogado');
     this.usuarioLogadoEmail = sessionStorage.getItem('email');
-    
-    //this.usuarioLogado = "false"
-    console.log(this.usuarioLogado);
-    console.log(this.usuarioLogadoEmail);
-    if(this.usuarioLogado == "" || this.usuarioLogado == null){
-      //this.router.navigate(['/cadastro-usuario?id=1']);
-      this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
-    }
+
+    //if(this.usuarioLogado == "" || this.usuarioLogado == null){
+    //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
+    //}
 
     this.createForm();
 
-    console.log(this.usuarioLogadoEmail);
     if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
       this.usuarioService.verificaEmail(this.usuarioLogadoEmail).subscribe(dados =>{
         this.idUsuario = dados.id;

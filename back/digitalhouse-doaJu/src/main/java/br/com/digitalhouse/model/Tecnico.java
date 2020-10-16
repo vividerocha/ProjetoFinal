@@ -1,20 +1,26 @@
 package br.com.digitalhouse.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@NoArgsConstructor // JPA Only
 @Entity
-public class Tecnico extends Pessoa{
+@Data
+public class Tecnico implements Serializable{
+	
+private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	
+	@Embedded
+    private Pessoa pessoa;
 
-	public Tecnico(int tipoPessoa, String nomeCompleto, String cep,
-			String logradouro, int numeroCasa, String bairro,
-			String cidade, String uf, String complemento, String telefone,
-			String celular, boolean termo, int idUsuario) {
-
-		//tipo pessoa 2 - Tecnico
-		super(2,nomeCompleto, cep, logradouro, numeroCasa, bairro,
-				cidade, uf, complemento, telefone, celular, termo, idUsuario);
-	}
 }

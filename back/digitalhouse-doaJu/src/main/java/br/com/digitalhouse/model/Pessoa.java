@@ -2,79 +2,31 @@ package br.com.digitalhouse.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
+import javax.persistence.Embeddable;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@Entity
-@Getter
-@NoArgsConstructor // JPA Only
+@Data
+@Embeddable
 public class Pessoa {
 		
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Column(name = "idPessoa")
-		private Long id;
-
-		@Column
-		private int tipoPessoa;
-		@Column
-		private String nomeCompleto;
-		@Column
+		private String nomeCompleto;	
 		private String cep;
-		@Column
 		private String logradouro;
-		@Column
 		private int numeroCasa;
-		@Column
 		private String bairro;
-		@Column
 		private String cidade;
-		@Column
 		private String estado;
-		@Column
 		private String complemento;
-		@Column
 		private String telefone;
-		@Column
 		private String celular;
-		@Column
 		private boolean termo;
 		
 		@DateTimeFormat(pattern="yyyy-mm-dd")
-		@Column(name="data_cadastro")
 		private LocalDate dataCadastro;
 		
-		@Column
-		private int id_usuario;
-		
-		public Pessoa(int tipoPessoa, String nomeCompleto, String cep,
-						String logradouro, int numeroCasa, String bairro,
-						String cidade, String estado, String complemento, String telefone,
-						String celular, boolean termo, int id_usuario) {
-			//1 - Doador
-			//2 - Tecnico
-			//3 - Aluno
-	        this.tipoPessoa = tipoPessoa;
-	        this.nomeCompleto = nomeCompleto;
-	        this.cep = cep;
-	        this.logradouro = logradouro;
-	        this.numeroCasa = numeroCasa;
-	        this.bairro = bairro;
-	        this.cidade = cidade;
-	        this.estado = estado;
-	        this.complemento = complemento;
-	        this.telefone = telefone;
-	        this.celular = celular;
-	        this.termo = termo;
-	        this.id_usuario = id_usuario;
-	    }
+		public Pessoa() {
+			
+		}
 }

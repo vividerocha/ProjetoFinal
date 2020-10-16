@@ -20,16 +20,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUsuario = sessionStorage.getItem('user');
-    //sessionStorage.setItem('user', null);
-    console.log(this.idUsuario);
-    console.log(this.logado);
-    if(this.idUsuario == "" || this.idUsuario == null){
-      this.logado = false;
-      this.tipoUsuario = "0";
-    }else{
-      this.logado = true;
-      this.consultaUsuario();
-    }
+    this.tipoUsuario = "0";
+    //sessionStorage.setItem('user', null);    
   }
 
   consultaUsuario(){

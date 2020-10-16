@@ -12,12 +12,13 @@ import br.com.digitalhouse.request.TecnicoRequest;
 public class TecnicoMapper {
 	@Autowired
     private ModelMapper modelMapper;
-	
-	public TecnicoDTO modelToDto(Tecnico tecnico) {
+
+    public Tecnico requestToModel(TecnicoRequest tecnicoRequest) {
+        return modelMapper.map(tecnicoRequest, Tecnico.class);
+    }
+    
+    public TecnicoDTO modelToDTO(Tecnico tecnico) {
         return modelMapper.map(tecnico, TecnicoDTO.class);
     }
 
-    public Tecnico dtoRequestToModel(TecnicoRequest request) {
-        return modelMapper.map(request, Tecnico.class);
-    }
 }

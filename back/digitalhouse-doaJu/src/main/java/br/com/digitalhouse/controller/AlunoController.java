@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,34 +21,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.digitalhouse.dto.AlunoDTO;
 import br.com.digitalhouse.model.Aluno;
+import br.com.digitalhouse.request.AlunoRequest;
 import br.com.digitalhouse.service.AlunoService;
 
-@RequestMapping("/alunos")
+@CrossOrigin
 @RestController
+@RequestMapping("/alunos")
 public class AlunoController {
-
-	private final AlunoService alunoService;
-
+	
 	@Autowired
-	public AlunoController(AlunoService alunoService) {
-		this.alunoService = alunoService;
-	}
+	private AlunoService service;
 	
 	@PostMapping
-	public ResponseEntity<Aluno> salvar(@RequestBody AlunoDTO dto) {
-	    Aluno aluno = alunoService.salvar(dto.transformaParaObjeto());
-	    return new ResponseEntity<>(aluno, HttpStatus.CREATED);
+	public ResponseEntity<?> salvar(@RequestBody @Valid AlunoRequest alunoRequest) {	
+		try {
+			
+			AlunoDTO alunoDTO = service.salvar(alunoRequest);			
+			return ResponseEntity.status(HttpStatus.CREATED).body(alunoDTO);
+		
+		}catch(Exception ex) {
+			return ResponseEntity.badRequest().body(ex.getMessage());
+		}		
 	}
 	
 	@GetMapping
-	public List<Aluno> listar(){
-		return alunoService.listar();
+	public List<AlunoDTO> listar(){
+		return service.listar();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Aluno> buscar(@PathVariable Long id) {
+	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		
-		Optional<Aluno> aluno = alunoService.buscar(id);
+		Optional<Aluno> aluno = service.buscar(id);
 		
 		if (aluno.isPresent()) {
 			return ResponseEntity.ok(aluno.get());
@@ -60,7 +65,7 @@ public class AlunoController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Aluno> excluir(@PathVariable Long id) {
 		try {
-			alunoService.excluir(id);	
+			service.excluir(id);	
 			return ResponseEntity.noContent().build();
 			
 		} catch (Exception e) {
@@ -75,12 +80,12 @@ public class AlunoController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid Aluno aluno, @PathVariable Long id) {
 		
-		Aluno alunoAtual = alunoService.buscar(id).orElse(null);
+		Aluno alunoAtual = service.buscar(id).orElse(null);
 		
 		if (alunoAtual != null) {
 			BeanUtils.copyProperties(aluno, alunoAtual, "id");
 			
-			alunoService.atualizar(alunoAtual);
+			service.atualizar(alunoAtual);
 			return ResponseEntity.ok(alunoAtual);
 		}	
 			

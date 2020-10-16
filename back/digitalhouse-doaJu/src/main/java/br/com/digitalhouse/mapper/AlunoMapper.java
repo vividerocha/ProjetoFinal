@@ -12,12 +12,13 @@ import br.com.digitalhouse.request.AlunoRequest;
 public class AlunoMapper {
 	@Autowired
     private ModelMapper modelMapper;
-	
-	public AlunoDTO modelToDto(Aluno aluno) {
+
+    public Aluno requestToModel(AlunoRequest alunoRequest) {
+        return modelMapper.map(alunoRequest, Aluno.class);
+    }
+    
+    public AlunoDTO modelToDTO(Aluno aluno) {
         return modelMapper.map(aluno, AlunoDTO.class);
     }
 
-    public Aluno dtoRequestToModel(AlunoRequest request) {
-        return modelMapper.map(request, Aluno.class);
-    }
 }
