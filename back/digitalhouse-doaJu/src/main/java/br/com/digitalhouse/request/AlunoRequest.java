@@ -1,6 +1,6 @@
 package br.com.digitalhouse.request;
 
-import br.com.digitalhouse.model.Pessoa;
+
 import lombok.Data;
 
 @Data
@@ -11,5 +11,16 @@ public class AlunoRequest {
 	private String turma;
 	private String turno;
 	private String serie;
-	private Pessoa pessoa;
+	private String nomeCompleto;	
+	private String cep;
+	private String logradouro;
+	private int numeroCasa;
+	private String bairro;
+	private String cidade;
+	private String estado;
+	private String complemento;
+	private String telefone;
+	private String celular;
+	private boolean termo;
+	
 }

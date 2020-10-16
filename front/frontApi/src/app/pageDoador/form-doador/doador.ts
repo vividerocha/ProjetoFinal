@@ -1,13 +1,13 @@
 export interface Doador {
-    nomeCompleto: string;
-    cep: string;
-    logradouro: string;
-    numeroCasa: number;
-    estado: string;
-    bairro: string;
-    cidade: string;
-    complemento: string;
-    telefone: string;
-    celular: string;
-    id_usuario: number;
+  nomeCompleto: String,
+	cep: String,
+	logradouro: String,
+	numeroCasa: number,
+	bairro: String,
+	cidade: String,
+	estado: String,
+	complemento: String,
+	telefone: String,
+	celular: String,
+	termo: String
   }

@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { consultaCepService } from './../../services/consultaCEP.service';
-import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Doador } from './Doador';
 import { DoadorService } from './form-doador.service';
 import { CadastroDoUsuarioService } from './../../cadastro-do-usuario/cadastro-do-usuario.service'
@@ -20,6 +20,7 @@ export class FormDoadorComponent implements OnInit {
   formDoador: FormGroup;
   //usuario: any[] = [];
   usuario: Usuario;
+  formularioInvaido: boolean;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -39,6 +40,7 @@ export class FormDoadorComponent implements OnInit {
     //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
     //}
 
+    this.formularioInvaido = false;
     this.createForm();
 
     if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
@@ -55,16 +57,16 @@ export class FormDoadorComponent implements OnInit {
 
   createForm() {
     this.formDoador = this.fb.group({
-      nomeCompleto: new FormControl(''),
-      cep: new FormControl(''),
+      nomeCompleto: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+      cep: new FormControl(null, Validators.required),
       estado: new FormControl(''),
       logradouro: new FormControl(''),
-      numeroCasa: new FormControl(''),
+      numeroCasa: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       bairro: new FormControl(''),
       cidade: new FormControl(''),
       complemento: new FormControl(''),
       telefone: new FormControl(''),
-      celular: new FormControl(''),
+      celular: new FormControl(null, [Validators.required, Validators.minLength(10)]),
       id_usuario: new FormControl('')
     });
   }
@@ -80,7 +82,7 @@ export class FormDoadorComponent implements OnInit {
 
   populaForm(dados){
     this.formDoador.patchValue({
-      cep: dados.cep,
+      //cep: dados.cep,
       logradouro: dados.logradouro,
       estado: dados.uf,
       bairro: dados.bairro,
@@ -90,14 +92,18 @@ export class FormDoadorComponent implements OnInit {
 
   onSubmit(form: NgForm){
 
+    if(this.formDoador.valid){
       this.doadorService.salvar(this.formDoador.value).subscribe(() => {
         //após cadastrar na tabela de pessoas, o usuário será redirecionado para a tela de login
         console.log(this.formDoador.value);
-        sessionStorage.setItem('isLogado', '');
-        sessionStorage.setItem('email', '');
-        this.router.navigateByUrl('/login');
+        //sessionStorage.setItem('isLogado', '');
+        //sessionStorage.setItem('email', '');
+        //this.router.navigateByUrl('/login');
       });
-      
+    }else{
+      this.formularioInvaido = true;
+    }
+
     //}
   
 }
@@ -112,4 +118,21 @@ export class FormDoadorComponent implements OnInit {
     );
 
   }
+
+  get nomeCompleto() {
+    return this.formDoador.get('nomeCompleto');
+  }
+
+  get cep() {
+    return this.formDoador.get('cep');
+  }
+
+  get celular() {
+    return this.formDoador.get('celular');
+  }
+
+  get numeroCasa() {
+    return this.formDoador.get('numeroCasa');
+  }
+  
 }

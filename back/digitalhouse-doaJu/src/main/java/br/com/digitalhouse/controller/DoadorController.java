@@ -2,7 +2,6 @@ package br.com.digitalhouse.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +24,9 @@ public class DoadorController {
 	@Autowired
 	private DoadorService service;
 	
+	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid DoadorRequest doadorRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody DoadorRequest doadorRequest) {	
 		try {
 			
 			DoadorDTO doadorDTO = service.salvar(doadorRequest);			
@@ -37,6 +37,7 @@ public class DoadorController {
 		}		
 	}
 	
+		
 	@GetMapping
 	public List<DoadorDTO> listar(){
 		return service.listar();
