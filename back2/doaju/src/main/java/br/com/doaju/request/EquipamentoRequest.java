@@ -1,8 +1,8 @@
-package br.com.digitalhouse.request;
+package br.com.doaju.request;
 
 import javax.validation.constraints.NotBlank;
 
-import br.com.digitalhouse.model.TipoEquipamento;
+import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 
 @Data

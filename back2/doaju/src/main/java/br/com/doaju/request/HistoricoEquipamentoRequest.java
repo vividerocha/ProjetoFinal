@@ -1,11 +1,9 @@
-package br.com.digitalhouse.request;
+package br.com.doaju.request;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.NotBlank;
-
-import br.com.digitalhouse.model.Equipamento;
-import br.com.digitalhouse.model.SituacaoEquipamento;
+import br.com.doaju.model.Equipamento;
+import br.com.doaju.model.SituacaoEquipamento;
 import lombok.Data;
 
 @Data

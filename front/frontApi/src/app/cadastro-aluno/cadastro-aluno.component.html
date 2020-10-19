@@ -10,7 +10,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="nome">Nome Completo</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Digite seu nome aqui">
+                        <input type="text" class="form-control" id="nomeCompleto"
+                        formControlName="nomeCompleto" placeholder="Digite seu nome aqui">
                     </div>
                 </div>
 
@@ -56,18 +57,21 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="complemento">Complemento</label>
-                        <input type="text" class="form-control" id="complemento" placeholder="ex: bloco A ap 320">
+                        <input type="text" class="form-control" id="complemento"
+                        formControlName="complemento" placeholder="ex: bloco A ap 320">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="telefone-fixo">Telefone Fixo</label>
-                        <input type="tel" class="form-control" id="telefone-fixo" placeholder="(00)0000-0000">
+                        <input type="tel" class="form-control"
+                        formControlName="telefone" id="telefone" placeholder="(00)0000-0000">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="telefone-celular">Telefone Celular</label>
-                        <input type="tel" class="form-control" id="telefone-celular" placeholder="(99)99999-9999">
+                        <input type="tel" class="form-control"
+                        formControlName="celular" id="celular" placeholder="(99)99999-9999">
                     </div>
                     <div class="form-group col-md-6">
                     </div>
@@ -75,22 +79,26 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label>Escola:</label>
-                        <input type="text" class="form-control" id="escola">
+                        <input type="text" class="form-control"
+                        formControlName="escola" id="escola">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Serie:</label>
-                        <input type="text" class="form-control" id="serie">
+                        <input type="text" class="form-control"
+                        formControlName="serie" id="serie">
                     </div>
 
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Turno:</label>
-                        <input type="text" class="form-control" id="turno">
+                        <input type="text" class="form-control"
+                        formControlName="turno" id="turno">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Turma:</label>
-                        <input type="text" class="form-control" id="turma">
+                        <input type="text" class="form-control"
+                        formControlName="turma" id="turma">
                     </div>
                 </div>
                 <div class="form-row">
@@ -98,19 +106,23 @@
                         <label>Tipo de Equipamento:</label>
                         <div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento" id="notebook" value="notebook">
+                                <input class="form-check-input" type="checkbox" name="equipamento"
+                                formControlName="notebook" id="notebook" value="notebook">
                                 <label class="form-check-label" for="notebook">Notebook</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento" id="desktop" value="desktop">
+                                <input class="form-check-input" type="checkbox" name="equipamento"
+                                formControlName="desktop" id="desktop" value="desktop">
                                 <label class="form-check-label" for="desktop">Desktop</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento" id="celular" value="celular">
+                                <input class="form-check-input" type="checkbox" name="equipamento"
+                                formControlName="celularEquip" id="celular" value="celular">
                                 <label class="form-check-label" for="celular">Celular</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento" id="tablet" value="tablet">
+                                <input class="form-check-input" type="checkbox" name="equipamento"
+                                formControlName="tablet" id="tablet" value="tablet">
                                 <label class="form-check-label" for="tablet">Tablet</label>
                             </div>
                             <div class="form-group col-md-6">

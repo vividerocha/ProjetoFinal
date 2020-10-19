@@ -1,8 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { consultaCepService } from '../services/consultaCEP.service';
 import { CadastroDoUsuarioService } from '../cadastro-do-usuario/cadastro-do-usuario.service';
+import { AlunoService } from './cadastro-aluno.service'
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -14,12 +15,14 @@ export class CadastroAlunoComponent implements OnInit {
   usuarioLogadoEmail: string;
   idUsuario:Number;
   formAluno: FormGroup;
+  formularioInvalido: boolean;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private usuarioService: CadastroDoUsuarioService,
+    private alunoService: AlunoService,
     private zone: NgZone) { }
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class CadastroAlunoComponent implements OnInit {
   }
   criaForm(){
     this.formAluno = this.fb.group({
-      nomeCompleto: new FormControl(''),
+      nomeCompleto: new FormControl(null,[Validators.required, Validators.minLength(10)]),
       cep: new FormControl(''),
       estado: new FormControl(''),
       logradouro: new FormControl(''),
@@ -57,7 +60,8 @@ export class CadastroAlunoComponent implements OnInit {
       celularEquip: new FormControl(''),
       tablet: new FormControl(''),
       declaracao: new FormControl('')
-    })
+    });
+    console.log(this.formAluno);
   }
 
   consultaCep(){
@@ -80,12 +84,16 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    if(this.formAluno.get('declaracao').value){
-      alert('Marcado');
+    if(this.formAluno.valid){
+      this.alunoService.salvar(this.formAluno.value).subscribe(() => {        
+        console.log(this.formAluno.value);
+        //sessionStorage.setItem('isLogado', '');
+        //sessionStorage.setItem('email', '');
+        //this.router.navigateByUrl('/login');
+      });
     }else{
-      alert('Não Marcado');
+      this.formularioInvalido = true;
+      alert('Por favor, leia e aceite a declação!');
     }
-    
-    
   }
 }
