@@ -16,6 +16,8 @@ import { ContatoComponent } from './contato/contato.component';
 import { LoginComponent } from './login/login.component';
 import { ToastComponent } from './toast/toast.component';
 import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-usuario.component';
+import { CommonModule } from '@angular/common';
+import { CadastroDeEquipamentoComponent } from './cadastro-de-equipamento/cadastro-de-equipamento.component';
 
 
 
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
    { path : 'cadastro-tecnico', component : CadastroTecnicoComponent },
    { path : 'contato', component : ContatoComponent },
    { path : 'login', component : LoginComponent },
-   { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent}
+   { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent},
+   { path : 'cadastro-equipamento', component : CadastroDeEquipamentoComponent}
    
 ];
 
@@ -50,7 +53,8 @@ const appRoutes: Routes = [
   ],
   imports: [
   
-BrowserModule,
+  BrowserModule,
+  CommonModule,
   FormsModule,
   ReactiveFormsModule,
   HttpClientModule,

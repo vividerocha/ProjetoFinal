@@ -9,133 +9,140 @@
             <form [formGroup]="formAluno" #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="nome">Nome Completo</label>
+                        <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="nomeCompleto"
-                        formControlName="nomeCompleto" placeholder="Digite seu nome aqui">
+                        formControlName="nomeCompleto">
+                        <mdb-error class="text-danger" 
+                            *ngIf="nomeCompleto.invalid && (nomeCompleto.dirty || nomeCompleto.touched)">
+                            Digite seu Nome Completo</mdb-error>
                     </div>
+                    
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-2">
-                        <label for="cep">CEP</label>
-                        <input type="text" class="form-control" id="cep" placeholder="00000-000"
+                        <label for="cep">CEP: <span style="color:red;">*</span></label>
+                        <input type="text" class="form-control" id="cep"
                         formControlName="cep"
                         (blur)="consultaCep()">
+                        <mdb-error class="text-danger" 
+                            *ngIf="cep.invalid && (cep.dirty || cep.touched)">
+                            Digite o CEP</mdb-error>
                     </div>
                     <div class="form-group col-md-8">
-                        <label for="logradouro">Logradouro</label>
-                        <input type="text" class="form-control" id="logradouro" placeholder="rua / avenida / viela / travessa"
+                        <label for="logradouro">Logradouro: </label>
+                        <input type="text" class="form-control" id="logradouro"
                         formControlName="logradouro"
                         readonly="true">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="numero">Número</label>
-                        <input type="text" class="form-control" id="numero" placeholder="ex 425"
+                        <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
+                        <input type="text" class="form-control" id="numero"
                         formControlName="numeroCasa">
+                        <mdb-error class="text-danger" 
+                            *ngIf="numeroCasa.invalid && (numeroCasa.dirty || numeroCasa.touched)">
+                            Digite o Número da Casa</mdb-error>
                     </div>
                 </div>
 
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" placeholder="Jardim dos Reis"
+                        <label for="bairro">Bairro: </label>
+                        <input type="text" class="form-control" id="bairro"
                         formControlName="bairro"
                         readonly="true">
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" placeholder="Franco da Rocha"
+                    <div class="form-group col-md-4">
+                        <label for="cidade">Cidade: </label>
+                        <input type="text" class="form-control" id="cidade"
                         formControlName="cidade"
                         readonly="true">
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="estado">Estado</label>
-                        <input type="text" class="form-control" id="estado" placeholder="ex: SP"
+                    <div class="form-group col-md-4">
+                        <label for="estado">Estado: </label>
+                        <input type="text" class="form-control" id="estado"
                         formControlName="estado"
                         readonly="true">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="complemento">Complemento</label>
-                        <input type="text" class="form-control" id="complemento"
-                        formControlName="complemento" placeholder="ex: bloco A ap 320">
-                    </div>
+                    
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="telefone-fixo">Telefone Fixo</label>
-                        <input type="tel" class="form-control"
-                        formControlName="telefone" id="telefone" placeholder="(00)0000-0000">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="telefone-celular">Telefone Celular</label>
-                        <input type="tel" class="form-control"
-                        formControlName="celular" id="celular" placeholder="(99)99999-9999">
-                    </div>
                     <div class="form-group col-md-6">
+                        <label for="complemento">Complemento: </label>
+                        <input type="text" class="form-control" id="complemento"
+                        formControlName="complemento">
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="telefone">Telefone Fixo: </label>
+                        <input type="tel" class="form-control"
+                        formControlName="telefone" id="telefone"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="celular">Telefone Celular: <span style="color:red;">*</span></label>
+                        <input type="tel" class="form-control"
+                        formControlName="celular" id="celular"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
+                        <mdb-error class="text-danger" 
+                            *ngIf="celular.invalid && (celular.dirty || celular.touched)">
+                            Digite o Celular</mdb-error>
+                    </div>
+                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-8">
-                        <label>Escola:</label>
+                        <label for="escola">Escola: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control"
                         formControlName="escola" id="escola">
+                        <mdb-error class="text-danger" 
+                            *ngIf="escola.invalid && (escola.dirty || escola.touched)">
+                            Digite o Nome da Escola</mdb-error>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Serie:</label>
+                        <label for="turno">Turno: <span style="color:red;">*</span></label>
+                        <select class="form-control" formControlName="turno">
+                            <option value="Matutino">Matutino</option>
+                            <option value="Vespertino">Vespertino</option>
+                            <option value="Noturno">Noturno</option>
+                            <option value="Integral">Integral</option>
+                        </select>
+                        
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="serie">Série: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control"
                         formControlName="serie" id="serie">
-                    </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Turno:</label>
-                        <input type="text" class="form-control"
-                        formControlName="turno" id="turno">
+                        <mdb-error class="text-danger" 
+                            *ngIf="serie.invalid && (serie.dirty || serie.touched)">
+                            Digite a Série</mdb-error>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Turma:</label>
+                        <label for="turma">Turma: <span style="color:red;">*</span></label>
                         <input type="text" class="form-control"
                         formControlName="turma" id="turma">
+                        <mdb-error class="text-danger" 
+                            *ngIf="turma.invalid && (turma.dirty || turma.touched)">
+                            Digite a Turma</mdb-error>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Tipo de Equipamento:</label>
-                        <div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento"
-                                formControlName="notebook" id="notebook" value="notebook">
-                                <label class="form-check-label" for="notebook">Notebook</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento"
-                                formControlName="desktop" id="desktop" value="desktop">
-                                <label class="form-check-label" for="desktop">Desktop</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento"
-                                formControlName="celularEquip" id="celular" value="celular">
-                                <label class="form-check-label" for="celular">Celular</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="equipamento"
-                                formControlName="tablet" id="tablet" value="tablet">
-                                <label class="form-check-label" for="tablet">Tablet</label>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input hidden="false" type="text" class="form-control" id="idUsuario" formControlName="id_usuario">
-                            </div>
-                        </div>
-
+                        <label for="tiposEquipamentos">Tipo de Equipamento: <span style="color:red;">*</span></label>
+                        <select class="form-control" formControlName="tiposEquipamentos" multiple>
+                            <option *ngFor="let tipoEquipamento of tiposEquipamentos" [ngValue]="tiposEquipamentos">
+                                {{tipoEquipamento.descricao}}</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-8">
-                        <label>Declaração:</label>
+                        <label for="declaracao">Declaração: <span style="color:red;">*</span></label>
                         <textarea class="form-control" id="declaracaoTexto" rows="5" readonly>
                             Declaro para os devidos fins, que sou aluno de escola pública. 
                             - Não possuo renda acima de meio salário mínimo por pessoa. 
@@ -153,6 +160,9 @@
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">Cadastrar</button>&nbsp;&nbsp;
                         <button type="submit" class="btn btn-secondary">Cancelar</button>
+                    <br>
+                    <mdb-error class="text-danger" *ngIf="formularioInvalido">
+                        Verifique os Campos Obrigatórios</mdb-error>
                     </div>
                 </div>
             </form>

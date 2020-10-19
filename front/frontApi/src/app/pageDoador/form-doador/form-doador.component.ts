@@ -6,6 +6,7 @@ import { Doador } from './Doador';
 import { DoadorService } from './form-doador.service';
 import { CadastroDoUsuarioService } from './../../cadastro-do-usuario/cadastro-do-usuario.service'
 import { Usuario } from 'src/app/cadastro-do-usuario/usuario';
+import { ToastService } from './../../toast/toast.service';
 
 @Component({
   selector: 'app-form-doador',
@@ -20,7 +21,7 @@ export class FormDoadorComponent implements OnInit {
   formDoador: FormGroup;
   //usuario: any[] = [];
   usuario: Usuario;
-  formularioInvaido: boolean;
+  formularioInvalido: boolean;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -28,7 +29,8 @@ export class FormDoadorComponent implements OnInit {
     private doadorService: DoadorService,
     private usuarioService: CadastroDoUsuarioService,
     private activatedRoute: ActivatedRoute,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
 
@@ -40,7 +42,7 @@ export class FormDoadorComponent implements OnInit {
     //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
     //}
 
-    this.formularioInvaido = false;
+    this.formularioInvalido = false;
     this.createForm();
 
     if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
@@ -58,7 +60,7 @@ export class FormDoadorComponent implements OnInit {
   createForm() {
     this.formDoador = this.fb.group({
       nomeCompleto: new FormControl(null, [Validators.required, Validators.minLength(10)]),
-      cep: new FormControl(null, Validators.required),
+      cep: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       estado: new FormControl(''),
       logradouro: new FormControl(''),
       numeroCasa: new FormControl(null, [Validators.required, Validators.minLength(1)]),
@@ -99,9 +101,10 @@ export class FormDoadorComponent implements OnInit {
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
+        this.showSuccess("Cadastro realizado com Sucesso!");
       });
     }else{
-      this.formularioInvaido = true;
+      this.formularioInvalido = true;
     }
 
     //}
@@ -133,6 +136,15 @@ export class FormDoadorComponent implements OnInit {
 
   get numeroCasa() {
     return this.formDoador.get('numeroCasa');
+  }
+
+  showSuccess(mensagem: string) {
+    this.toastService.show(mensagem, {
+      classname: 'bg-successToast',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Toast Header'
+    });
   }
   
 }

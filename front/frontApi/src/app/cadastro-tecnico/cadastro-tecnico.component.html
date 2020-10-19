@@ -2,97 +2,102 @@
     <div class="card">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
-                Sou Técnico
+                Sou Tecnico
             </h6>
         </div>
-        <form class="formTec" style="padding: 20px;">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="nome">Primeiro Nome</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Primeiro Nome">
+        <div class="card-body">
+            <form [formGroup]="formTecnico" #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
+                        <input type="text" class="form-control"
+                        id="nomeCompleto" 
+                        formControlName="nomeCompleto"
+                        required>
+                    </div>
+                    <mdb-error class="text-danger" 
+                    *ngIf="nomeCompleto.invalid && (nomeCompleto.dirty || nomeCompleto.touched)">
+                    Digite seu Nome Completo</mdb-error>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="nome">Sobre Nome</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Sobre Nome">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="cep">CEP</label>
-                    <input type="text" class="form-control" id="cep" placeholder="00000-000">
-                </div>
-                <div class="form-group col-md-8">
-                    <label for="logradouro">Logradouro</label>
-                    <input type="text" class="form-control" id="rua" placeholder="Rua / Avenida">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="numero">Número</label>
-                    <input type="number" class="form-control" id="numero" placeholder="Ex: 425">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="bairro">Bairro</label>
-                    <input type="text" class="form-control" id="bairro" placeholder="Boa Esperança">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" class="form-control" id="cidade" placeholder="Anapolis">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="complemento">Complemento</label>
-                    <input type="text" class="form-control" id="complemento" placeholder="Ex: Lote 45">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="complemento">Estado</label>
-                    <input type="text" class="form-control" size="2" id="uf" placeholder="Ex: GO">
-                </div>
-            </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="telefone-fixo">Telefone Fixo</label>
-                    <input type="tel" class="form-control" id="telefone-fixo" placeholder="(62) 9999-9999">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="telefone-celular">Telefone Celular</label>
-                    <input type="tel" class="form-control" id="telefone-celular" placeholder="(62) 9 9999-9999">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="email" placeholder="fulano@fulano.com.br">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
-                    <label class="form-check-label" for="invalidCheck">
-                            Aceito os Termos para Cadastro
-                        </label>
-                </div>
-                <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Termo de Compromisso
-                              </button>
-                            </h2>
-                        </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                Me comprometo a cuidar dos equipamentos buscando preservar a integridade dos mesmos e destina-los ao final da manutenção a guem de fato necessite.
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="cep">CEP: <span style="color:red;">*</span></label>
+                        <input type="text" maxlength="8" class="form-control" id="cep" 
+                        formControlName="cep"
+                        (blur)="consultaCep()"
+                        onkeypress="return SomenteNumero(event);">
+                        <mdb-error class="text-danger" 
+                        *ngIf="cep.invalid && (cep.dirty || cep.touched)">
+                        Digite seu CEP</mdb-error>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="logradouro">Logradouro: </label>
+                        <input type="text" class="form-control" id="logradouro" 
+                        formControlName="logradouro"
+                        [readonly]="true">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
+                        <input type="text" class="form-control" 
+                        formControlName="numeroCasa"
+                        id="numero" >
+                        <mdb-error class="text-danger" 
+                        *ngIf="numeroCasa.invalid && (numeroCasa.dirty || numeroCasa.touched)">
+                        Digite um Número de Residência</mdb-error>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Salvar</button>&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-secondary">Cancelar</button>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="bairro">Bairro: </label>
+                        <input type="text" class="form-control" id="bairro" formControlName="bairro" [readonly]="true">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="cidade">Cidade: </label>
+                        <input type="text" class="form-control" id="cidade" formControlName="cidade" [readonly]="true">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="estado">Estado: </label>
+                        <input type="text" class="form-control" id="estado" formControlName="estado" [readonly]="true">
+                    </div>
+                    
                 </div>
-            </div>
-        </form>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="complemento">Complemento: </label>
+                        <input type="text" class="form-control" id="complemento" formControlName="complemento">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="telefone">Telefone Fixo: </label>
+                        <input type="tel" class="form-control" id="telefone" formControlName="telefone"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="celular">Telefone Celular:  <span style="color:red;">*</span></label>
+                        <input type="tel" class="form-control" id="celular" 
+                        formControlName="celular"
+                        onkeypress="$(this).mask('(00) 0000-00009')">
+                        <mdb-error class="text-danger" 
+                        *ngIf="celular.invalid && (celular.dirty || celular.touched)">
+                        Digite um Telefone</mdb-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input [hidden]="true" type="text" class="form-control" id="idUsuario" formControlName="id_usuario">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-secondary ml-2">Cancelar</button><br>
+                <mdb-error class="text-danger" 
+                        *ngIf="formularioInvalido">
+                        Verifique os Campos Obrigatórios</mdb-error>
+            </form>
+        </div>
     </div>
 </div>

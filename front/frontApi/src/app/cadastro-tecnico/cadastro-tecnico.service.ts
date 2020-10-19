@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { CadastroAlunoComponent } from './cadastro-aluno.component';
+import { CadastroTecnicoComponent } from './cadastro-tecnico.component';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -8,9 +8,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 @Injectable({
     providedIn: 'root'
 })
-export class AlunoService {
+export class TecnicoService {
 
-    apiUrl = environment.URLSERVIDOR + "alunos";
+    apiUrl = environment.URLSERVIDOR + "tecnicos";
 
     constructor(private httpClient: HttpClient) { }
 
@@ -19,9 +19,9 @@ export class AlunoService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
 
-    salvar(novoAluno: CadastroAlunoComponent): Observable<CadastroAlunoComponent>{
-        console.log(novoAluno);
-        return this.httpClient.post<CadastroAlunoComponent>(this.apiUrl, JSON.stringify(novoAluno), this.httpOptions)
+    salvar(novoTecnico: CadastroTecnicoComponent): Observable<CadastroTecnicoComponent>{
+        console.log(novoTecnico);
+        return this.httpClient.post<CadastroTecnicoComponent>(this.apiUrl, JSON.stringify(novoTecnico), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))
         //return this.httpClient.post(this.apiUrl, novoUser);
         
@@ -40,9 +40,5 @@ export class AlunoService {
         console.log(errorMessage);
         return throwError(errorMessage);
     };
-
-    getTiposEquipamentos(): Observable<any> {
-        return this.httpClient.get<any>(environment.URLSERVIDOR + "tipoEquipamentos");
-      }
 
 }

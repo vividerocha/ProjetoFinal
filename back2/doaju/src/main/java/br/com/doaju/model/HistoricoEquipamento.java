@@ -1,6 +1,6 @@
 package br.com.doaju.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -30,9 +31,7 @@ public class HistoricoEquipamento {
 	@JoinColumn (name="situacaoEquipamento_id",referencedColumnName="id",nullable=false,unique=true)
 	SituacaoEquipamento situacao;
 	
-	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private LocalDate dataAlteracao;
-	
-	
+	@Temporal(TemporalType.TIMESTAMP)     
+	private Date dataAlteracao = new java.sql.Date(System.currentTimeMillis());
 
 }

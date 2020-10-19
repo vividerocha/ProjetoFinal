@@ -3,6 +3,7 @@ import { ToastService } from './toast.service';
 
 @Component({
   selector: 'app-toasts',
+  styleUrls: ['toast.component.css'],
   template: `
     <ngb-toast
       *ngFor="let toast of toastService.toasts"

@@ -1,14 +1,13 @@
 package br.com.doaju.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -39,7 +38,7 @@ private static final long serialVersionUID = 1L;
 	private String celular;
 	private boolean termo;
 	
-	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private LocalDate dataCadastro;
+	@Temporal(TemporalType.TIMESTAMP)     
+	private Date dataCadastro = new java.sql.Date(System.currentTimeMillis());
 
 }
