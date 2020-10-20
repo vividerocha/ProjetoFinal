@@ -1,72 +1,56 @@
 <div class="container">
-    <div class="card">
+    <div class="card mb-4">            
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">
-                    Cadastro de Equipamento
-                </h6>
-            </div>
+            <h6 class="m-0 font-weight-bold text-primary">
+                Cadastro de Equipamento
+            </h6>
         </div>
         <div class="card-body">
-            <form>  
+            <form [formGroup]="formEquipamento" #f="ngForm" (ngSubmit)="onSubmit(f)">  
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="tipoEquipamento">Tipo de Equipamento</label> <br>                  
-                        
-                        <select class="custom-select" id="tipoEquipamento">
-                            <option selected>Escolha...</option>
-                            <option value="1">Tablet</option>
-                            <option value="2">Celular</option>
-                            <option value="3">Desktop</option>
-                            <option value="4">Notebook</option>
-                        </select>                       
+                        <label for="tipos">Tipo de Equipamento: <span style="color:red;">*</span></label>
+                        <select class="form-control" formControlName="tiposEquipamentos" multiple>
+                            <option *ngFor="let tipoEquipamento of tiposEquipamentos" value={{tipoEquipamento.id}}>
+                                {{tipoEquipamento.descricao}}</option>
+                        </select>
+                                          
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="tipoEquipamento">Está Funcionando</label> <br>                  
+                        <label for="funcionamento">Está Funcionando? <span style="color:red;">*</span></label> <br>                  
                         
-                        <select class="custom-select" id="funcionamentoEquipamento">
-                            <option selected>Escolha...</option>
-                            <option value="1">Sim</option>
-                            <option value="2">Não</option>
-                        </select>                       
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="funcionando" id="sim" value="sim" formControlName="funcionando">
+                            <label class="form-check-label" for="sim">
+                              Sim
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="funcionando" id="nao" value="nao" formControlName="funcionando">
+                            <label class="form-check-label" for="nao">
+                              Não
+                            </label>
+                          </div>                  
                     </div>     
-                   
-                    
-                    <!-- 
-
-                    <div class="form-group col-md-6">
-                        <label>Funcional:</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="funcionaSim" name="equipamentoFuncional">
-                            <label class="custom-control-label" for="funcionaSim">Sim</label> 
-                        </div> 
-
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="funcionaNao" name="equipamentoFuncional">
-                            <label class="custom-control-label" for="funcionaNao">Não</label>
-                        </div>  
-                    </div>    
-                    --> 
                 </div>
     
                 <div class="form-row">
-                    <label>Descrição:</label>
-                    <textarea class="form-control" id="declaracaoTexto" rows="5"></textarea>
-                </div>                
-                <br/>
-                <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="bairro">Observação:</label>
-                        <input type="text" class="form-control" id="observacao">
+                        <label>Descrição: <span style="color:red;">*</span></label>
+                        <textarea class="form-control" id="descricao" formControlName="descricao" rows="5"></textarea>
+                        <mdb-error class="text-danger" 
+                            *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+                            Descreva o Equipamento</mdb-error> 
                     </div>
-                </div>
-
+                </div>                
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-secondary ml-2">Cancelar</button>
                     </div>
                 </div>
+                <mdb-error class="text-danger" *ngIf="formularioInvalido">
+                    Verifique os Campos Obrigatórios</mdb-error>
             </form>
         </div>
     </div>

@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     LoginComponent,
     ToastComponent,
     CadastroDoUsuarioComponent,
+    CadastroDeEquipamentoComponent,
     FormDoadorComponent
   
   ],
