@@ -24,18 +24,9 @@ public class SituacaoEquipamento implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String descricao;
+	private String situacao;
 	
 	@OneToMany(mappedBy = "situacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HistoricoEquipamento> historicoEquipamentos = new ArrayList<>();
-	
-	public SituacaoEquipamento() {
-		
-	}
 
-	public SituacaoEquipamento(Long id, String descricao) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-	}
 }

@@ -10,6 +10,6 @@ import lombok.Data;
 public class SituacaoEquipamentoDTO {
 
 	private Long id;
-	private String descricao;
+	private String situacao;
 	private List<HistoricoEquipamento> historicoEquipamentos = new ArrayList<>();
 }

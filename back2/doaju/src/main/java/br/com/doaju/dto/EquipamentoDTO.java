@@ -1,5 +1,7 @@
 package br.com.doaju.dto;
 
+import java.util.Date;
+
 import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 
@@ -7,7 +9,8 @@ import lombok.Data;
 public class EquipamentoDTO {
 	
 	private Long id;
-	String descricao;
+	String descricaoEquipamento;
 	boolean funcionando;
 	TipoEquipamento tipo;
+	Date dataCadastro;
 }

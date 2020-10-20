@@ -10,9 +10,8 @@ public class EquipamentoRequest {
 	
 	private Long id;
 	@NotBlank
-	String descricao;
-	
+	String descricaoEquipamento;
 	boolean funcionando;
-	
 	TipoEquipamento tipo;
+	Data dataCadastro;
 }

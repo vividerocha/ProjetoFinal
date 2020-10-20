@@ -26,7 +26,7 @@ public class EquipamentoController {
 	private EquipamentoService service;
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid EquipamentoRequest equipamentoRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody EquipamentoRequest equipamentoRequest) {	
 		try {
 			
 			EquipamentoDTO equipamentoDTO = service.salvar(equipamentoRequest);			
@@ -36,6 +36,7 @@ public class EquipamentoController {
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}		
 	}
+	
 	
 	@GetMapping
 	public List<EquipamentoDTO> listar(){

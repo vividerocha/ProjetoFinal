@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.HistoricoEquipamentoMapper;
+import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.repository.HistoricoEquipamentoRepository;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
@@ -32,8 +33,8 @@ public class HistoricoEquipamentoService {
 	    return mapper.modelToDTO( repository.save(historicoEquipamento) );		
 	}
 	
-	public Optional<HistoricoEquipamento> buscar(Long id) {
-		return repository.findById(id);
+	public Optional<HistoricoEquipamento> buscar(Equipamento equipamento) {
+		return repository.findByEquipamento(equipamento);
 	}
 
 	@Transactional
