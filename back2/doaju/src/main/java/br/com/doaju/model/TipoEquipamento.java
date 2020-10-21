@@ -1,6 +1,5 @@
 package br.com.doaju.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,32 +10,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-public class TipoEquipamento implements Serializable{
-	
-	
-	private static final long serialVersionUID = 1L;
+@NoArgsConstructor
+@Table(name = "TipoEquipamento")
+public class TipoEquipamento{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String descricao;
-	
-	@OneToMany(mappedBy = "tipo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Equipamento> equipamentos = new ArrayList<>();
-	
-	public TipoEquipamento() {
 		
-	}
-
-	public TipoEquipamento(Long id, String descricao) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-	}
-	
+	@OneToMany(mappedBy="tipoEquipamento")
+	private List<Equipamento> equipamentos = new ArrayList<>();
+		
 }

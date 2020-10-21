@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class TipoEquipamentoRequest {
+	
 	private Long id;
 	@NotBlank
 	private String descricao;	

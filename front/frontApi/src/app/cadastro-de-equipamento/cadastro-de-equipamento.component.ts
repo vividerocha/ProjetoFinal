@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angula
 import { EquipamentoService } from './cadastro-de-equipamento.service';
 import { ToastService } from './../toast/toast.service';
 import { Equipamento } from './equipamento';
+import { TipoEquipamento } from './tipoEquipamento';
 
 @Component({
   selector: 'app-cadastro-de-equipamento',
@@ -10,7 +11,7 @@ import { Equipamento } from './equipamento';
   styleUrls: ['./cadastro-de-equipamento.component.css']
 })
 export class CadastroDeEquipamentoComponent implements OnInit {
-  tiposEquipamentos;
+  tiposEquipamentosLista: TipoEquipamento;
   formEquipamento: FormGroup;
   formularioInvalido: boolean;
 
@@ -24,7 +25,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
 
   getTiposEquipamentos() {
     this.equipamentoService.getTiposEquipamentos().subscribe(data => {
-      this.tiposEquipamentos = data;
+      this.tiposEquipamentosLista = data;
     });
   }
   criaForm(){
@@ -37,20 +38,25 @@ export class CadastroDeEquipamentoComponent implements OnInit {
 
   onSubmit(form: NgForm){
     let func;
-    if(this.formEquipamento.value.funcionando == "Sim"){
+    if(this.formEquipamento.value.funcionando == "true"){
       func = true;
     }else{
       func = false;
     }
+
+    console.log(this.formEquipamento.value.tiposEquipamentos);
+    
     const dados = {
       descricao: this.formEquipamento.value.descricao,
       funcionando: func,
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
 
+    //console.log(this.formEquipamento.value);
     console.log(dados);
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
+        //this.equipamentoService.salvar(this.formEquipamento.value)
         .subscribe(
           response => {
             console.log(response);            

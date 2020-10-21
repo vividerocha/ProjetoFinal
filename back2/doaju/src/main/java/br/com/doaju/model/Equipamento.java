@@ -1,6 +1,5 @@
 package br.com.doaju.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,31 +15,35 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-public class Equipamento implements Serializable{
-	
-	
-	private static final long serialVersionUID = 1L;
+@NoArgsConstructor
+public class Equipamento{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	String descricaoEquipamento;
-	boolean funcionando;
+	private String descricaoEquipamento;
+	private boolean funcionando;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataCadastro = new java.sql.Date(System.currentTimeMillis());
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="tipoEquipamento_id",referencedColumnName="id",nullable=false)
-	TipoEquipamento tipo;
+	@ManyToOne
+    @JoinColumn(name="tipoEquipamento_id", nullable=false)
+	private TipoEquipamento tipoEquipamento = new TipoEquipamento();
 	
 	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HistoricoEquipamento> historicos = new ArrayList<>();
+
+	
+	
+	
 
 	
 }

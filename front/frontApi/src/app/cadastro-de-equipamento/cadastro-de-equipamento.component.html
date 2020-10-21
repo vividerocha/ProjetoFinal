@@ -10,8 +10,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="tipos">Tipo de Equipamento: <span style="color:red;">*</span></label>
-                        <select class="form-control" formControlName="tiposEquipamentos" multiple>
-                            <option *ngFor="let tipoEquipamento of tiposEquipamentos" value={{tipoEquipamento.id}}>
+                        <select class="form-control" formControlName="tiposEquipamentos">
+                            <option *ngFor="let tipoEquipamento of tiposEquipamentosLista"  [ngValue]="tipoEquipamento">
                                 {{tipoEquipamento.descricao}}</option>
                         </select>
                                           
@@ -20,13 +20,13 @@
                         <label for="funcionamento">Está Funcionando? <span style="color:red;">*</span></label> <br>                  
                         
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="funcionando" id="sim" value="sim" formControlName="funcionando">
+                            <input class="form-check-input" type="radio" name="funcionando" id="sim" value="true" formControlName="funcionando">
                             <label class="form-check-label" for="sim">
                               Sim
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="funcionando" id="nao" value="nao" formControlName="funcionando">
+                            <input class="form-check-input" type="radio" name="funcionando" id="nao" value="false" formControlName="funcionando">
                             <label class="form-check-label" for="nao">
                               Não
                             </label>
