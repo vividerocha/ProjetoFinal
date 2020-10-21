@@ -32,7 +32,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     this.formEquipamento = this.fb.group({
       tiposEquipamentos : new FormControl(''),
       funcionando: new FormControl(''),
-      descricao: new FormControl(null, [Validators.required])
+      descricaoEquipamento: new FormControl(null, [Validators.required])
     });
   }
 
@@ -47,7 +47,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     console.log(this.formEquipamento.value.tiposEquipamentos);
     
     const dados = {
-      descricao: this.formEquipamento.value.descricao,
+      descricaoEquipamento: this.formEquipamento.value.descricaoEquipamento,
       funcionando: func,
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
@@ -78,8 +78,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     return this.formEquipamento.get('funcionando');
   }
 
-  get descricao(){
-    return this.formEquipamento.get('descricao');
+  get descricaoEquipamento(){
+    return this.formEquipamento.get('descricaoEquipamento');
   }
 
   showSuccess(mensagem: string) {

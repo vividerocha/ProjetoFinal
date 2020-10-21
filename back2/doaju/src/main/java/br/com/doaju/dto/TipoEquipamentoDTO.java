@@ -6,4 +6,6 @@ import lombok.Data;
 public class TipoEquipamentoDTO {
 	private Long id;
 	private String descricao;
+	
+	
 }

@@ -2,7 +2,7 @@ import { TipoEquipamento } from './tipoEquipamento';
 
 export interface Equipamento {
     id: number,
-    descricao: String,
+    descricaoEquipamento: String,
     funcionando: Boolean,
     tipoEquipamento: TipoEquipamento
 }

@@ -22,7 +22,7 @@ export class EquipamentoService {
     }
 
     salvar(novoEquipamento: any): Observable<any>{
-        return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento));
+        return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento), this.httpOptions);
         //return this.httpClient.post(this.apiUrl, novoUser);
         
     }

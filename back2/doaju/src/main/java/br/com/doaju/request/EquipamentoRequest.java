@@ -2,6 +2,7 @@ package br.com.doaju.request;
 
 import javax.validation.constraints.NotBlank;
 
+import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,5 +14,5 @@ public class EquipamentoRequest {
 	@NotBlank
 	private String descricaoEquipamento;
 	private boolean funcionando;
-	TipoEquipamentoRequest tipoEquipamento;
+	TipoEquipamento tipoEquipamento;
 }
