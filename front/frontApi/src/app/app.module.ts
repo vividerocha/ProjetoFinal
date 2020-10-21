@@ -18,6 +18,14 @@ import { ToastComponent } from './toast/toast.component';
 import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-usuario.component';
 import { CommonModule } from '@angular/common';
 import { CadastroDeEquipamentoComponent } from './cadastro-de-equipamento/cadastro-de-equipamento.component';
+import { AdminComponent } from './admin/admin.component';
+import { CadastroTipoEquipamentoComponent } from './cadastro-tipo-equipamento/cadastro-tipo-equipamento.component';
+import { CadastroSituacaoEquipamentoComponent } from './cadastro-situacao-equipamento/cadastro-situacao-equipamento.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { MensagemComponent } from './mensagem/mensagem.component';
+import { DoadoresComponent } from './doadores/doadores.component';
+import { TecnicosComponent } from './tecnicos/tecnicos.component';
+import { AlunosComponent } from './alunos/alunos.component';
 
 
 
@@ -32,7 +40,8 @@ const appRoutes: Routes = [
    { path : 'contato', component : ContatoComponent },
    { path : 'login', component : LoginComponent },
    { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent},
-   { path : 'cadastro-equipamento', component : CadastroDeEquipamentoComponent}
+   { path : 'cadastro-equipamento', component : CadastroDeEquipamentoComponent},
+   { path : 'admin', component : AdminComponent}
    
 ];
 
@@ -49,7 +58,15 @@ const appRoutes: Routes = [
     ToastComponent,
     CadastroDoUsuarioComponent,
     CadastroDeEquipamentoComponent,
-    FormDoadorComponent
+    FormDoadorComponent,
+    AdminComponent,
+    CadastroTipoEquipamentoComponent,
+    CadastroSituacaoEquipamentoComponent,
+    RankingComponent,
+    MensagemComponent,
+    DoadoresComponent,
+    TecnicosComponent,
+    AlunosComponent
   
   ],
   imports: [
