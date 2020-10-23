@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "doaju.password.client",
+  "type": "java.lang.String",
+  "description": "A description for 'doaju.password.client'"
+}]}
