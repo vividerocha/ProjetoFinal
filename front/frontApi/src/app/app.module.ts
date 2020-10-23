@@ -27,7 +27,10 @@ import { MensagemComponent } from './mensagem/mensagem.component';
 import { DoadoresComponent } from './doadores/doadores.component';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { AlunosComponent } from './alunos/alunos.component';
+
+import { AuthService } from './seguranca/auth.service';
 import { MatTableModule } from '@angular/material/table';
+
 
 
 const appRoutes: Routes = [
@@ -83,9 +86,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule
   ],
-  
-  
-  providers: [],
+  providers: [AuthService],
+
+
   bootstrap: [AppComponent]
   
 })
