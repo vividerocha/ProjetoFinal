@@ -26,6 +26,7 @@ import { MensagemComponent } from './mensagem/mensagem.component';
 import { DoadoresComponent } from './doadores/doadores.component';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { AlunosComponent } from './alunos/alunos.component';
+import { AuthService } from './seguranca/auth.service'
 
 
 
@@ -78,7 +79,7 @@ const appRoutes: Routes = [
   HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

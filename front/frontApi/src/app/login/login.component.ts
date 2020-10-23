@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from './login';
-import { LoginService } from './login.service';
+import { AuthService } from './../seguranca/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -12,14 +12,18 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   escondeMensagemErro: Boolean;
-  
+
 
   constructor(private fb: FormBuilder, private router: Router,
-    private loginService: LoginService) { }
+    private service: AuthService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     this.createForm();
-    this.escondeMensagemErro = true;
+    this.escondeMensagemErro = true;  
+    if (localStorage.getItem('token') !== null) {
+      this.router.navigate(['/home']);
+    }
+
   }
 
   createForm() {
@@ -29,26 +33,11 @@ export class LoginComponent implements OnInit {
     });
   }
   onSubmit(form: NgForm) {
-
-    if (this.formLogin.valid) {
-      console.log('form submitted');
-      this.loginService.login(this.formLogin.value.email, this.formLogin.value.senha)
-        .subscribe(
-          response => {
-            console.log(response.id);
-            sessionStorage.setItem('isLogado', 'true');
-            sessionStorage.setItem('user', response.id);
-            this.router.navigate(['/home']);
-          },
-          error => {
-            console.log(error);
-            this.escondeMensagemErro = false;
-          });
-
-    } else {
-      console.log('form invalido');
-      this.escondeMensagemErro = false;
+    if (this.formLogin.invalid) {
+      return;
     }
+    //fazer a chamada  ao service
+    this.service.login(this.formLogin.value.email, this.formLogin.value.senha);
 
   }
 
