@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { EquipamentoService } from './cadastro-de-equipamento.service';
-import { ToastService } from './../toast/toast.service';
 import { Equipamento } from './equipamento';
-import { TipoEquipamento } from './tipoEquipamento';
+import { TipoEquipamento } from '../cadastro-tipo-equipamento/tipoEquipamento';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro-de-equipamento',
@@ -16,7 +16,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   formularioInvalido: boolean;
 
   constructor(private equipamentoService: EquipamentoService,
-    private fb: FormBuilder, private toastService: ToastService) { }
+    private fb: FormBuilder, private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.criaForm();
@@ -83,11 +83,6 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   }
 
   showSuccess(mensagem: string) {
-    this.toastService.show(mensagem, {
-      classname: 'bg-successToast',
-      delay: 2000 ,
-      autohide: true,
-      headertext: 'Toast Header'
-    });
+      this.toastService.success(mensagem);
   }
 }

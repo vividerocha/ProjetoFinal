@@ -3,6 +3,8 @@ import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -14,7 +16,6 @@ import { SobreProjetoComponent } from './sobre-projeto/sobre-projeto.component';
 import { CadastroTecnicoComponent} from './cadastro-tecnico/cadastro-tecnico.component';
 import { ContatoComponent } from './contato/contato.component';
 import { LoginComponent } from './login/login.component';
-import { ToastComponent } from './toast/toast.component';
 import { CadastroDoUsuarioComponent } from './cadastro-do-usuario/cadastro-do-usuario.component';
 import { CommonModule } from '@angular/common';
 import { CadastroDeEquipamentoComponent } from './cadastro-de-equipamento/cadastro-de-equipamento.component';
@@ -26,8 +27,9 @@ import { MensagemComponent } from './mensagem/mensagem.component';
 import { DoadoresComponent } from './doadores/doadores.component';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { AlunosComponent } from './alunos/alunos.component';
-import { AuthService } from './seguranca/auth.service'
 
+import { AuthService } from './seguranca/auth.service';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -56,7 +58,6 @@ const appRoutes: Routes = [
     CadastroTecnicoComponent,
     ContatoComponent,
     LoginComponent,
-    ToastComponent,
     CadastroDoUsuarioComponent,
     CadastroDeEquipamentoComponent,
     FormDoadorComponent,
@@ -71,15 +72,24 @@ const appRoutes: Routes = [
   
   ],
   imports: [
-  
+    
+  ToastrModule.forRoot({
+    timeOut: 10000,
+    positionClass: 'toast-top-center'
+  }),
   BrowserModule,
   CommonModule,
   FormsModule,
   ReactiveFormsModule,
+  MatTableModule,
   HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule
   ],
   providers: [AuthService],
+
+
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

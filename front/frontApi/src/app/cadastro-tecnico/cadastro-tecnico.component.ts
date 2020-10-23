@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { consultaCepService } from './../services/consultaCEP.service';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Tecnico } from './tecnico';
-import { ToastService } from './../toast/toast.service';
 import { TecnicoService } from './cadastro-tecnico.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro-tecnico',
@@ -25,7 +25,7 @@ export class CadastroTecnicoComponent implements OnInit {
     private tecnicoService: TecnicoService,
     private activatedRoute: ActivatedRoute,
     private zone: NgZone,
-    private toastService: ToastService) { }
+    private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.usuarioLogado = sessionStorage.getItem('isLogado');
@@ -102,11 +102,6 @@ export class CadastroTecnicoComponent implements OnInit {
   }
 
   showSuccess(mensagem: string) {
-    this.toastService.show(mensagem, {
-      classname: 'bg-successToast',
-      delay: 2000 ,
-      autohide: true,
-      headertext: 'Toast Header'
-    });
+      this.toastService.success(mensagem);
   }
 }

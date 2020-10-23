@@ -1,4 +1,4 @@
-import { TipoEquipamento } from './tipoEquipamento';
+import { TipoEquipamento } from '../cadastro-tipo-equipamento/tipoEquipamento';
 
 export interface Equipamento {
     id: number,
