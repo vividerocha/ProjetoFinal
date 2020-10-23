@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { consultaCepService } from './../services/consultaCEP.service';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Aluno } from './aluno';
-import { ToastService } from './../toast/toast.service';
 import { AlunoService } from './cadastro-aluno.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -25,7 +25,7 @@ export class CadastroAlunoComponent implements OnInit {
     private alunoService: AlunoService,
     private activatedRoute: ActivatedRoute,
     private zone: NgZone,
-    private toastService: ToastService) { }
+    private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.usuarioLogado = sessionStorage.getItem('isLogado');
@@ -124,11 +124,6 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   showSuccess(mensagem: string) {
-    this.toastService.show(mensagem, {
-      classname: 'bg-successToast',
-      delay: 2000 ,
-      autohide: true,
-      headertext: 'Toast Header'
-    });
+      this.toastService.success(mensagem);
   }
 }

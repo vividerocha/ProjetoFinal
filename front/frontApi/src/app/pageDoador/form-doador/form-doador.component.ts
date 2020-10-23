@@ -6,7 +6,8 @@ import { Doador } from './Doador';
 import { DoadorService } from './form-doador.service';
 import { CadastroDoUsuarioService } from './../../cadastro-do-usuario/cadastro-do-usuario.service'
 import { Usuario } from 'src/app/cadastro-do-usuario/usuario';
-import { ToastService } from './../../toast/toast.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-form-doador',
@@ -30,7 +31,7 @@ export class FormDoadorComponent implements OnInit {
     private usuarioService: CadastroDoUsuarioService,
     private activatedRoute: ActivatedRoute,
     private zone: NgZone,
-    private toastService: ToastService) { }
+    private toastService: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -101,7 +102,7 @@ export class FormDoadorComponent implements OnInit {
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
-        this.showSuccess("Cadastro realizado com Sucesso!");
+        this.toastService.success("Cadastro realizado com Sucesso!");
       });
     }else{
       this.formularioInvalido = true;
@@ -138,13 +139,17 @@ export class FormDoadorComponent implements OnInit {
     return this.formDoador.get('numeroCasa');
   }
 
-  showSuccess(mensagem: string) {
-    this.toastService.show(mensagem, {
-      classname: 'bg-successToast',
-      delay: 2000 ,
-      autohide: true,
-      headertext: 'Toast Header'
-    });
+  showSucesso(mensagem: string){
+    this.toastService.success(mensagem, '', {
+      positionClass : "toast-center",
+      closeButton : false,
+      newestOnTop : false,
+      progressBar : false,
+      timeOut : 5000,
+      extendedTimeOut : 1000,
+      easing : 'ease-in'
+     }
+    );
   }
   
 }
