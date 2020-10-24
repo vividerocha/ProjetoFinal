@@ -1,7 +1,8 @@
 
 export interface Usuario {
-    nome: string;
+    usuario: string;
     email: string;
     senha: string;
     confirmaSenha: string;
+    tipoPermissao:any
   }

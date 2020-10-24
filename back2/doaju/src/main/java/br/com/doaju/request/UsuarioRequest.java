@@ -10,9 +10,11 @@ public class UsuarioRequest {
 	
 	private Long id;
 	@NotNull
-	private String nome;
+	private String usuario;
 	@NotNull
     private String email;
 	@NotNull
     private String senha;
+	
+	private String tipoPermissao;
 }

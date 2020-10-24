@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,6 +37,9 @@ public class Usuario {
 	
 	@Column(nullable = false)
 	private String senha;
+	
+	@Transient
+	private String tipoPermissao;
 	
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),

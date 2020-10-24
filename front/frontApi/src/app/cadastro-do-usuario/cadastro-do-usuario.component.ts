@@ -22,6 +22,7 @@ export class CadastroDoUsuarioComponent implements OnInit {
   escondeMsgErroEmail: boolean;
   desabilitaBotao: boolean;
   idUsuarioEncontrado: number = 0;
+  erroUser: boolean = true;
 
   formUsuario: FormGroup;
 
@@ -44,7 +45,8 @@ export class CadastroDoUsuarioComponent implements OnInit {
       nome: new FormControl(null, [Validators.required, Validators.minLength(3)]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       senha: new FormControl(''),
-      confirmaSenha: new FormControl('')
+      confirmaSenha: new FormControl(''),
+      radioTipo: new FormControl('')
     });
   }
 
@@ -54,11 +56,14 @@ export class CadastroDoUsuarioComponent implements OnInit {
       console.log('form submitted');
 
       const dados = {
-        nome: this.formUsuario.value.nome,
+        usuario: this.formUsuario.value.nome,
         senha: this.formUsuario.value.senha,
-        email: this.formUsuario.value.email
+        email: this.formUsuario.value.email,
+        tipoPermissao: this.formUsuario.value.radioTipo
       } as Usuario;
 
+      console.log(dados);
+      
       this.usuarioService.salvar(dados)
         .subscribe(
           response => {
@@ -142,6 +147,22 @@ export class CadastroDoUsuarioComponent implements OnInit {
     return this.formUsuario.get('email');
   }
 
+  verificaUser(user){
+    if(user == ''){      
+      return
+    }
+    this.usuarioService.verificaUser(user)
+      .subscribe(dados=>{
+        console.log('usuario disponível!');
+        this.erroUser = true;
+      },
+      error=>{
+        console.log('usuário já utilizado!');
+        this.erroUser = false;
+        this.desabilitaBotao = true;
+      });
+  }
+
   verificaEmailExiste(digitado){
     this.usuarioService.verificaEmail(digitado)
     .subscribe(dados =>{
@@ -149,14 +170,14 @@ export class CadastroDoUsuarioComponent implements OnInit {
         this.idUsuarioEncontrado = dados.id;
         this.escondeMsgErroEmail = false;
         if(this.escondeMsgErroSenha == false){
-          this.desabilitaBotao = true;
+          this.desabilitaBotao = false;
         }
       },
     error => {
       console.log(error);
       this.escondeMsgErroEmail = true;
       if(this.escondeMsgErroSenha == true){
-        this.desabilitaBotao = false;
+        this.desabilitaBotao = true;
       }
     });
 

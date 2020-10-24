@@ -19,8 +19,9 @@
                       name="nome"
                       formControlName="nome"
                       mdbInput mdbValidate
-                      >
+                      (blur)="verificaUser($event.target.value)">
                       <mdb-error class="text-danger" *ngIf="nome.invalid && (nome.dirty || nome.touched)">Digite um Nome de Usuário com pelo menos 3 dígitos</mdb-error>
+                      <div [hidden]="erroUser" class="text-danger">Usuário já cadastrado, por favor digite outro nome para usuário!</div>
                     </div>
                     
                     <div class="form-group">
@@ -59,9 +60,38 @@
                     <div [hidden]="escondeMsgErroSenha" class="alert alert-danger alert-dismissible fade show" role="alert">
                       As senhas não são iguais.
                     </div>
-                    <div class="form-row">
+                    <div>Eu sou um:</div>
+                    <div class="form-check-inline">
+                      <input  class="form-check-input"
+                              type="radio"
+                              formControlName="radioTipo"
+                              name="radioTipo"
+                              id="doador"
+                              value="Doadores"
+                              checked>
+                      <label class="form-check-label" for="doador">Doador</label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input  class="form-check-input"
+                              type="radio"
+                              formControlName="radioTipo"
+                              name="radioTipo"
+                              id="tecnico"
+                              value="Tecnicos">
+                      <label class="form-check-label" for="tecnico">Técnico</label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input  class="form-check-input"
+                              type="radio"
+                              formControlName="radioTipo"
+                              name="radioTipo"
+                              id="aluno"
+                              value="Alunos">
+                      <label class="form-check-label" for="alunoo">Aluno</label>
+                    </div>
+                    <div class="form-row mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button [disabled]="desabilitaBotao" type="submit" class="btn btn-primary" data-dismiss="modal">Cadastrar</button>
+                        <button [disabled]="desabilitaBotao" type="submit" class="btn btn-primary ml-2" data-dismiss="modal">Cadastrar</button>
                       </div>
                 </form>
                 

@@ -31,6 +31,10 @@ export class CadastroDoUsuarioService {
         return this.httpClient.get<Usuario>(this.apiUrl + '/email/' + email);
     }
 
+    verificaUser(user: String): Observable<any>{
+        return this.httpClient.get<Usuario>(this.apiUrl + '/user/' + user);
+    }
+
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {
         let errorMessage = '';

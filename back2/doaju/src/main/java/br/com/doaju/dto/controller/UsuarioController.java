@@ -124,6 +124,18 @@ public class UsuarioController {
 		}
 
 	}
+	@GetMapping("/user/{user}")
+	public ResponseEntity<?> buscarUsuario(@PathVariable String user) {
+		Usuario usuario = usuarioService.buscarUsuario(user);
+		System.out.println(user);
+		if(user != "") {
+			if(usuario == null) {
+				return ResponseEntity.ok(usuario);
+			}
+			return ResponseEntity.badRequest().body("Existe um usuário cadastrado para esse email!");
+		}
+		return ResponseEntity.notFound().build();
+	}
 
 	@GetMapping("/email/{email}")
 	public ResponseEntity<?> buscarEmail(@PathVariable String email) {
