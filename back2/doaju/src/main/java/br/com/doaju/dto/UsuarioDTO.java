@@ -6,9 +6,9 @@ import lombok.Data;
 public class UsuarioDTO {
 
 	private Long id;
-    private String nome;
+    private String usuario;
     private String email;
-    private String senha;
+    //private String senha;
     
 //    public Usuario transformaParaObjeto(){
 //        return new Usuario(nome, email, senha);

@@ -63,14 +63,15 @@ export class CadastroDoUsuarioComponent implements OnInit {
       } as Usuario;
 
       console.log(dados);
-      
+
       this.usuarioService.salvar(dados)
         .subscribe(
           response => {
             console.log(response);
-            sessionStorage.setItem('isLogado', 'true');
-            sessionStorage.setItem('email', dados.email);
-            this.goRota();
+            sessionStorage.setItem('isLogado', 'true');            
+            sessionStorage.setItem('idUser', response.id);
+            this.redireciona(dados.tipoPermissao)
+            //this.goRota();
             //this.submitted = true;
           },
           error => {
@@ -81,6 +82,23 @@ export class CadastroDoUsuarioComponent implements OnInit {
     } else {
       console.log('form invalido');
       this.desabilitaBotao = true;
+    }
+
+  }
+  redireciona(tipoUsuario) {
+
+    switch (tipoUsuario) {
+      case 'Alunos':
+        this.router.navigate(['/cadastro-aluno']);
+        break;
+      case 'Tecnicos':
+        this.router.navigate(['/cadastro-tecnico']);
+        break;
+      case 'Doadores':
+        this.router.navigate(['/page-doador']);
+        break;
+      default:
+        break;
     }
 
   }
@@ -116,12 +134,12 @@ export class CadastroDoUsuarioComponent implements OnInit {
     if (this.formUsuario.value.confirmaSenha != "") {
       if (this.senha == digitado) {
         this.escondeMsgErroSenha = true;
-        if(this.escondeMsgErroEmail == true){
+        if (this.escondeMsgErroEmail == true) {
           this.desabilitaBotao = false;
         }
       } else {
         this.escondeMsgErroSenha = false;
-        if(this.escondeMsgErroEmail == false){
+        if (this.escondeMsgErroEmail == false) {
           this.desabilitaBotao = true;
         }
       }
@@ -147,39 +165,39 @@ export class CadastroDoUsuarioComponent implements OnInit {
     return this.formUsuario.get('email');
   }
 
-  verificaUser(user){
-    if(user == ''){      
+  verificaUser(user) {
+    if (user == '') {
       return
     }
     this.usuarioService.verificaUser(user)
-      .subscribe(dados=>{
+      .subscribe(dados => {
         console.log('usuario disponível!');
         this.erroUser = true;
       },
-      error=>{
-        console.log('usuário já utilizado!');
-        this.erroUser = false;
-        this.desabilitaBotao = true;
-      });
+        error => {
+          console.log('usuário já utilizado!');
+          this.erroUser = false;
+          this.desabilitaBotao = true;
+        });
   }
 
-  verificaEmailExiste(digitado){
+  verificaEmailExiste(digitado) {
     this.usuarioService.verificaEmail(digitado)
-    .subscribe(dados =>{
+      .subscribe(dados => {
         console.log(dados.id);
         this.idUsuarioEncontrado = dados.id;
         this.escondeMsgErroEmail = false;
-        if(this.escondeMsgErroSenha == false){
+        if (this.escondeMsgErroSenha == false) {
           this.desabilitaBotao = false;
         }
       },
-    error => {
-      console.log(error);
-      this.escondeMsgErroEmail = true;
-      if(this.escondeMsgErroSenha == true){
-        this.desabilitaBotao = true;
-      }
-    });
+        error => {
+          console.log(error);
+          this.escondeMsgErroEmail = true;
+          if (this.escondeMsgErroSenha == true) {
+            this.desabilitaBotao = true;
+          }
+        });
 
   }
 

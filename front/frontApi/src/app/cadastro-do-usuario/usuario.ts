@@ -5,4 +5,5 @@ export interface Usuario {
     senha: string;
     confirmaSenha: string;
     tipoPermissao:any
+    id:any
   }

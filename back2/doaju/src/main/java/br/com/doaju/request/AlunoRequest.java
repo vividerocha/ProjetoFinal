@@ -22,5 +22,6 @@ public class AlunoRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	private boolean equipamentos[] = new boolean[4];
 	
 }

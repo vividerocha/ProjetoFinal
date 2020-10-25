@@ -58,7 +58,10 @@ export class CadastroAlunoComponent implements OnInit {
       turno: new FormControl(null, [Validators.required]),
       turma: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       declaracao: new FormControl(null, [Validators.required]),
-      tiposEquipamentos : new FormControl(null, [Validators.required])
+      tiposEquipamentos : new FormControl(null, [Validators.required]),
+      idUser: new FormControl(sessionStorage.getItem('idUser')),
+      checkNote: new FormControl(''),
+      checkCelular: new FormControl('')
     });
   }
 
@@ -82,13 +85,15 @@ export class CadastroAlunoComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if(this.formAluno.valid){
+      console.log(this.formAluno.value)
+      /*
       this.alunoService.salvar(this.formAluno.value).subscribe(() => {        
         console.log(this.formAluno.value);
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
         this.showSuccess("Cadastro realizado com Sucesso!");
-      });
+      });*/
     }else{
       this.formularioInvalido = true;
       alert('Por favor, leia e aceite a declação!');
