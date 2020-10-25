@@ -25,8 +25,12 @@ export class DoadoresService {
     }
 
     atualizar(id, data): Observable<any> {
-        return this.httpClient.put(this.apiUrl + "/id", data);
-      }
+        return this.httpClient.put(this.apiUrl + "/" + id, data);
+    }
+
+    getDoador(id: number): Observable<any>{
+        return this.httpClient.get<Doador>(this.apiUrl + "/" + id);
+    }
 
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {

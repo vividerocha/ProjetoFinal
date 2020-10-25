@@ -66,14 +66,11 @@
                     formControlName="id"
                     readonly>
                 </div>
-                <mdb-error class="text-danger" 
-                *ngIf="nomeCompleto.invalid && (nomeCompleto.dirty || nomeCompleto.touched)">
-                Digite seu Nome Completo</mdb-error>
             </div>
               <div class="form-row">
                   <div class="form-group col-md-12">
                       <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
-                      <input type="text" class="form-control"
+                      <input type="text" [Value]="{{ doador.nomeCompleto }}" class="form-control"
                       id="nomeCompleto" 
                       formControlName="nomeCompleto"
                       required>

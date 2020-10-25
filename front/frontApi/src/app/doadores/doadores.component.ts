@@ -23,6 +23,7 @@ export class DoadoresComponent implements OnInit {
   form: FormGroup;
   formDetalhe: FormGroup;
   formularioInvalido: boolean;
+  doador: Doador;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,6 +41,7 @@ export class DoadoresComponent implements OnInit {
     });
     this.carregaDoadores();
     this.createForm();
+    this.formularioInvalido = false;
   }
 
   carregaDoadores(){
@@ -68,6 +70,10 @@ export class DoadoresComponent implements OnInit {
   detalhaItem(id: number){
     console.log(id);
     this.formDetalhe.get('id').setValue(id);
+    this.doadoresService.getDoador(id).subscribe(res => {
+      this.doador = res;
+    }
+    );
   }
 
   get nomeCompleto() {
