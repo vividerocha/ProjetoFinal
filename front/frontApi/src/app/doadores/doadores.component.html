@@ -35,7 +35,7 @@
               <ng-container matColumnDef="-">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
                 <mat-cell *matCellDef="let element"><button type="button" data-toggle="modal" 
-                  data-target="#modal" class="btn" style="background-color: #F3E2A9;"
+                  data-target="#modal" class="btn" style="background-color: #F7D358;"
                   (click)="detalhaItem(element.id)">Detalhe</button></mat-cell>
               </ng-container>
           
@@ -66,11 +66,11 @@
                     formControlName="id"
                     readonly>
                 </div>
-            </div>
+              </div>
               <div class="form-row">
                   <div class="form-group col-md-12">
                       <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
-                      <input type="text" [Value]="{{ doador.nomeCompleto }}" class="form-control"
+                      <input type="text" [(ngModel)]="doador.nomeCompleto" class="form-control"
                       id="nomeCompleto" 
                       formControlName="nomeCompleto"
                       required>
@@ -83,7 +83,8 @@
               <div class="form-row">
                   <div class="form-group col-md-2">
                       <label for="cep">CEP: <span style="color:red;">*</span></label>
-                      <input type="text" maxlength="8" class="form-control" id="cep" 
+                      <input type="text" [(ngModel)]="doador.cep"
+                      maxlength="8" class="form-control" id="cep" 
                       formControlName="cep"
                       (blur)="consultaCep()"
                       onkeypress="return SomenteNumero(event);">
@@ -93,34 +94,42 @@
                   </div>
                   <div class="form-group col-md-8">
                       <label for="logradouro">Logradouro: </label>
-                      <input type="text" class="form-control" id="logradouro" 
+                      <input type="text" [(ngModel)]="doador.logradouro"
+                      class="form-control" id="logradouro" 
                       formControlName="logradouro"
                       [readonly]="true">
                   </div>
                   <div class="form-group col-md-2">
                       <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" 
+                      <input type="text" [(ngModel)]="doador.numeroCasa"
+                      class="form-control" 
                       formControlName="numeroCasa"
                       id="numero" >
                       <mdb-error class="text-danger" 
                       *ngIf="numeroCasa.invalid && (numeroCasa.dirty || numeroCasa.touched)">
                       Digite um Número de Residência</mdb-error>
                   </div>
-              </div>
+                </div>
 
 
               <div class="form-row">
                   <div class="form-group col-md-4">
                       <label for="bairro">Bairro: </label>
-                      <input type="text" class="form-control" id="bairro" formControlName="bairro" [readonly]="true">
+                      <input type="text" 
+                      [(ngModel)]="doador.bairro"
+                      class="form-control" id="bairro" formControlName="bairro" [readonly]="true">
                   </div>
                   <div class="form-group col-md-4">
                       <label for="cidade">Cidade: </label>
-                      <input type="text" class="form-control" id="cidade" formControlName="cidade" [readonly]="true">
+                      <input type="text" 
+                      [(ngModel)]="doador.cidade"
+                      class="form-control" id="cidade" formControlName="cidade" [readonly]="true">
                   </div>
                   <div class="form-group col-md-4">
                       <label for="estado">Estado: </label>
-                      <input type="text" class="form-control" id="estado" formControlName="estado" [readonly]="true">
+                      <input type="text" 
+                      [(ngModel)]="doador.estado"
+                      class="form-control" id="estado" formControlName="estado" [readonly]="true">
                   </div>
                   
               </div>
@@ -128,19 +137,25 @@
               <div class="form-row">
                   <div class="form-group col-md-12">
                       <label for="complemento">Complemento: </label>
-                      <input type="text" class="form-control" id="complemento" formControlName="complemento">
+                      <input type="text" 
+                      [(ngModel)]="doador.complemento"
+                      class="form-control" id="complemento" formControlName="complemento">
                   </div>
               </div>
 
               <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="telefone">Telefone Fixo: </label>
-                      <input type="tel" class="form-control" id="telefone" formControlName="telefone"
+                      <input type="tel" 
+                      [(ngModel)]="doador.telefone"
+                      class="form-control" id="telefone" formControlName="telefone"
                       onkeypress="$(this).mask('(00) 0000-00009')">
                   </div>
                   <div class="form-group col-md-3">
                       <label for="celular">Telefone Celular:  <span style="color:red;">*</span></label>
-                      <input type="tel" class="form-control" id="celular" 
+                      <input type="tel" 
+                      [(ngModel)]="doador.celular"
+                      class="form-control" id="celular" 
                       formControlName="celular"
                       onkeypress="$(this).mask('(00) 0000-00009')">
                       <mdb-error class="text-danger" 
@@ -154,12 +169,14 @@
               <mdb-error class="text-danger" 
                       *ngIf="formularioInvalido">
                       Verifique os Campos Obrigatórios</mdb-error>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-danger" (click)="excluir(doador.id);">Excluir</button>
+                        <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                      </div>
           </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar mudanças</button>
-      </div>
+      
     </div>
   </div>
 </div>

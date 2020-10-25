@@ -32,8 +32,9 @@ public class DoadorService {
 	    return mapper.modelToDTO( repository.save(doador) );		
 	}
 	
-	public Optional<Doador> buscar(Long id) {
-		return repository.findById(id);
+	public DoadorDTO buscar(Long id) {
+		Doador doador = repository.findById(id).get(); 
+		return mapper.modelToDTO(doador);
 	}
 
 	@Transactional
@@ -56,6 +57,12 @@ public class DoadorService {
 				.stream()
 				.map(doa -> mapper.modelToDTO(doa))
 				.collect(Collectors.toList());	
+	}
+	
+	@Transactional
+	public DoadorDTO atualizar(DoadorRequest doadorRequest) {
+		Doador doador = mapper.requestToModel(doadorRequest);
+		return mapper.modelToDTO( repository.save(doador) );		
 	}
 
 }

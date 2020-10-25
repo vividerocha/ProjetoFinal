@@ -17,7 +17,12 @@ export class DoadoresService {
 
     // Headers
     httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        //headers: new HttpHeaders({'Content-Type': 'application/json' })
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": environment.URLSERVIDOR,
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        }
      }
 
     getDoadores(): Observable<any>{
@@ -25,7 +30,7 @@ export class DoadoresService {
     }
 
     atualizar(id, data): Observable<any> {
-        return this.httpClient.put(this.apiUrl + "/" + id, data);
+        return this.httpClient.put(`${this.apiUrl}/${id}`, data);
     }
 
     getDoador(id: number): Observable<any>{

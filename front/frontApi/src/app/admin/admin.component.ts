@@ -14,6 +14,7 @@ export class AdminComponent implements OnInit {
   Alunos: boolean;
   Ranking: boolean;
   Mensagens: boolean;
+  Seguranca: boolean;
   classeTipo: string;
   classeSituacao: string;
   classeDoadores: string;
@@ -21,6 +22,7 @@ export class AdminComponent implements OnInit {
   classeAlunos: string;
   classeRanking: string;
   classeMensagens: string;
+  classeSeguranca: string;
 
   constructor() { }
 
@@ -32,6 +34,7 @@ export class AdminComponent implements OnInit {
     this.Alunos = true;
     this.Ranking = true;
     this.Mensagens = true;
+    this.Seguranca = true;
     this.classeTipo = "nav-link active";
     this.classeSituacao = "nav-link";
     this.classeDoadores = "nav-link";
@@ -39,6 +42,7 @@ export class AdminComponent implements OnInit {
     this.classeAlunos = "nav-link";
     this.classeRanking = "nav-link";
     this.classeMensagens = "nav-link";
+    this.classeSeguranca = "nav-link";
   }
 
   exibeDiv(nomeDiv: string){
@@ -51,6 +55,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = true;
           this.Mensagens = true;
+          this.Seguranca = true;
           this.classeTipo = "nav-link active";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link";
@@ -58,6 +63,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         } 
         case "SituacaoEquipamento": { 
@@ -68,6 +74,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = true;
           this.Mensagens = true;
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link active";
           this.classeDoadores = "nav-link";
@@ -75,6 +82,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         } 
         case "Doadores": { 
@@ -85,6 +93,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = true;
           this.Mensagens = true;
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link active";
@@ -92,6 +101,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         }
         case "Tecnicos": { 
@@ -102,6 +112,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = true;
           this.Mensagens = true; 
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link";
@@ -109,6 +120,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         }
         case "Alunos": { 
@@ -119,6 +131,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = false;
           this.Ranking = true;
           this.Mensagens = true;
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link";
@@ -126,6 +139,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link active";
           this.classeRanking = "nav-link";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         }
         case "Ranking": { 
@@ -136,6 +150,7 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = false;
           this.Mensagens = true; 
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link";
@@ -143,6 +158,7 @@ export class AdminComponent implements OnInit {
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link active";
           this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link";
           break; 
         }
         case "Mensagens": { 
@@ -153,13 +169,34 @@ export class AdminComponent implements OnInit {
           this.Alunos = true;
           this.Ranking = true;
           this.Mensagens = false;
+          this.Seguranca = true;
           this.classeTipo = "nav-link";
           this.classeSituacao = "nav-link";
           this.classeDoadores = "nav-link";
           this.classeTecnicos = "nav-link";
           this.classeAlunos = "nav-link";
           this.classeRanking = "nav-link";
-          this.classeMensagens = "nav-link active"; 
+          this.classeMensagens = "nav-link active";
+          this.classeSeguranca = "nav-link";
+          break; 
+        } 
+        case "Seguranca": { 
+          this.TipoEquipamento = true;
+          this.SituacaoEquipamento = true;
+          this.Doadores = true;
+          this.Tecnicos = true;
+          this.Alunos = true;
+          this.Ranking = true;
+          this.Mensagens = true;
+          this.Seguranca = false;
+          this.classeTipo = "nav-link";
+          this.classeSituacao = "nav-link";
+          this.classeDoadores = "nav-link";
+          this.classeTecnicos = "nav-link";
+          this.classeAlunos = "nav-link";
+          this.classeRanking = "nav-link";
+          this.classeMensagens = "nav-link";
+          this.classeSeguranca = "nav-link active";
           break; 
         } 
         default: { 

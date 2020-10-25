@@ -1,5 +1,6 @@
 export interface Doador {
-  nomeCompleto: String,
+	id: number,
+  	nomeCompleto: String,
 	cep: String,
 	logradouro: String,
 	numeroCasa: number,

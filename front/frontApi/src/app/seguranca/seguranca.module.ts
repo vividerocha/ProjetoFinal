@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { HomeComponent } from './../home/home.component';
+import { SegurancaComponent } from './seguranca.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, SegurancaComponent],
   imports: [
     CommonModule,
     SegurancaRoutingModule,

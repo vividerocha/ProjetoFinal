@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container2">
     <div class="card mb-4">            
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -32,9 +32,9 @@
                         <li class="nav-item">
                             <a [ngClass]="classeMensagens" (click)="exibeDiv('Mensagens');">Mensagens</a>
                         </li>
-                        <!--<li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>-->
+                        <li class="nav-item">
+                            <a [ngClass]="classeSeguranca" (click)="exibeDiv('Seguranca');">Segurança</a>
+                        </li>
                     </ul>
 
                 </div>
@@ -63,7 +63,11 @@
                     <div id="Mensagens" [hidden]="Mensagens">
                         <app-mensagem></app-mensagem>
                     </div>
+                    <div id="Seguranca" [hidden]="Seguranca">
+                        <app-seguranca></app-seguranca>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>

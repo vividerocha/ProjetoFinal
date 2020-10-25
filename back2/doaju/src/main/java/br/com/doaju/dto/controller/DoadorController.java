@@ -1,20 +1,27 @@
 package br.com.doaju.dto.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.model.Doador;
+import br.com.doaju.model.Usuario;
 import br.com.doaju.request.DoadorRequest;
 import br.com.doaju.service.DoadorService;
+
 
 @CrossOrigin
 @RestController
@@ -40,6 +47,34 @@ public class DoadorController {
 	@GetMapping
 	public List<DoadorDTO> listar(){
 		return service.listar();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> buscar(@PathVariable Long id) {
+		
+		DoadorDTO doador = service.buscar(id);
+		
+		if (doador != null) {
+			return ResponseEntity.ok(doador);
+		}
+		
+		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+	
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> atualizar(@RequestBody DoadorRequest doador, @PathVariable Long id) {
+		
+		DoadorDTO doadorAtual = service.buscar(id);
+		
+		if (doadorAtual != null) {
+			BeanUtils.copyProperties(doador, doadorAtual, "id");
+			
+			service.atualizar(doador);
+			return ResponseEntity.ok(doador);
+		}	
+			
+		return ResponseEntity.notFound().build();
 	}
 
 }

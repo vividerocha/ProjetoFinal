@@ -42,6 +42,7 @@ export class DoadoresComponent implements OnInit {
     this.carregaDoadores();
     this.createForm();
     this.formularioInvalido = false;
+    this.detalhaItem(1);
   }
 
   carregaDoadores(){
@@ -71,6 +72,7 @@ export class DoadoresComponent implements OnInit {
     console.log(id);
     this.formDetalhe.get('id').setValue(id);
     this.doadoresService.getDoador(id).subscribe(res => {
+      console.log(res);
       this.doador = res;
     }
     );
@@ -131,17 +133,21 @@ export class DoadoresComponent implements OnInit {
   onSubmit(form: NgForm){
     if(this.formDetalhe.valid){
       let id = this.formDetalhe.get('id');
-      this.doadoresService.atualizar(id, this.formDetalhe.value).subscribe(() => {        
+      console.log(this.formDetalhe.value);
+      this.doadoresService.atualizar(id, this.formDetalhe.value).subscribe(() => {      
         
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
-        this.showSuccess("Cadastro realizado com Sucesso!");
+        this.showSuccess("Cadastro alterado com Sucesso!");
       });
     }else{
       this.formularioInvalido = true;
-      alert('Por favor, leia e aceite a declação!');
     }
+  }
+
+  excluir(id: number){
+    console.log(id);
   }
 
   showSuccess(mensagem: string) {

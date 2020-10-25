@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import br.com.doaju.security.config.JwtCustomClaimsTokenEnhancer;
 
 @Configuration
 @EnableAuthorizationServer
@@ -30,7 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	@Value("${doaju.password.client}")//("digital")
+	@Value("${doaju.pass.client}")//("digital")
 	private String clientPassw;
 	
 	@Override

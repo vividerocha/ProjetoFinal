@@ -5,6 +5,11 @@ html, body {
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
+.container2{
+  width: 90%;
+  margin:0 auto;
+}
+
 .tabDetalhe {
     width: 100%;
     overflow-x: auto;
