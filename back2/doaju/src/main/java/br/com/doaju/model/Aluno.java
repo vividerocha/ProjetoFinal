@@ -1,13 +1,22 @@
 package br.com.doaju.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -40,5 +49,17 @@ private static final long serialVersionUID = 1L;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataCadastro = new java.sql.Date(System.currentTimeMillis());
+	
+	@Transient
+	private List<String> equipamentos = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name = "aluno_equipamento", joinColumns = @JoinColumn(name = "aluno_id"),
+			inverseJoinColumns = @JoinColumn(name = "equipamento_id"))
+	private Set<TipoEquipamento> equipamentoAluno = new HashSet<>();
+	
+	public void addTipo(TipoEquipamento tipo) {
+		this.equipamentoAluno.add(tipo);
+	}
 
 }

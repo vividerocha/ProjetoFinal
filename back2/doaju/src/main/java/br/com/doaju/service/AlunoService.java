@@ -15,12 +15,15 @@ import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.repository.AlunoRepository;
+import br.com.doaju.repository.TipoEquipamentoRepository;
 import br.com.doaju.request.AlunoRequest;
 
 @Service
 public class AlunoService {
 	@Autowired
 	private AlunoRepository repository;
+	@Autowired
+	private TipoEquipamentoRepository repoEquip;
 	
 	@Autowired
 	private AlunoMapper mapper;
@@ -29,6 +32,10 @@ public class AlunoService {
 	public AlunoDTO salvar(AlunoRequest alunoRequest) {
 		
 		Aluno aluno = mapper.requestToModel(alunoRequest);
+		for (int i = 0; i < aluno.getEquipamentos().size(); i++) {
+			aluno.addTipo(repoEquip.buscarPorEquipamento(alunoRequest.getEquipamentos().get(i)));
+		}		
+		System.out.println(aluno.toString());
 	    return mapper.modelToDTO( repository.save(aluno) );		
 	}
 	

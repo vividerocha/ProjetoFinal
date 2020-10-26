@@ -1,11 +1,14 @@
 package br.com.doaju.request;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
-public class AlunoRequest {
-	
+public class AlunoRequest{
+
 	private Long id;
 	private String escola;
 	private String turma;
@@ -22,6 +25,6 @@ public class AlunoRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
-	private boolean equipamentos[] = new boolean[4];
+	private List<String> equipamentos = new ArrayList<>();
 	
 }
