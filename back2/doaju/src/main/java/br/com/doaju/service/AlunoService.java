@@ -16,6 +16,7 @@ import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.repository.AlunoRepository;
 import br.com.doaju.repository.TipoEquipamentoRepository;
+import br.com.doaju.repository.UsuarioRepository;
 import br.com.doaju.request.AlunoRequest;
 
 @Service
@@ -24,6 +25,8 @@ public class AlunoService {
 	private AlunoRepository repository;
 	@Autowired
 	private TipoEquipamentoRepository repoEquip;
+	@Autowired
+	private UsuarioRepository repoUser;
 	
 	@Autowired
 	private AlunoMapper mapper;
@@ -31,12 +34,12 @@ public class AlunoService {
 	@Transactional
 	public AlunoDTO salvar(AlunoRequest alunoRequest) {
 		
-		Aluno aluno = mapper.requestToModel(alunoRequest);
+		Aluno aluno = mapper.requestToModel(alunoRequest);		
 		for (int i = 0; i < aluno.getEquipamentos().size(); i++) {
 			aluno.addTipo(repoEquip.buscarPorEquipamento(alunoRequest.getEquipamentos().get(i)));
-		}		
-		System.out.println(aluno.toString());
-	    return mapper.modelToDTO( repository.save(aluno) );		
+		}
+		aluno.setUsuario(repoUser.findById(alunoRequest.getUsuario()).get());
+		return mapper.modelToDTO( repository.save(aluno) );		
 	}
 	
 	public Optional<Aluno> buscar(Long id) {

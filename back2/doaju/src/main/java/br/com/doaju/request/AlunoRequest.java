@@ -4,6 +4,7 @@ package br.com.doaju.request;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.doaju.model.Usuario;
 import lombok.Data;
 
 @Data
@@ -26,5 +27,6 @@ public class AlunoRequest{
 	private String celular;
 	private boolean termo;
 	private List<String> equipamentos = new ArrayList<>();
+	private Long usuario;
 	
 }
