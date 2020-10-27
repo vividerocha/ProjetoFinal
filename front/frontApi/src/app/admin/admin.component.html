@@ -1,7 +1,7 @@
 <div class="container2">
     <div class="card mb-4">            
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">
+            <h6 class="text-primary">
                 Módulo de Administração
             </h6>
         </div>
@@ -42,28 +42,28 @@
             <div class="form-row">
                 <!--PÁGINA -->
                 <div class="form-group col-md-12">
-                    <div id="TipoEquipamento" [hidden]="TipoEquipamento">
+                    <div id="TipoEquipamento" *ngIf="!TipoEquipamento">
                         <app-cadastro-tipo-equipamento></app-cadastro-tipo-equipamento>
                     </div>
-                    <div id="SituacaoEquipamento" [hidden]="SituacaoEquipamento">
+                    <div id="SituacaoEquipamento" *ngIf="!SituacaoEquipamento">
                         <app-cadastro-situacao-equipamento></app-cadastro-situacao-equipamento>
                     </div>
-                    <div id="Doadores" [hidden]="Doadores">
+                    <div id="Doadores" *ngIf="!Doadores">
                         <app-doadores></app-doadores>
                     </div>
-                    <div id="Tecnicos" [hidden]="Tecnicos">
+                    <div id="Tecnicos" *ngIf="!Tecnicos">
                         <app-tecnicos></app-tecnicos>
                     </div>
-                    <div id="Alunos" [hidden]="Alunos">
+                    <div id="Alunos" *ngIf="!Alunos">
                         <app-alunos></app-alunos>
                     </div>
-                    <div id="Ranking" [hidden]="Ranking">
+                    <div id="Ranking" *ngIf="!Ranking">
                         <app-ranking></app-ranking>
                     </div>
-                    <div id="Mensagens" [hidden]="Mensagens">
+                    <div id="Mensagens" *ngIf="!Mensagens">
                         <app-mensagem></app-mensagem>
                     </div>
-                    <div id="Seguranca" [hidden]="Seguranca">
+                    <div id="Seguranca" *ngIf="!Seguranca">
                         <app-seguranca></app-seguranca>
                     </div>
                 </div>

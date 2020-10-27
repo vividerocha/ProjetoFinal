@@ -1,1 +1,108 @@
-<p>cadastro-tipo-equipamento works!</p>
+<div>
+        <div class="card-body">
+            <form [formGroup]="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="descricao">Descrição: <span style="color:red;">*</span></label>
+                        <input type="text" class="form-control"
+                        id="descricao" 
+                        formControlName="descricao"
+                        (blur)="verificaTipo($event.target.value)"
+                        required>
+                    </div>
+                    <mdb-error class="text-danger" 
+                    *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+                    Digite uma Descrição. Ex: Tablet</mdb-error>
+                    <div [hidden]="escondeMsgErroTipo">
+                        <div class="alert alert-danger" role="alert">
+                            Já existe uma descrição com esse texto!
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="habilita">Cadastrar</button>
+                <mdb-error class="text-danger" 
+                        *ngIf="formularioInvalido">
+                        Verifique os Campos Obrigatórios</mdb-error>
+            </form>
+
+            <div>
+                <mat-table [dataSource]="dataSourceTipo" matSort>
+                    <ng-container matColumnDef="idTipo">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                      <mat-cell *matCellDef="let elementTipo"> {{elementTipo.id}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="descricaoTipo">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
+                      <mat-cell *matCellDef="let elementTipo"> {{elementTipo.descricao}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="-Tipo">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+                      <mat-cell *matCellDef="let elementTipo"><button type="button" data-toggle="modal" 
+                        data-target="#modal" class="btn" style="background-color: #F7D358;"
+                        (click)="detalhaItemTipo(elementTipo.id)">Detalhe</button></mat-cell>
+                    </ng-container>
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                  </mat-table>
+            </div>
+        </div>
+        
+    
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelTipo">Detalhes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formDetalheTipo" #f="ngForm" (ngSubmit)="atualiza(f)">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="id">Id:</label>
+                            <input type="text" class="form-control"
+                            id="id" 
+                            formControlName="id"
+                            readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="descricao">Descrição: <span style="color:red;">*</span></label>
+                            <input type="text" *ngIf="tipoEquipamento" [(ngModel)]="tipoEquipamento.descricao" class="form-control"
+                            id="descricao" 
+                            formControlName="descricao"
+                            required>
+                        </div>
+                        <mdb-error class="text-danger" 
+                        *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+                        Digite uma Descrição. Ex: Tablet</mdb-error>
+                    </div>
+                            <mdb-error class="text-danger" 
+                            *ngIf="formularioInvalido">
+                            Verifique os Campos Obrigatórios</mdb-error>
+                            <div [hidden]="confirmaExclusao">
+                                <div class="alert alert-warning" role="alert">
+                                    <label>Tem Certeza de que Deseja Excluir?</label><br>
+                                    <button type="button" class="btn btn-secondary" (click)="desisteExcluir();">Não</button>
+                                    <button type="button" class="btn btn-danger" (click)="excluir(tipoEquipamento.id);">Sim</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="desisteExcluir();" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-danger" (click)="confirmaExcluir();">Excluir</button>
+                                <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                            </div>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>

@@ -1,7 +1,6 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -9,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import br.com.doaju.dto.TipoEquipamentoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.TipoEquipamentoMapper;
@@ -32,8 +30,8 @@ public class TipoEquipamentoService {
 	    return mapper.modelToDTO( repository.save(tipoEquipamento) );		
 	}
 	
-	public Optional<TipoEquipamento> buscar(Long id) {
-		return repository.findById(id);
+	public TipoEquipamentoDTO buscar(Long id) {
+		return mapper.modelToDTO(repository.findById(id).get());
 	}
 
 	@Transactional
@@ -57,5 +55,16 @@ public class TipoEquipamentoService {
 				.map(equi -> mapper.modelToDTO(equi))
 				.collect(Collectors.toList());	
 	}
+	
+	public TipoEquipamento buscarTipo(String desc) {
+		return repository.buscarPorEquipamento(desc);
+	}
+	
+	@Transactional
+	public TipoEquipamentoDTO atualizar(TipoEquipamentoRequest tipoRequest) {
+		TipoEquipamento tipo = mapper.requestToModel(tipoRequest);
+		return mapper.modelToDTO( repository.save(tipo) );		
+	}
+	
 
 }

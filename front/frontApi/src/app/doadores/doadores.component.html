@@ -70,7 +70,7 @@
               <div class="form-row">
                   <div class="form-group col-md-12">
                       <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
-                      <input type="text" [(ngModel)]="doador.nomeCompleto" class="form-control"
+                      <input *ngIf="doador" type="text" [(ngModel)]="doador.nomeCompleto" class="form-control"
                       id="nomeCompleto" 
                       formControlName="nomeCompleto"
                       required>

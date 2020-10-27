@@ -40,11 +40,12 @@ export class DoadoresComponent implements OnInit {
     this.form = this.fb.group({
       pesquisa: new FormControl('')
     });
+    
     this.carregaDoadores();
     this.createForm();
     this.formularioInvalido = false;
     this.confirmaExclusao = true;
-    this.detalhaItem(1);
+    this.detalhaItem(0);
   }
 
   carregaDoadores(){
@@ -71,13 +72,13 @@ export class DoadoresComponent implements OnInit {
   }
 
   detalhaItem(id: number){
-    console.log(id);
-    this.formDetalhe.get('id').setValue(id);
-    this.doadoresService.getDoador(id).subscribe(res => {
-      console.log(res);
-      this.doador = res;
+    if(id != 0){
+      this.formDetalhe.get('id').setValue(id);
+      this.doadoresService.getDoador(id).subscribe(res => {
+        this.doador = res;
+      }
+      );
     }
-    );
   }
 
   get nomeCompleto() {
