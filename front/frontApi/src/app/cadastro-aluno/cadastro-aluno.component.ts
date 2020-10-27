@@ -58,9 +58,11 @@ export class CadastroAlunoComponent implements OnInit {
       turno: new FormControl(null, [Validators.required]),
       turma: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       declaracao: new FormControl(null, [Validators.required]),
-      tiposEquipamentos : new FormControl(null, [Validators.required]),
+      //tiposEquipamentos : new FormControl(null, [Validators.required]),
       idUser: new FormControl(sessionStorage.getItem('idUser')),
       checkNote: new FormControl(''),
+      checkPC: new FormControl(''),
+      checkTablet: new FormControl(''),
       checkCelular: new FormControl('')
     });
   }
@@ -85,15 +87,51 @@ export class CadastroAlunoComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if(this.formAluno.valid){
-      console.log(this.formAluno.value)
-      /*
-      this.alunoService.salvar(this.formAluno.value).subscribe(() => {        
+      let equip:String [] = new Array();
+      if(this.formAluno.value.checkNote){
+        equip.push("Notebook")
+      }
+      if(this.formAluno.value.checkCelular){
+        equip.push("Celular")
+      }
+      if(this.formAluno.value.checkTablet){
+        equip.push("Tablet")
+      }
+      if(this.formAluno.value.checkPC){
+        equip.push("PC Desktop")
+      }
+      const dados = {
+        nomeCompleto: this.formAluno.value.nomeCompleto,
+        cep: this.formAluno.value.cep,
+        logradouro: this.formAluno.value.logradouro,
+        numeroCasa: this.formAluno.value.numeroCasa,
+        bairro: this.formAluno.value.bairro,
+        cidade: this.formAluno.value.cidade,
+        estado: this.formAluno.value.estado,
+        complemento: this.formAluno.value.complemento,
+        telefone: this.formAluno.value.telefone,
+        celular: this.formAluno.value.celular,
+        escola: this.formAluno.value.escola,
+        serie: this.formAluno.value.serie,
+        turno: this.formAluno.value.turno,
+        turma: this.formAluno.value.turma,
+        termo: this.formAluno.value.declaracao,
+        usuario: this.formAluno.value.idUser,       
+        equipamentos:equip
+      } as Aluno
+      console.log(equip);
+      console.log(dados)
+      
+      
+      //console.log(this.formAluno.value)
+      
+      this.alunoService.salvar(dados).subscribe(() => {        
         console.log(this.formAluno.value);
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
         this.showSuccess("Cadastro realizado com Sucesso!");
-      });*/
+      });
     }else{
       this.formularioInvalido = true;
       alert('Por favor, leia e aceite a declação!');

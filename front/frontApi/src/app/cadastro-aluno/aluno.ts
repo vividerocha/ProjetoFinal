@@ -14,5 +14,7 @@ export interface Aluno {
       turno: String,
       turma: String,
       termo: String,
-      tiposEquipamentos : String
+      tiposEquipamentos: String[],
+      equipamentos:String[],
+      usuario:number
     }

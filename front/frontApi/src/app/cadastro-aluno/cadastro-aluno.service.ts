@@ -19,7 +19,7 @@ export class AlunoService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
 
-    salvar(novoAluno: CadastroAlunoComponent): Observable<CadastroAlunoComponent>{
+    salvar(novoAluno: any): Observable<CadastroAlunoComponent>{
         console.log(novoAluno);
         return this.httpClient.post<CadastroAlunoComponent>(this.apiUrl, JSON.stringify(novoAluno), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))
