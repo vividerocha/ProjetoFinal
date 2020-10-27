@@ -116,31 +116,16 @@
                                 {{tipoEquipamento.descricao}}</option>
                         </select>
                     </div>
-                </div> -->
+                </div> -->                
                 <div class="form-row">
                     <div class="d-flex d-block">Escolha qual o(s) tipo(s) de equipamentovocê deseja receber:</div>
                 </div>
-                <div class="form-row mt-2">
-                    
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Notebook"
-                            formControlName='checkNote'>
-                        <label class="form-check-label" for="inlineCheckbox1">Notebook</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Celular"
-                            formControlName='checkCelular'>
-                        <label class="form-check-label" for="inlineCheckbox1">Celular</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Tablet"
-                            formControlName='checkTablet'>
-                        <label class="form-check-label" for="inlineCheckbox1">Tablet</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="PcDesktop"
-                            formControlName='checkPC'>
-                        <label class="form-check-label" for="inlineCheckbox1">PC Desktop</label>
+                <div class="form-row mt-2">                    
+                    <div *ngFor="let equip of tiposEquipamentos">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" (click)="itemSelecionado($event)" type="checkbox" id="chk{{equip.id}}" value="{{equip.descricao}}">
+                            <label class="form-check-label" for="chk{{equip.id}}">{{equip.descricao}}</label>
+                        </div>
                     </div>
                 </div>
 

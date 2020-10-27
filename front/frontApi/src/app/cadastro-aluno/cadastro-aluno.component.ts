@@ -17,6 +17,7 @@ export class CadastroAlunoComponent implements OnInit {
   idUsuario:Number;
   formAluno: FormGroup;
   formularioInvalido: boolean;
+  equipamentosSelecionados:String [] = new Array();
   tiposEquipamentos;
 
   constructor(private router: Router,
@@ -59,10 +60,7 @@ export class CadastroAlunoComponent implements OnInit {
       turma: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       declaracao: new FormControl(null, [Validators.required]),
       //tiposEquipamentos : new FormControl(null, [Validators.required]),
-      idUser: new FormControl(sessionStorage.getItem('idUser')),
-      checkNote: new FormControl(''),
-      checkPC: new FormControl(''),
-      checkTablet: new FormControl(''),
+      idUser: new FormControl(sessionStorage.getItem('idUser')), 
       checkCelular: new FormControl('')
     });
   }
@@ -76,6 +74,17 @@ export class CadastroAlunoComponent implements OnInit {
     }
   }
 
+  itemSelecionado(ev){
+    console.log(ev)
+    // se estiver marcado adiciona ao array
+    if(ev.target.checked){
+      this.equipamentosSelecionados.push(ev.target.value)
+    //se o usuario desmarcar o else tira do array o equipamento
+    }else{
+      this.equipamentosSelecionados.splice(this.equipamentosSelecionados.indexOf(ev.target.value),1)
+    }
+  }
+
   populaForm(dados){
     this.formAluno.patchValue({
       logradouro: dados.logradouro,
@@ -86,20 +95,7 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    if(this.formAluno.valid){
-      let equip:String [] = new Array();
-      if(this.formAluno.value.checkNote){
-        equip.push("Notebook")
-      }
-      if(this.formAluno.value.checkCelular){
-        equip.push("Celular")
-      }
-      if(this.formAluno.value.checkTablet){
-        equip.push("Tablet")
-      }
-      if(this.formAluno.value.checkPC){
-        equip.push("PC Desktop")
-      }
+    if(this.formAluno.valid){      
       const dados = {
         nomeCompleto: this.formAluno.value.nomeCompleto,
         cep: this.formAluno.value.cep,
@@ -117,9 +113,8 @@ export class CadastroAlunoComponent implements OnInit {
         turma: this.formAluno.value.turma,
         termo: this.formAluno.value.declaracao,
         usuario: this.formAluno.value.idUser,       
-        equipamentos:equip
-      } as Aluno
-      console.log(equip);
+        equipamentos:this.equipamentosSelecionados
+      } as Aluno      
       console.log(dados)
       
       
