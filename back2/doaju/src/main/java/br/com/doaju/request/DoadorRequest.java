@@ -1,8 +1,12 @@
 package br.com.doaju.request;
 
+import java.util.Date;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class DoadorRequest {
 	
 	private Long id;
@@ -17,4 +21,5 @@ public class DoadorRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	private Date dataCadastro;
 }

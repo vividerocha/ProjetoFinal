@@ -16,25 +16,41 @@ export class DoadoresService {
     constructor(private httpClient: HttpClient) { }
 
     // Headers
+    //httpOptions = {
+    //    headers: new HttpHeaders({'Content-Type': 'application/json' })
+    //}
     httpOptions = {
-        //headers: new HttpHeaders({'Content-Type': 'application/json' })
-        headers: {
-            "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": environment.URLSERVIDOR,
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-        }
-     }
+        header : new HttpHeaders(   {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : 'localhost:8080',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers': 'accept, accept-encoding, access-control-allow-headers, access-control-allow-origin, content-type, accept-language'
+        } 
+        )
+    }
 
     getDoadores(): Observable<any>{
         return this.httpClient.get<Doador>(this.apiUrl);
     }
 
-    atualizar(id, data): Observable<any> {
-        return this.httpClient.put(`${this.apiUrl}/${id}`, data);
+    /*atualizar(id, data): Observable<any> {
+        console.log(JSON.stringify(data));
+        return this.httpClient.put<void>(`${this.apiUrl}/${id}`, JSON.stringify(data));
+    }*/
+
+    atualizar(id: number, doador: Doador){        
+        console.log(JSON.stringify(doador));
+        return this.httpClient.put(`${this.apiUrl}/${id}`, doador)
+        .pipe(retry(2),catchError(this.handleError));
     }
 
     getDoador(id: number): Observable<any>{
         return this.httpClient.get<Doador>(this.apiUrl + "/" + id);
+    }
+
+    delete(id: number): Observable<any> {
+        return this.httpClient.delete(`${this.apiUrl}/${id}`);
     }
 
     // Manipulação de erros

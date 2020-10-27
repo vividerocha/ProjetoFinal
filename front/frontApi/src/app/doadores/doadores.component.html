@@ -169,9 +169,16 @@
               <mdb-error class="text-danger" 
                       *ngIf="formularioInvalido">
                       Verifique os Campos Obrigatórios</mdb-error>
+                      <div [hidden]="confirmaExclusao">
+                        <div class="alert alert-warning" role="alert">
+                          <label>Tem Certeza de que Deseja Excluir?</label><br>
+                          <button type="button" class="btn btn-secondary" (click)="desisteExcluir();">Não</button>
+                          <button type="button" class="btn btn-danger" (click)="excluir(doador.id);">Sim</button>
+                        </div>
+                      </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-danger" (click)="excluir(doador.id);">Excluir</button>
+                        <button type="button" class="btn btn-danger" (click)="confirmaExcluir();">Excluir</button>
                         <button type="submit" class="btn btn-primary">Salvar mudanças</button>
                       </div>
           </form>

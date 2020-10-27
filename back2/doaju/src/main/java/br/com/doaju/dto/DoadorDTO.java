@@ -1,5 +1,7 @@
 package br.com.doaju.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,6 @@ public class DoadorDTO {
 	private String telefone;
 	private String celular;
 	private boolean termo;
-	
+	private Date dataCadastro;
 
 }

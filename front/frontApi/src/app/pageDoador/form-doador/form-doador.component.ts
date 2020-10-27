@@ -111,6 +111,8 @@ export class FormDoadorComponent implements OnInit {
     //}
   
 }
+
+
   goRota(){
     this.activatedRoute.queryParams
       .subscribe(params => {

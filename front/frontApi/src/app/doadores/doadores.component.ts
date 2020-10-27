@@ -24,6 +24,7 @@ export class DoadoresComponent implements OnInit {
   formDetalhe: FormGroup;
   formularioInvalido: boolean;
   doador: Doador;
+  confirmaExclusao: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -42,6 +43,7 @@ export class DoadoresComponent implements OnInit {
     this.carregaDoadores();
     this.createForm();
     this.formularioInvalido = false;
+    this.confirmaExclusao = true;
     this.detalhaItem(1);
   }
 
@@ -132,26 +134,43 @@ export class DoadoresComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if(this.formDetalhe.valid){
-      let id = this.formDetalhe.get('id');
-      console.log(this.formDetalhe.value);
+      let id = this.formDetalhe.get('id').value;      
       this.doadoresService.atualizar(id, this.formDetalhe.value).subscribe(() => {      
         
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');
         this.showSuccess("Cadastro alterado com Sucesso!");
+        this.carregaDoadores();
       });
     }else{
       this.formularioInvalido = true;
     }
   }
 
-  excluir(id: number){
-    console.log(id);
+  confirmaExcluir(){
+    this.confirmaExclusao = false;
+  }
+
+  desisteExcluir(){
+    this.confirmaExclusao = true;
+  }
+
+  excluir(id: number): void {
+    console.log("chamando");
+    this.doadoresService.delete(id)
+      .subscribe(
+        response => {
+          this.showSuccess("Cadastro excluído com Sucesso!");
+          this.carregaDoadores();
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   showSuccess(mensagem: string) {
     this.toastService.success(mensagem);
-}
+  }
 
 }
