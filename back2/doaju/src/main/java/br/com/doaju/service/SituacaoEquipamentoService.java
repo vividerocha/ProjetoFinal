@@ -1,7 +1,6 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -9,13 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import br.com.doaju.dto.SituacaoEquipamentoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.SituacaoEquipamentoMapper;
 import br.com.doaju.model.SituacaoEquipamento;
 import br.com.doaju.repository.SituacaoEquipamentoRepository;
 import br.com.doaju.request.SituacaoEquipamentoRequest;
+
 
 @Service
 public class SituacaoEquipamentoService {
@@ -26,14 +25,14 @@ public class SituacaoEquipamentoService {
 	private SituacaoEquipamentoMapper mapper;
 
 	@Transactional
-	public SituacaoEquipamentoDTO salvar(SituacaoEquipamentoRequest situacaoEquipamentoRequest) {
+	public SituacaoEquipamentoDTO salvar(SituacaoEquipamentoRequest situacaoRequest) {
 		
-		SituacaoEquipamento situacaoEquipamento = mapper.requestToModel(situacaoEquipamentoRequest);
-	    return mapper.modelToDTO( repository.save(situacaoEquipamento) );		
+		SituacaoEquipamento situacao = mapper.requestToModel(situacaoRequest);
+	    return mapper.modelToDTO( repository.save(situacao) );		
 	}
 	
-	public Optional<SituacaoEquipamento> buscar(Long id) {
-		return repository.findById(id);
+	public SituacaoEquipamentoDTO buscar(Long id) {
+		return mapper.modelToDTO(repository.findById(id).get());
 	}
 
 	@Transactional
@@ -44,7 +43,7 @@ public class SituacaoEquipamentoService {
 			repository.flush();
 		
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Situacao Equipamento não encontrado!") {
+			throw new EntidadeNaoEncontradaException("Situação Equipamento não encontrado!") {
 				private static final long serialVersionUID = 1L;
 			};
 		}			
@@ -54,8 +53,18 @@ public class SituacaoEquipamentoService {
 		
 		return repository.findAll()
 				.stream()
-				.map(situ -> mapper.modelToDTO(situ))
+				.map(equi -> mapper.modelToDTO(equi))
 				.collect(Collectors.toList());	
+	}
+	
+	public SituacaoEquipamento buscarTipo(String desc) {
+		return repository.buscarPorEquipamento(desc);
+	}
+	
+	@Transactional
+	public SituacaoEquipamentoDTO atualizar(SituacaoEquipamentoRequest situacaoRequest) {
+		SituacaoEquipamento situacao = mapper.requestToModel(situacaoRequest);
+		return mapper.modelToDTO( repository.save(situacao) );		
 	}
 
 }

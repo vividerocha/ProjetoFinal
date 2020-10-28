@@ -10,12 +10,16 @@
                         (blur)="verificaTipo($event.target.value)"
                         required>
                     </div>
-                    <mdb-error class="text-danger" 
-                    *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
-                    Digite uma Descrição. Ex: Tablet</mdb-error>
-                    <div [hidden]="escondeMsgErroTipo">
-                        <div class="alert alert-danger" role="alert">
-                            Já existe uma descrição com esse texto!
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <mdb-error class="text-danger" 
+                        *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+                        Digite uma Descrição. Ex: Tablet</mdb-error>
+                        <div [hidden]="escondeMsgErroTipo">
+                            <div class="alert alert-danger" role="alert">
+                                Já existe uma descrição com esse texto!
+                            </div>
                         </div>
                     </div>
                 </div>

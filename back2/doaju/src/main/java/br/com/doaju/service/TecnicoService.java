@@ -1,7 +1,6 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -9,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import br.com.doaju.dto.TecnicoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.TecnicoMapper;
@@ -29,11 +27,12 @@ public class TecnicoService {
 	public TecnicoDTO salvar(TecnicoRequest tecnicoRequest) {
 		
 		Tecnico tecnico = mapper.requestToModel(tecnicoRequest);
-	    return mapper.modelToDTO( repository.save(tecnico) );		
+	    return mapper.modelToDTO( repository.save(tecnico));		
 	}
 	
-	public Optional<Tecnico> buscar(Long id) {
-		return repository.findById(id);
+	public TecnicoDTO buscar(Long id) {
+		Tecnico tecnico = repository.findById(id).get(); 
+		return mapper.modelToDTO(tecnico);
 	}
 
 	@Transactional
@@ -44,7 +43,7 @@ public class TecnicoService {
 			repository.flush();
 		
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Tecnico não encontrado!") {
+			throw new EntidadeNaoEncontradaException("Técnico não encontrado!") {
 				private static final long serialVersionUID = 1L;
 			};
 		}			
@@ -56,6 +55,12 @@ public class TecnicoService {
 				.stream()
 				.map(tec -> mapper.modelToDTO(tec))
 				.collect(Collectors.toList());	
+	}
+	
+	@Transactional
+	public TecnicoDTO atualizar(TecnicoRequest tecnicoRequest) {
+		Tecnico tecnico = mapper.requestToModel(tecnicoRequest);
+		return mapper.modelToDTO( repository.save(tecnico) );		
 	}
 
 }

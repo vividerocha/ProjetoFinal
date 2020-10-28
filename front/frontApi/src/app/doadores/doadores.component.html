@@ -62,6 +62,7 @@
                 <div class="form-group col-md-12">
                     <label for="id">Id:</label>
                     <input type="text" class="form-control"
+                    *ngIf="doador"
                     id="id" 
                     formControlName="id"
                     readonly>
@@ -83,7 +84,7 @@
               <div class="form-row">
                   <div class="form-group col-md-2">
                       <label for="cep">CEP: <span style="color:red;">*</span></label>
-                      <input type="text" [(ngModel)]="doador.cep"
+                      <input type="text" *ngIf="doador" [(ngModel)]="doador.cep"
                       maxlength="8" class="form-control" id="cep" 
                       formControlName="cep"
                       (blur)="consultaCep()"
@@ -94,14 +95,14 @@
                   </div>
                   <div class="form-group col-md-8">
                       <label for="logradouro">Logradouro: </label>
-                      <input type="text" [(ngModel)]="doador.logradouro"
+                      <input type="text" *ngIf="doador" [(ngModel)]="doador.logradouro"
                       class="form-control" id="logradouro" 
                       formControlName="logradouro"
                       [readonly]="true">
                   </div>
                   <div class="form-group col-md-2">
                       <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
-                      <input type="text" [(ngModel)]="doador.numeroCasa"
+                      <input type="text" *ngIf="doador" [(ngModel)]="doador.numeroCasa"
                       class="form-control" 
                       formControlName="numeroCasa"
                       id="numero" >
@@ -116,18 +117,21 @@
                   <div class="form-group col-md-4">
                       <label for="bairro">Bairro: </label>
                       <input type="text" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.bairro"
                       class="form-control" id="bairro" formControlName="bairro" [readonly]="true">
                   </div>
                   <div class="form-group col-md-4">
                       <label for="cidade">Cidade: </label>
                       <input type="text" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.cidade"
                       class="form-control" id="cidade" formControlName="cidade" [readonly]="true">
                   </div>
                   <div class="form-group col-md-4">
                       <label for="estado">Estado: </label>
                       <input type="text" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.estado"
                       class="form-control" id="estado" formControlName="estado" [readonly]="true">
                   </div>
@@ -138,6 +142,7 @@
                   <div class="form-group col-md-12">
                       <label for="complemento">Complemento: </label>
                       <input type="text" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.complemento"
                       class="form-control" id="complemento" formControlName="complemento">
                   </div>
@@ -147,6 +152,7 @@
                   <div class="form-group col-md-3">
                       <label for="telefone">Telefone Fixo: </label>
                       <input type="tel" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.telefone"
                       class="form-control" id="telefone" formControlName="telefone"
                       onkeypress="$(this).mask('(00) 0000-00009')">
@@ -154,6 +160,7 @@
                   <div class="form-group col-md-3">
                       <label for="celular">Telefone Celular:  <span style="color:red;">*</span></label>
                       <input type="tel" 
+                      *ngIf="doador"
                       [(ngModel)]="doador.celular"
                       class="form-control" id="celular" 
                       formControlName="celular"

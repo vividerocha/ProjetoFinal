@@ -1,4 +1,5 @@
 export interface Tecnico {
+    id: number;
     nomeCompleto: String,
     cep: String,
     logradouro: String,
