@@ -1,1 +1,177 @@
-<p>seguranca works!</p>
+<div class="container2">
+    <div class="card mb-4">
+        
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 text-primary">
+                    Novo Administrador
+                </h6>
+            </div>
+        
+        <div class="card-body">
+            <div class="form-group">
+                <form [formGroup]="formUsuario" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+                    <div class="form-group">
+                      <label for="nome">Digite um nome de usuário:  <span style="color:red;">*</span></label>
+                      <input
+                      type="text"
+                      class="form-control"
+                      id="nome"
+                      name="nome"
+                      formControlName="nome"
+                      mdbInput mdbValidate
+                      (blur)="verificaUser($event.target.value)">
+                      <mdb-error class="text-danger" *ngIf="nome.invalid && (nome.dirty || nome.touched)">Digite um Nome de Usuário com pelo menos 3 dígitos</mdb-error>
+                      <div [hidden]="erroUser" class="text-danger">Usuário já cadastrado, por favor digite outro nome para usuário!</div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="email">Digite seu Email:  <span style="color:red;">*</span></label>
+                      <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      formControlName="email"
+                      mdbInput mdbValidate
+                      (blur)="verificaEmailExiste($event.target.value)">
+                      <mdb-error class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">Email inválido</mdb-error>
+                      <div [hidden]="escondeMsgErroEmail" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Já existe um usuário cadastrado para esse email.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="senha">Digite uma senha:  <span style="color:red;">*</span></label>
+                      <input
+                      type="password"
+                      class="form-control"
+                      id="senha"
+                      formControlName="senha"
+                      (blur)="capturaSenha($event.target.value)">
+                    </div>
+                    <div class="form-group">
+                      <label for="confirmaSenha">Confirme a senha:  <span style="color:red;">*</span></label>
+                      <input
+                      type="password"
+                      class="form-control"
+                      id="confirmaSenha"
+                      formControlName="confirmaSenha"
+                      (keyup)="compara($event.target.value)"
+                      >
+                    </div>
+                    <div [hidden]="escondeMsgErroSenha" class="alert alert-danger alert-dismissible fade show" role="alert">
+                      As senhas não são iguais.
+                    </div>
+                    
+                    <div class="form-row mt-3">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button [disabled]="desabilitaBotao" type="submit" class="btn btn-primary ml-2" data-dismiss="modal">Cadastrar</button>
+                      </div>
+                </form>
+                
+            </div>
+            <div>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="id">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="usuario">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Usuário </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.usuario}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="-">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+                      <mat-cell *matCellDef="let element"><button type="button" data-toggle="modal" 
+                        data-target="#modal" class="btn" style="background-color: #F7D358;"
+                        (click)="detalhaItem(element.id)">Detalhe</button></mat-cell>
+                    </ng-container>
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                  </mat-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+              <form [formGroup]="formDetalhe" #f="ngForm" (ngSubmit)="atualiza(f)">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="id">Id:</label>
+                        <input type="text" class="form-control"
+                        *ngIf="usuario"
+                        id="id" 
+                        formControlName="id"
+                        readonly>
+                    </div>
+                  </div>
+                <div class="form-group">
+                    <label for="nome">Usuário:  <span style="color:red;">*</span></label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="nome"
+                    name="nome"
+                    *ngIf="usuario"
+                    [(ngModel)]="usuario.usuario"
+                    formControlName="nome"
+                    mdbInput mdbValidate
+                    (blur)="verificaUser($event.target.value)">
+                    <mdb-error class="text-danger" *ngIf="nome.invalid && (nome.dirty || nome.touched)">Digite um Nome de Usuário com pelo menos 3 dígitos</mdb-error>
+                    <div [hidden]="erroUser" class="text-danger">Usuário já cadastrado, por favor digite outro nome para usuário!</div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="email">Email:  <span style="color:red;">*</span></label>
+                    <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    formControlName="email"
+                    *ngIf="usuario"
+                    [(ngModel)]="usuario.email"
+                    mdbInput mdbValidate
+                    (blur)="verificaEmailExiste($event.target.value)">
+                    <mdb-error class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">Email inválido</mdb-error>
+                    <div [hidden]="escondeMsgErroEmail" class="alert alert-danger alert-dismissible fade show" role="alert">
+                      Já existe um usuário cadastrado para esse email.
+                    </div>
+                  </div>
+                    <mdb-error class="text-danger" 
+                        *ngIf="formularioInvalido">
+                        Verifique os Campos Obrigatórios</mdb-error>
+                        <div [hidden]="confirmaExclusao">
+                          <div class="alert alert-warning" role="alert">
+                            <label>Tem Certeza de que Deseja Excluir?</label><br>
+                            <button type="button" class="btn btn-secondary" (click)="desisteExcluir();">Não</button>
+                            <button type="button" class="btn btn-danger" (click)="excluir(usuario.id);">Sim</button>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                          <button type="button" class="btn btn-danger" (click)="confirmaExcluir();">Excluir</button>
+                          <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                        </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>

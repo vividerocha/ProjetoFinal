@@ -13,4 +13,6 @@ public interface GrupoRepository extends JpaRepository<Grupo, Long>{
 	@Query(value = "SELECT * FROM grupo WHERE nome = ?1", nativeQuery = true)
 	public Set<Grupo> localizaGrupo(String permissao);
 
+	@Query(value = "SELECT * FROM grupo WHERE nome = ?1", nativeQuery = true)
+	public Grupo buscaIdAdmin(String nome);
 }

@@ -1,6 +1,9 @@
 package br.com.doaju.service;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.doaju.dto.UsuarioDTO;
 import br.com.doaju.mapper.UsuarioMapper;
+import br.com.doaju.model.Grupo;
 import br.com.doaju.model.Usuario;
 import br.com.doaju.repository.GrupoRepository;
 import br.com.doaju.repository.UsuarioRepository;
@@ -56,6 +60,10 @@ public class UsuarioService {
 	public Usuario buscarUsuario(String user) {
 		return repository.buscarPorUsuario(user);
 	}
+	
+	public Grupo buscarIdGrupoAdmin(String desc) {
+		return gruporepository.buscaIdAdmin(desc);
+	}
 
 //    private final UsuarioRepository usuarioRepository;
 //
@@ -67,11 +75,12 @@ public class UsuarioService {
 //    public Usuario salvar(Usuario usuario) {
 //        return usuarioRepository.save(usuario);
 //    }
-//    
-//    public List<Usuario> listar() {
-//		return usuarioRepository.findAll();	
-//	}
-//    
+//
+	
+    public List<Usuario> listar() {
+		return repository.findAll();	
+	}
+    
     public Optional<Usuario> buscarPorId(Long id) {
 		return repository.findById(id);
 	}
@@ -81,21 +90,20 @@ public class UsuarioService {
 //		
 //	}
 //    
-//    @Transactional
-//	public void excluir(Long id) {
-//		
-//		try {
-//			usuarioRepository.deleteById(id);
-//			usuarioRepository.flush();
-//		
-//		} catch (EmptyResultDataAccessException e) {
-//			
-//		};			
-//	}
-//    
-//    @Transactional
-//	public void atualizar(Usuario usuario) {
-//				
-//		usuarioRepository.save(usuario);		
-//	}
+    @Transactional
+	public void excluir(Long id) {
+		
+		try {
+			repository.deleteById(id);
+			repository.flush();
+		
+		} catch (Exception e) {
+			
+		};			
+	}
+    
+    @Transactional
+	public void atualizar(Usuario usuario) {
+		repository.save(usuario);		
+	}
 }

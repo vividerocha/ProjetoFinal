@@ -1,19 +1,24 @@
 package br.com.doaju.dto.controller;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.UsuarioDTO;
+import br.com.doaju.model.Grupo;
 import br.com.doaju.model.Usuario;
 import br.com.doaju.request.UsuarioRequest;
 import br.com.doaju.service.UsuarioService;
@@ -59,11 +64,11 @@ public class UsuarioController {
 //		    return ResponseEntity.ok("Usuário cadastrado com sucesso!");	
 //	    }
 //	}
-//	@GetMapping
-//	public List<Usuario> listar(){
-//		return usuarioService.listar();
-//	}
-//	
+	@GetMapping
+	public List<Usuario> listar(){
+		return usuarioService.listar();
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		
@@ -77,36 +82,33 @@ public class UsuarioController {
 	
 	}
 	
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<Usuario> excluir(@PathVariable Long id) {
-//		try {
-//			usuarioService.excluir(id);	
-//			return ResponseEntity.noContent().build();
-//			
-//		} catch (Exception e) {
-//			return ResponseEntity.notFound().build();
-//		}
-//			
-////		} catch (Exception e) {
-////			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-////		}
-//	}
-//	
-//	@PutMapping("/{id}")
-//	public ResponseEntity<?> atualizar(@RequestBody @Valid Usuario usuario, @PathVariable Long id) {
-//		
-//		Usuario usuarioAtual = usuarioService.buscar(id).orElse(null);
-//		
-//		if (usuarioAtual != null) {
-//			BeanUtils.copyProperties(usuario, usuarioAtual, "id");
-//			
-//			usuarioService.atualizar(usuarioAtual);
-//			return ResponseEntity.ok(usuarioAtual);
-//		}	
-//			
-//		return ResponseEntity.notFound().build();
-//	}
-//	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Usuario> excluir(@PathVariable Long id) {
+		try {
+			usuarioService.excluir(id);	
+			return ResponseEntity.noContent().build();
+			
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> atualizar(@RequestBody Usuario usuario, @PathVariable Long id) {
+		
+		Usuario usuarioAtual = usuarioService.buscarPorId(id).orElse(null);
+		
+		if (usuarioAtual != null) {
+			usuario.setSenha(usuarioAtual.getSenha());
+			BeanUtils.copyProperties(usuario, usuarioAtual, "id");
+			
+			usuarioService.atualizar(usuarioAtual);
+			return ResponseEntity.ok(usuarioAtual);
+		}	
+			
+		return ResponseEntity.notFound().build();
+	}
+	
 
 	@GetMapping("/login/{dadosUsuario}")
 	public ResponseEntity<?> login(@PathVariable String dadosUsuario) {
@@ -147,6 +149,25 @@ public class UsuarioController {
 			} else {
 				// return ResponseEntity.notFound().build();
 				return ResponseEntity.badRequest().body("Não existe um usuário cadastrado para esse email!");
+			}
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+	
+	@GetMapping("/desc/{desc}")
+	public ResponseEntity<?> buscaIdGrupoAdmin(@PathVariable String desc) {
+
+		//Long idGrupo = usuarioService.buscarIdGrupoAdmin(desc);
+		Grupo grupo = usuarioService.buscarIdGrupoAdmin(desc);
+		if (desc != "") {
+			if (grupo != null) {
+				return ResponseEntity.ok(grupo);
+			} else {
+				// return ResponseEntity.notFound().build();
+				return ResponseEntity.badRequest().body("Não existe um Grupo de Admin cadastrado no banco!");
 			}
 
 		} else {
