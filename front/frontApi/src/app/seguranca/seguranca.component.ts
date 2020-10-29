@@ -98,7 +98,7 @@ export class SegurancaComponent implements OnInit {
         usuario: this.formUsuario.value.nome,
         senha: this.formUsuario.value.senha,
         email: this.formUsuario.value.email,
-        tipoPermissao: this.idAdmin
+        tipoPermissao: "Admin"
       } as Usuario;
 
       this.service.salvar(dados)
@@ -110,6 +110,7 @@ export class SegurancaComponent implements OnInit {
             //this.goRota();
             //this.submitted = true;
             this.showSuccess("Cadastro incluído com Sucesso!");
+            this.formUsuario.reset();
             this.carregaUsuarios();
           },
           error => {

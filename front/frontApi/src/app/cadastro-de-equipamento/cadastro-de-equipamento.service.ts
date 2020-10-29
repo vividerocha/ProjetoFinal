@@ -22,9 +22,7 @@ export class EquipamentoService {
     }
 
     salvar(novoEquipamento: any): Observable<any>{
-        return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento), this.httpOptions);
-        //return this.httpClient.post(this.apiUrl, novoUser);
-        
+        return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento), this.httpOptions);        
     }
 
     salvarHistorico(id: string): Observable<any>{
@@ -55,6 +53,10 @@ export class EquipamentoService {
 
     getTiposEquipamentos(): Observable<any> {
         return this.httpClient.get<any>(environment.URLSERVIDOR + "tipoEquipamentos");
+      }
+    
+      getEquipamentos(): Observable<any> {
+        return this.httpClient.get<any>(this.apiUrl);
       }
 
 }

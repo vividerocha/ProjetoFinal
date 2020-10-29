@@ -54,7 +54,7 @@ public class EquipamentoService {
 		
 		return repository.findAll()
 				.stream()
-				.map(equi -> mapper.modelToDTO(equi))
+				.map(doa -> mapper.modelToDTO(doa))
 				.collect(Collectors.toList());	
 	}
 }

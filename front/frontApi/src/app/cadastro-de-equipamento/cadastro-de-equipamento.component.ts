@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { EquipamentoService } from './cadastro-de-equipamento.service';
 import { Equipamento } from './equipamento';
 import { TipoEquipamento } from '../cadastro-tipo-equipamento/tipoEquipamento';
 import { ToastrService } from 'ngx-toastr';
+import { Session } from 'protractor';
+import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-cadastro-de-equipamento',
@@ -11,9 +15,18 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./cadastro-de-equipamento.component.css']
 })
 export class CadastroDeEquipamentoComponent implements OnInit {
+
+  displayedColumns: string[] = ['id', 'descricao', 'funcionando',  '-'];
   tiposEquipamentosLista: TipoEquipamento;
   formEquipamento: FormGroup;
   formularioInvalido: boolean;
+  dataSource;
+  elements;
+  //idDoador = sessionStorage.getItem("idUser");
+  idDoador = 1;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private equipamentoService: EquipamentoService,
     private fb: FormBuilder, private toastService: ToastrService) { }
@@ -21,6 +34,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   ngOnInit(): void {
     this.criaForm();
     this.getTiposEquipamentos();
+    this.carregaEquipamentos();
   }
 
   getTiposEquipamentos() {
@@ -61,6 +75,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
           response => {
             console.log(response);            
             this.showSuccess("Cadastro realizado com Sucesso!");
+            this.formEquipamento.reset();
+            this.carregaEquipamentos();
           },
           error => {
             console.log(error);
@@ -84,5 +100,17 @@ export class CadastroDeEquipamentoComponent implements OnInit {
 
   showSuccess(mensagem: string) {
       this.toastService.success(mensagem);
+  }
+
+  carregaEquipamentos() {
+    this.equipamentoService.getEquipamentos()
+    .subscribe(res => {
+      this.elements = res;
+      this.dataSource = new MatTableDataSource(res);
+      //this.isLoadingResults = false;
+    }, err => {
+      console.log(err);
+      //this.isLoadingResults = false;
+    });
   }
 }

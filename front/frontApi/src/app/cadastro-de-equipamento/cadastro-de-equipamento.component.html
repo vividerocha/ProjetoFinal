@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container2">
     <div class="card mb-4">            
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -52,6 +52,36 @@
                 <mdb-error class="text-danger" *ngIf="formularioInvalido">
                     Verifique os Campos Obrigatórios</mdb-error>
             </form>
+            <div>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="id">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="descricao">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Descricao </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.descricaoEquipamento}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="funcionando">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Funcionando </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.funcionando}} </mat-cell>
+                    </ng-container>
+                    <!--<ng-container matColumnDef="tipo">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> tipoEquipamento </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.tipoEquipamento}} </mat-cell>
+                    </ng-container>-->
+                    <ng-container matColumnDef="-">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+                      <mat-cell *matCellDef="let element"><button type="button" data-toggle="modal" 
+                        data-target="#modal" class="btn" style="background-color: #F7D358;"
+                        (click)="detalhaItem(element.id)">Detalhe</button></mat-cell>
+                    </ng-container>
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                  </mat-table>
+            </div>
         </div>
     </div>
 </div>

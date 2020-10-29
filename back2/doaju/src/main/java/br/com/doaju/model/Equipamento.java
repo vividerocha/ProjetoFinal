@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,12 +39,9 @@ public class Equipamento{
     @JoinColumn(name="tipoEquipamento_id", nullable=false)
 	private TipoEquipamento tipoEquipamento = new TipoEquipamento();
 	
-	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<HistoricoEquipamento> historicos = new ArrayList<>();
 
-	
-	
-	
 
 	
 }

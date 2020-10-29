@@ -33,5 +33,7 @@ public class HistoricoEquipamento {
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataAlteracao = new java.sql.Date(System.currentTimeMillis());
+	
+	
 
 }

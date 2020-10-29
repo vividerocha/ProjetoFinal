@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class TipoEquipamento{
 	private Long id;
 	private String descricao;
 		
-	@OneToMany(mappedBy="tipoEquipamento")
+	@OneToMany(mappedBy="tipoEquipamento", fetch=FetchType.EAGER)
 	private List<Equipamento> equipamentos = new ArrayList<>();
 		
 }
