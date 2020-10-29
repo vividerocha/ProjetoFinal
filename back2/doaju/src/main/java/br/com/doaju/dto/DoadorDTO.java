@@ -20,5 +20,6 @@ public class DoadorDTO {
 	private String celular;
 	private boolean termo;
 	private Date dataCadastro;
+	
 
 }

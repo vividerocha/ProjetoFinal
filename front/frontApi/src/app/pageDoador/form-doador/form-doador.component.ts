@@ -96,9 +96,24 @@ export class FormDoadorComponent implements OnInit {
   onSubmit(form: NgForm){
 
     if(this.formDoador.valid){
-      this.doadorService.salvar(this.formDoador.value).subscribe(() => {
+      const dados = {
+        nomeCompleto: this.formDoador.value.nomeCompleto,
+        cep: this.formDoador.value.cep,
+        logradouro: this.formDoador.value.logradouro,
+        numeroCasa: this.formDoador.value.numeroCasa,
+        bairro: this.formDoador.value.bairro,
+        cidade: this.formDoador.value.cidade,
+        estado: this.formDoador.value.estado,
+        complemento: this.formDoador.value.complemento,
+        celular: this.formDoador.value.celular,
+        telefone: this.formDoador.value.telefone,
+        usuario: sessionStorage.idUser
+      } as Doador
+
+      
+      this.doadorService.salvar(dados).subscribe(() => {
         //após cadastrar na tabela de pessoas, o usuário será redirecionado para a tela de login
-        console.log(this.formDoador.value);
+        console.log(dados);
         //sessionStorage.setItem('isLogado', '');
         //sessionStorage.setItem('email', '');
         //this.router.navigateByUrl('/login');

@@ -36,6 +36,8 @@ public class DoadorController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(doadorDTO);
 		
 		}catch(Exception ex) {
+			System.out.println("caiu aqui");
+			System.out.println(ex.getMessage());
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}		
 	}

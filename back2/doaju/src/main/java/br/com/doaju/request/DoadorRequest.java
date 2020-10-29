@@ -21,5 +21,6 @@ public class DoadorRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
-	private Date dataCadastro;
+	private Long usuario;
+	
 }

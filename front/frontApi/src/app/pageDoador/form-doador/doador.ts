@@ -10,5 +10,6 @@ export interface Doador {
 	complemento: String,
 	telefone: String,
 	celular: String,
-	termo: String
+	termo: String,
+	usuario:number 
   }

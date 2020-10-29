@@ -1,5 +1,7 @@
 package br.com.doaju.service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.DoadorMapper;
 import br.com.doaju.model.Doador;
 import br.com.doaju.repository.DoadorRepository;
+import br.com.doaju.repository.UsuarioRepository;
 import br.com.doaju.request.DoadorRequest;
 
 @Service
@@ -23,11 +26,16 @@ public class DoadorService {
 	
 	@Autowired
 	private DoadorMapper mapper;
+	
+	@Autowired
+	private UsuarioRepository repoUser;
 
 	@Transactional
 	public DoadorDTO salvar(DoadorRequest doadorRequest) {
 		
 		Doador doador = mapper.requestToModel(doadorRequest);
+		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario()).get()));
+		System.out.println(doador.toString());
 	    return mapper.modelToDTO( repository.save(doador) );		
 	}
 	

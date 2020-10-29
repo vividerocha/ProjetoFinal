@@ -4,6 +4,7 @@ import { Doador } from './Doador';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { FormDoadorComponent } from './form-doador.component';
 
 
 
@@ -23,9 +24,9 @@ export class DoadorService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
      }
 
-    salvar(novoDoador: Doador): Observable<Doador>{
+    salvar(novoDoador: any): Observable<FormDoadorComponent>{
         console.log(novoDoador);
-        return this.httpClient.post<Doador>(this.apiUrl, JSON.stringify(novoDoador), this.httpOptions)
+        return this.httpClient.post<FormDoadorComponent>(this.apiUrl, JSON.stringify(novoDoador), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))
         //return this.httpClient.post(this.apiUrl, novoUser);
         
