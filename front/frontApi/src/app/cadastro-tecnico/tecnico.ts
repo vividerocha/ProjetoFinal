@@ -10,6 +10,6 @@ export interface Tecnico {
     complemento: String,
     telefone: String,
     celular: String,
-    termo: String
-    
+    termo: boolean,
+    usuario: any    
   }

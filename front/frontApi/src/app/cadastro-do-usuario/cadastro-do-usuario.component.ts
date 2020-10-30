@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-cadastro-do-usuario',
   templateUrl: './cadastro-do-usuario.component.html',
@@ -32,9 +33,15 @@ export class CadastroDoUsuarioComponent implements OnInit {
     private zone: NgZone) { }
 
   ngOnInit() {
+    if(sessionStorage.getItem('token')!= null){
+      this.router.navigate(['/home'])
+    }
+    if(sessionStorage.getItem('idUser')!==null){
+      this.buscaUser(sessionStorage.getItem('idUser'))
+    }
     let headers = new Headers();
     headers.append('Accept', 'q=0.8;application/json;q=0.9');
-    this.createForm();
+    this.createForm();    
     this.desabilitaBotao = true;
     this.escondeMsgErroSenha = true;
     this.escondeMsgErroEmail = true;
@@ -102,34 +109,7 @@ export class CadastroDoUsuarioComponent implements OnInit {
     }
 
   }
-
-  goRota() {
-    this.activatedRoute.queryParams
-      .subscribe(params => {
-        this.tipoPessoa = params.id;
-        if (this.tipoPessoa == "1") {
-          this.zone.run(() => {
-            this.router.navigate(['/page-doador']);
-          });
-        } else if (this.tipoPessoa == "2") {
-          this.zone.run(() => {
-            this.router.navigate(['/cadastro-tecnico']);
-          });
-        } else if (this.tipoPessoa == "3") {
-          this.zone.run(() => {
-            this.router.navigate(['/cadastro-aluno']);
-          });
-        } else {
-          this.zone.run(() => {
-            this.router.navigate(['/home']);
-          });
-        }
-      }
-      );
-
-
-  }
-
+  
   compara(digitado) {
     if (this.formUsuario.value.confirmaSenha != "") {
       if (this.senha == digitado) {
@@ -199,6 +179,16 @@ export class CadastroDoUsuarioComponent implements OnInit {
           }
         });
 
+  }
+
+  buscaUser(idUser){
+    let id:number = parseInt(idUser);
+    this.usuarioService.buscaPorId(id)
+    .subscribe(dados => {       
+        this.redireciona(dados.grupos[0].nome)
+      }, error => {
+        console.log(error);
+      });
   }
 
 }

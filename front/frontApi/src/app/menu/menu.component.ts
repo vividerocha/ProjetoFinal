@@ -1,8 +1,12 @@
+import { TecnicoService } from './../cadastro-tecnico/cadastro-tecnico.service';
+import { DoadoresService } from './../doadores/doadores.service';
+import { AlunoService } from './../cadastro-aluno/cadastro-aluno.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from './menu.service';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Doador } from '../pageDoador/form-doador/doador';
 
 @Component({
   selector: 'app-menu',
@@ -11,30 +15,52 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  idUsuario: string;
-  logado: Boolean = false;
-  nomeUsuario: string;
-  tipoUsuario: string;
+  idUsuario: number;
+  myNome: String = "Seu nome aqui";
+  ver: boolean = true; 
 
-  constructor(private menuService: MenuService,private router: Router) { }
+  constructor(private menuService: MenuService,
+              private router: Router,
+              private alunoService: AlunoService,
+              private doadorService: DoadoresService,
+              private tecnicoService: TecnicoService) { }
 
   ngOnInit(): void {
-    this.idUsuario = sessionStorage.getItem('user');
-    this.tipoUsuario = "0";
-    //sessionStorage.setItem('user', null);    
+    this.idUsuario = parseInt(sessionStorage.getItem('idUserLogado'));
+    this.consultaDoador(this.idUsuario)
   }
 
-  consultaUsuario(){
-    this.menuService.getUsuario(this.idUsuario)
-    .subscribe(dados =>{
-        console.log(dados);
-        this.nomeUsuario = dados.nome;
-        this.tipoUsuario = dados.tipoUsuario;
-      },
-    error => {
-      console.log(error);
-      this.tipoUsuario = "0";
-    });
+  consultaDoador(id){
+    this.doadorService.getDoadorPorIduser(id)
+    .subscribe(dados=>{
+      console.log(dados);
+      this.myNome = dados.nomeCompleto;
+      this.ver = false;
+    },error=>{
+      this.consultaTecnico(id)
+    })
+  }
+
+  consultaTecnico(id){
+    this.tecnicoService.getTecnicoPorIduser(id)
+    .subscribe(dados=>{
+      console.log(dados);
+      this.myNome = dados.nomeCompleto;
+      this.ver = false;
+    },error=>{
+      this.consultaAluno(id)
+    })
+  }
+
+  consultaAluno(id){
+    this.alunoService.getAlunoPorIduser(id)
+    .subscribe(dados=>{
+      console.log(dados);
+      this.myNome = dados.nomeCompleto;
+      this.ver = false;
+    },error=>{
+      this.ver = true;
+    })
   }
 
   logout(){

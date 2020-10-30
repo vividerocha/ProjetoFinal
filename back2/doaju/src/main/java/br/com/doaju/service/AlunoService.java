@@ -72,5 +72,16 @@ public class AlunoService {
 	public void atualizar(Aluno aluno) {
 		repository.save(aluno);		
 	}
+	
+	public AlunoDTO buscarPorIdUsuario(Long id) {
+		try {
+			Aluno aluno = repository.buscarPorIdUsuario(id);
+			return mapper.modelToDTO(aluno);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+	}
 
 }
