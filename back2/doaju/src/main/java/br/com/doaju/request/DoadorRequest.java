@@ -1,7 +1,5 @@
 package br.com.doaju.request;
 
-import java.util.Date;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

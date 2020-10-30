@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,15 +26,17 @@ public class HistoricoEquipamento {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn (name="equipamento_id",referencedColumnName="id",nullable=false,unique=true)
-	Equipamento equipamento;
+	private Equipamento equipamento;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn (name="situacaoEquipamento_id",referencedColumnName="id",nullable=false,unique=true)
-	SituacaoEquipamento situacao;
+	private SituacaoEquipamento situacao;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataAlteracao = new java.sql.Date(System.currentTimeMillis());
 	
-	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 
 }

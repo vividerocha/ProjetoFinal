@@ -16,12 +16,15 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class CadastroDeEquipamentoComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'descricao', 'funcionando',  '-'];
+  displayedColumns: string[] = ['id','tipoEquipamento', 'descricao', 'funcionando',  '-'];
   tiposEquipamentosLista: TipoEquipamento;
   formEquipamento: FormGroup;
+  formDetalhe: FormGroup;
   formularioInvalido: boolean;
+  equipamento: Equipamento;
   dataSource;
   elements;
+  confirmaExclusao: boolean;
   //idDoador = sessionStorage.getItem("idUser");
   idDoador = 1;
 
@@ -35,6 +38,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     this.criaForm();
     this.getTiposEquipamentos();
     this.carregaEquipamentos();
+    this.desisteExcluir();
   }
 
   getTiposEquipamentos() {
@@ -46,6 +50,13 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     this.formEquipamento = this.fb.group({
       tiposEquipamentos : new FormControl(''),
       funcionando: new FormControl(''),
+      descricaoEquipamento: new FormControl(null, [Validators.required])
+    });
+
+    this.formDetalhe = this.fb.group({
+      id: new FormControl(''),
+      tiposEquipamentos : new FormControl(''),
+      funcionando: [''],
       descricaoEquipamento: new FormControl(null, [Validators.required])
     });
   }
@@ -112,5 +123,49 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       console.log(err);
       //this.isLoadingResults = false;
     });
+  }
+
+  detalhaItem(id: number){
+    if(id != 0){
+      this.formDetalhe.get('id').setValue(id);
+      this.equipamentoService.getEquipamento(id).subscribe(res => {
+        this.equipamento = res;
+        console.log(this.equipamento.funcionando);
+        this.formDetalhe.get("funcionando").setValue(this.equipamento.funcionando);        
+      }
+      );
+    }
+  }
+  confirmaExcluir(){
+    this.confirmaExclusao = false;
+  }
+
+  desisteExcluir(){
+    this.confirmaExclusao = true;
+  }
+
+  excluir(id: number): void {
+    this.equipamentoService.delete(id)
+      .subscribe(
+        response => {
+          this.showSuccess("Cadastro excluído com Sucesso!");
+          this.carregaEquipamentos();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  atualizar(form: NgForm){
+    if(this.formDetalhe.valid){
+      let id = this.formDetalhe.get('id').value;
+      console.log(this.formDetalhe.value);
+      this.equipamentoService.atualizar(id, this.formDetalhe.value).subscribe(() => {      
+        this.showSuccess("Cadastro alterado com Sucesso!");
+        this.carregaEquipamentos();
+      });
+    }else{
+      this.formularioInvalido = true;
+    } 
   }
 }

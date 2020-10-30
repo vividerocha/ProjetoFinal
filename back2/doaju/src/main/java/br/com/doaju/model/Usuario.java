@@ -11,10 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -46,22 +44,8 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private Set<Grupo> grupos = new HashSet<>();
 	
-
-//	    @Id
-//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//		@Column(name = "idUsuario")
-//	    private Long id;
-//	    private String nome;
-//	    private String email;
-//	    private String senha;
-//	    private boolean admin = false;
-//	    
-//		@Temporal(TemporalType.TIMESTAMP)     
-//		private Date dataCadastro = new java.sql.Date(System.currentTimeMillis());
+	@OneToOne 
+	@JoinColumn(name = "usuario_id")
+	private HistoricoEquipamento historico;
 	
-//	    public Usuario(String nome, String email, String senha) {
-//	        this.nome = nome;
-//	        this.email = email;
-//	        this.senha = senha;
-//	    }
 }

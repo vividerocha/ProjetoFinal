@@ -59,4 +59,16 @@ export class EquipamentoService {
         return this.httpClient.get<any>(this.apiUrl);
       }
 
+      getEquipamento(id: number): Observable<any>{
+        return this.httpClient.get<Equipamento>(this.apiUrl + "/" + id);
+    }
+
+    delete(id: number): Observable<any> {
+        return this.httpClient.delete(`${this.apiUrl}/${id}`);
+    }
+    atualizar(id: number, equipamento: Equipamento){   
+        return this.httpClient.put(`${this.apiUrl}/${id}`, equipamento)
+        .pipe(retry(2),catchError(this.handleError));
+    }
+
 }
