@@ -1,3 +1,4 @@
+import { Tecnico } from './tecnico';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CadastroTecnicoComponent } from './cadastro-tecnico.component';
@@ -19,12 +20,16 @@ export class TecnicoService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
 
-    salvar(novoTecnico: CadastroTecnicoComponent): Observable<CadastroTecnicoComponent>{
+    salvar(novoTecnico: Tecnico): Observable<CadastroTecnicoComponent>{
         console.log(novoTecnico);
         return this.httpClient.post<CadastroTecnicoComponent>(this.apiUrl, JSON.stringify(novoTecnico), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))
         //return this.httpClient.post(this.apiUrl, novoUser);
         
+    }
+
+    getTecnicoPorIduser(id: number): Observable<any>{
+        return this.httpClient.get<Tecnico>(this.apiUrl + "/user/" + id);
     }
 
     // Manipulação de erros

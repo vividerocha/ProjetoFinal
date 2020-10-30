@@ -31,11 +31,12 @@ public class TecnicoController {
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody TecnicoRequest tecnicoRequest) {	
 		try {
-			
+			System.out.println(tecnicoRequest.toString());
 			TecnicoDTO tecnicoDTO = service.salvar(tecnicoRequest);			
 			return ResponseEntity.status(HttpStatus.CREATED).body(tecnicoDTO);
 		
 		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}		
 	}
@@ -50,6 +51,18 @@ public class TecnicoController {
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		
 		TecnicoDTO tecnico = service.buscar(id);
+		
+		if (tecnico != null) {
+			return ResponseEntity.ok(tecnico);
+		}
+		
+		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+	
+	}
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> buscarPorIdUser(@PathVariable Long id) {
+		
+		TecnicoDTO tecnico = service.buscarPoridUser(id);
 		
 		if (tecnico != null) {
 			return ResponseEntity.ok(tecnico);

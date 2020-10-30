@@ -48,6 +48,9 @@ export class DoadoresService {
     getDoador(id: number): Observable<any>{
         return this.httpClient.get<Doador>(this.apiUrl + "/" + id);
     }
+    getDoadorPorIduser(id: number): Observable<any>{
+        return this.httpClient.get<Doador>(this.apiUrl + "/user/" + id);
+    }
 
     delete(id: number): Observable<any> {
         return this.httpClient.delete(`${this.apiUrl}/${id}`);

@@ -40,8 +40,24 @@ public class DoadorService {
 	}
 	
 	public DoadorDTO buscar(Long id) {
-		Doador doador = repository.findById(id).get(); 
-		return mapper.modelToDTO(doador);
+		try {
+			Doador doador = repository.findById(id).get(); 
+			return mapper.modelToDTO(doador);
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
+	public DoadorDTO buscarPorIdUsuario(Long id) {
+		try {
+			Doador doador = repository.buscarPorIdUsuario(id);
+			return mapper.modelToDTO(doador);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
 	}
 
 	@Transactional

@@ -13,6 +13,7 @@ import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.TecnicoMapper;
 import br.com.doaju.model.Tecnico;
 import br.com.doaju.repository.TecnicoRepository;
+import br.com.doaju.repository.UsuarioRepository;
 import br.com.doaju.request.TecnicoRequest;
 
 @Service
@@ -21,18 +22,34 @@ public class TecnicoService {
 	private TecnicoRepository repository;
 	
 	@Autowired
+	private UsuarioRepository repoUser;
+	
+	@Autowired
 	private TecnicoMapper mapper;
 
 	@Transactional
 	public TecnicoDTO salvar(TecnicoRequest tecnicoRequest) {
 		
 		Tecnico tecnico = mapper.requestToModel(tecnicoRequest);
+		tecnico.setUsuario(repoUser.findById(tecnicoRequest.getUsuario()).get());
+		System.out.println(tecnico.toString());
 	    return mapper.modelToDTO( repository.save(tecnico));		
 	}
 	
 	public TecnicoDTO buscar(Long id) {
 		Tecnico tecnico = repository.findById(id).get(); 
 		return mapper.modelToDTO(tecnico);
+	}
+	
+	public TecnicoDTO buscarPoridUser(Long id) {
+		try {
+			Tecnico tecnico = repository.buscarPorIdUsuario(id);
+			return mapper.modelToDTO(tecnico);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
 	}
 
 	@Transactional

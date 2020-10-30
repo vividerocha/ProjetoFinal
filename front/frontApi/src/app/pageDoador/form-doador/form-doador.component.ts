@@ -16,9 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FormDoadorComponent implements OnInit {
 
-  usuarioLogado: string;
-  usuarioLogadoEmail: string;
-  idUsuario:Number;
+ 
   formDoador: FormGroup;
   //usuario: any[] = [];
   usuario: Usuario;
@@ -34,28 +32,12 @@ export class FormDoadorComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-
-    //localStorage.setItem('isLogado', '');
-    this.usuarioLogado = sessionStorage.getItem('isLogado');
-    this.usuarioLogadoEmail = sessionStorage.getItem('email');
-
-    //if(this.usuarioLogado == "" || this.usuarioLogado == null){
-    //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '1' }, queryParamsHandling: 'merge' });
-    //}
-
+    if(sessionStorage.getItem('token')!= null){
+      this.router.navigate(['/home'])
+    }
     this.formularioInvalido = false;
     this.createForm();
 
-    if(this.usuarioLogadoEmail != "" && this.usuarioLogadoEmail != null){
-      this.usuarioService.verificaEmail(this.usuarioLogadoEmail).subscribe(dados =>{
-        this.idUsuario = dados.id;
-        console.log(dados);
-        this.formDoador.get('id_usuario').setValue(this.idUsuario);
-        }
-      );
-    }
-    
-    
   }
 
   createForm() {
@@ -70,7 +52,7 @@ export class FormDoadorComponent implements OnInit {
       complemento: new FormControl(''),
       telefone: new FormControl(''),
       celular: new FormControl(null, [Validators.required, Validators.minLength(10)]),
-      id_usuario: new FormControl('')
+      
     });
   }
 
@@ -112,12 +94,8 @@ export class FormDoadorComponent implements OnInit {
 
       
       this.doadorService.salvar(dados).subscribe(() => {
-        //após cadastrar na tabela de pessoas, o usuário será redirecionado para a tela de login
-        console.log(dados);
-        //sessionStorage.setItem('isLogado', '');
-        //sessionStorage.setItem('email', '');
-        //this.router.navigateByUrl('/login');
         this.toastService.success("Cadastro realizado com Sucesso!");
+        this.router.navigate(['/login'])
       });
     }else{
       this.formularioInvalido = true;
