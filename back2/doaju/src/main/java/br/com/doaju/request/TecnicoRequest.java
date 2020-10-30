@@ -17,4 +17,5 @@ public class TecnicoRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	private Long usuario;
 }

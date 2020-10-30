@@ -61,6 +61,16 @@ public class AlunoController {
 		return ResponseEntity.notFound().build();
 	
 	}
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+		
+		AlunoDTO aluno = service.buscarPorIdUsuario(id);
+		
+		if (aluno != null) {
+			return ResponseEntity.ok(aluno);
+		}
+		return ResponseEntity.notFound().build();
+	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Aluno> excluir(@PathVariable Long id) {

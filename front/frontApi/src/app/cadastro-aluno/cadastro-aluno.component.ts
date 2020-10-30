@@ -29,15 +29,9 @@ export class CadastroAlunoComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    this.usuarioLogado = sessionStorage.getItem('isLogado');
-    this.usuarioLogadoEmail = sessionStorage.getItem('email');
-    //apagar a linha abaixo depois. Só para testar estado da variavel antes de mais nada.
-    console.log(`Pagina cadastro de aluno. Variável ususarioLogado: ${this.usuarioLogado}`);
-
-    //if(this.usuarioLogado == "" || this.usuarioLogado == null){
-    //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '3' }, queryParamsHandling: 'merge' });
-    //}
-
+    if(sessionStorage.getItem('token')!= null){
+      this.router.navigate(['/home'])
+    }
     this.criaForm();
     this.getTiposEquipamentos();
 
@@ -114,18 +108,12 @@ export class CadastroAlunoComponent implements OnInit {
         termo: this.formAluno.value.declaracao,
         usuario: this.formAluno.value.idUser,       
         equipamentos:this.equipamentosSelecionados
-      } as Aluno      
-      console.log(dados)
-      
-      
-      //console.log(this.formAluno.value)
-      
+      } as Aluno
+
       this.alunoService.salvar(dados).subscribe(() => {        
-        console.log(this.formAluno.value);
-        //sessionStorage.setItem('isLogado', '');
-        //sessionStorage.setItem('email', '');
-        //this.router.navigateByUrl('/login');
+        console.log(this.formAluno.value);        
         this.showSuccess("Cadastro realizado com Sucesso!");
+        this.router.navigate(['/login'])
       });
     }else{
       this.formularioInvalido = true;

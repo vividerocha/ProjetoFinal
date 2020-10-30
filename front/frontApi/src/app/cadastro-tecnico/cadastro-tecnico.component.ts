@@ -12,9 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./cadastro-tecnico.component.css']
 })
 export class CadastroTecnicoComponent implements OnInit {
-  usuarioLogado: string;
-  usuarioLogadoEmail: string;
-  idUsuario:Number;
+  
   formTecnico: FormGroup;
   formularioInvalido: boolean;
   tiposEquipamentos;
@@ -28,22 +26,15 @@ export class CadastroTecnicoComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    this.usuarioLogado = sessionStorage.getItem('isLogado');
-    this.usuarioLogadoEmail = sessionStorage.getItem('email');
-    //apagar a linha abaixo depois. Só para testar estado da variavel antes de mais nada.
-    console.log(`Pagina cadastro de aluno. Variável ususarioLogado: ${this.usuarioLogado}`);
-
-    //if(this.usuarioLogado == "" || this.usuarioLogado == null){
-    //  this.router.navigate(['/cadastro-usuario'], { queryParams: { id: '3' }, queryParamsHandling: 'merge' });
-    //}
-
+    if(sessionStorage.getItem('token')!= null){
+      this.router.navigate(['/home'])
+    }
     this.criaForm();
-    
-
   }
-  criaForm(){
+
+  criaForm() {
     this.formTecnico = this.fb.group({
-      nomeCompleto: new FormControl(null,[Validators.required, Validators.minLength(10)]),
+      nomeCompleto: new FormControl(null, [Validators.required, Validators.minLength(10)]),
       cep: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       estado: new FormControl(''),
       logradouro: new FormControl(''),
@@ -56,16 +47,16 @@ export class CadastroTecnicoComponent implements OnInit {
     });
   }
 
-  consultaCep(){
+  consultaCep() {
     let cep = this.formTecnico.get('cep').value;
     console.log(cep);
-    
-    if(cep != null && cep !== ''){
-        this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
     }
   }
 
-  populaForm(dados){
+  populaForm(dados) {
     this.formTecnico.patchValue({
       logradouro: dados.logradouro,
       estado: dados.uf,
@@ -74,34 +65,46 @@ export class CadastroTecnicoComponent implements OnInit {
     })
   }
 
-  onSubmit(form: NgForm){
-    if(this.formTecnico.valid){
-      this.tecnicoService.salvar(this.formTecnico.value).subscribe(() => {        
-        console.log(this.formTecnico.value);
-        //sessionStorage.setItem('isLogado', '');
-        //sessionStorage.setItem('email', '');
-        //this.router.navigateByUrl('/login');
+  onSubmit(form: NgForm) {
+    if (this.formTecnico.valid) {
+      const dados = {
+        nomeCompleto: this.formTecnico.value.nomeCompleto,
+        cep: this.formTecnico.value.cep,
+        logradouro: this.formTecnico.value.logradouro,
+        numeroCasa: this.formTecnico.value.numeroCasa,
+        bairro: this.formTecnico.value.bairro,
+        cidade: this.formTecnico.value.cidade,
+        estado: this.formTecnico.value.estado,
+        complemento: this.formTecnico.value.complemento,
+        telefone: this.formTecnico.value.telefone,
+        celular: this.formTecnico.value.celular,
+        termo: true,
+        usuario: sessionStorage.getItem('idUser')
+      } as Tecnico
+
+      this.tecnicoService.salvar(dados).subscribe(() => {
         this.showSuccess("Cadastro realizado com Sucesso!");
+        this.router.navigate(['/login'])
       });
-    }else{
+    } else {
       this.formularioInvalido = true;
     }
   }
 
-  get nomeCompleto(){
+  get nomeCompleto() {
     return this.formTecnico.get('nomeCompleto');
   }
-  get cep(){
+  get cep() {
     return this.formTecnico.get('cep');
   }
-  get celular(){
+  get celular() {
     return this.formTecnico.get('celular');
   }
-  get numeroCasa(){
+  get numeroCasa() {
     return this.formTecnico.get('numeroCasa');
   }
 
   showSuccess(mensagem: string) {
-      this.toastService.success(mensagem);
+    this.toastService.success(mensagem);
   }
 }

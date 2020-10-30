@@ -59,6 +59,19 @@ public class DoadorController {
 	
 	}
 	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> buscarPorIdUser(@PathVariable Long id) {
+		System.out.println(id);
+		DoadorDTO doador = service.buscarPorIdUsuario(id);
+		
+		if (doador != null) {
+			return ResponseEntity.ok(doador);
+		}
+		
+		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+	
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@RequestBody DoadorRequest doadorRequest, @PathVariable Long id) {
 		
