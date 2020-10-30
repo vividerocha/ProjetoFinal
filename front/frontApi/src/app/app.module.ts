@@ -34,6 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 
 
 
+
 const appRoutes: Routes = [
    {path: '', redirectTo: 'home', pathMatch: 'full'},
    { path : 'home', component : HomeComponent },
