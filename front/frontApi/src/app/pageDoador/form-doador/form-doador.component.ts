@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { consultaCepService } from './../../services/consultaCEP.service';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
-import { Doador } from './Doador';
+import { Doador } from './doador';
 import { DoadorService } from './form-doador.service';
 import { CadastroDoUsuarioService } from './../../cadastro-do-usuario/cadastro-do-usuario.service'
 import { Usuario } from 'src/app/cadastro-do-usuario/usuario';

@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: false,
+  logRequest: true,
+  traceRequest: true,
+  URLSERVIDOR: 'https://doaju.herokuapp.com/'
 };

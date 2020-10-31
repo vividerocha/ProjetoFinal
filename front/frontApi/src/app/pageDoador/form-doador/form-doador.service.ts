@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
-import { Doador } from './Doador';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';

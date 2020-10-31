@@ -37,7 +37,7 @@ import { MatTableModule } from '@angular/material/table';
 
 const appRoutes: Routes = [
    {path: '', redirectTo: 'home', pathMatch: 'full'},
-   { path : 'home', component : HomeComponent },
+   { path : 'home', component : HomeComponent },   
    { path : 'sobre-projeto', component : SobreProjetoComponent },
    { path : 'cadastro-aluno', component : CadastroAlunoComponent },
    { path : 'page-doador', component : FormDoadorComponent },
