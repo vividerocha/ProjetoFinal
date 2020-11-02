@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild  } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { EquipamentoService } from './cadastro-de-equipamento.service';
 import { Equipamento } from './equipamento';
-import { TipoEquipamento } from '../cadastro-tipo-equipamento/tipoEquipamento';
 import { ToastrService } from 'ngx-toastr';
 import { Session } from 'protractor';
 import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { TipoEquipamento } from './../cadastro-tipo-equipamento/tipoEquipamento';
+
 
 @Component({
   selector: 'app-cadastro-de-equipamento',
@@ -18,6 +19,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
 
   displayedColumns: string[] = ['id','tipoEquipamento', 'descricao', 'funcionando',  '-'];
   tiposEquipamentosLista: TipoEquipamento;
+  tipoEqui: TipoEquipamento;
   formEquipamento: FormGroup;
   formDetalhe: FormGroup;
   formularioInvalido: boolean;
@@ -77,11 +79,9 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
 
-    //console.log(this.formEquipamento.value);
     console.log(dados);
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
-        //this.equipamentoService.salvar(this.formEquipamento.value)
         .subscribe(
           response => {
             console.log(response);            
@@ -96,8 +96,6 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     }else{
       this.formularioInvalido = true;
     }
-    
-
   }
 
 
@@ -130,8 +128,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       this.formDetalhe.get('id').setValue(id);
       this.equipamentoService.getEquipamento(id).subscribe(res => {
         this.equipamento = res;
-        console.log(this.equipamento.funcionando);
-        this.formDetalhe.get("funcionando").setValue(this.equipamento.funcionando);        
+        this.formDetalhe.get("funcionando").setValue(this.equipamento.funcionando);    
+        this.formDetalhe.get("tiposEquipamentos").setValue(this.equipamento.tipoEquipamento.id)
       }
       );
     }
@@ -157,15 +155,45 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   }
 
   atualizar(form: NgForm){
-    if(this.formDetalhe.valid){
-      let id = this.formDetalhe.get('id').value;
-      console.log(this.formDetalhe.value);
-      this.equipamentoService.atualizar(id, this.formDetalhe.value).subscribe(() => {      
-        this.showSuccess("Cadastro alterado com Sucesso!");
-        this.carregaEquipamentos();
-      });
-    }else{
-      this.formularioInvalido = true;
-    } 
+    this.atribuiObjeto();
+    setTimeout(() => {
+      if(this.tipoEqui != null || this.tipoEqui != undefined){
+        const dados = {
+          id: this.formDetalhe.get('id').value,
+          descricaoEquipamento: this.formDetalhe.get('descricaoEquipamento').value,
+          funcionando: this.formDetalhe.get('funcionando').value,
+          tipoEquipamento: this.tipoEqui
+        } as Equipamento;
+    
+        console.log(dados);
+        if(this.formDetalhe.valid){
+          let id = this.formDetalhe.get('id').value;
+          this.equipamentoService.atualizar(id, dados).subscribe(() => {      
+            this.showSuccess("Cadastro alterado com Sucesso!");
+            this.carregaEquipamentos();
+          });
+        }else{
+          this.formularioInvalido = true;
+        } 
+      }
+      
+    }, 60);
+
+    
+  }
+
+  atribuiObjeto(){
+    this.retornaTipoEquipamento(this.formDetalhe.value.tiposEquipamentos);
+  }
+
+  retornaTipoEquipamento(id: number){
+    this.equipamentoService.getTipoEquipamento(id).subscribe(
+      (res) => {
+         this.tipoEqui = res;
+      },
+      (error) => {
+         console.error(error)
+      }
+    );
   }
 }

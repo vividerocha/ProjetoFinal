@@ -112,7 +112,8 @@
                     <div class="form-group col-md-6">
                         <label for="tipos">Tipo de Equipamento: <span style="color:red;">*</span></label>
                         <select class="form-control" formControlName="tiposEquipamentos">
-                            <option *ngFor="let tipoEquipamento of tiposEquipamentosLista">
+                            <option *ngFor="let tipoEquipamento of tiposEquipamentosLista" 
+                            [value]="tipoEquipamento.id">
                                 {{tipoEquipamento.descricao}}</option>
                         </select>
                                           
@@ -122,14 +123,16 @@
                         
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="funcionando" id="sim" 
-                            value="true" formControlName="funcionando">
+                            [value]="true" *ngIf="equipamento"
+                            formControlName="funcionando" [(ngModel)]="equipamento.funcionando">
                             <label class="form-check-label" for="sim">
                               Sim
                             </label>
                           </div>
                           <div class="form-check">
                             <input class="form-check-input" type="radio" 
-                            name="funcionando" id="nao" value="false" formControlName="funcionando">
+                            name="funcionando" *ngIf="equipamento" id="nao" [value]="false" 
+                            formControlName="funcionando" [(ngModel)]="equipamento.funcionando">
                             <label class="form-check-label" for="nao">
                               Não
                             </label>
@@ -140,8 +143,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label>Descrição: <span style="color:red;">*</span></label>
-                        <textarea class="form-control" id="descricaoEquipamento" 
-                        *ngIf="equipamento" [(ngModel)]="equipamento.descricaoEquipamento"
+                        <textarea class="form-control" id="descricaoEquipamento"
+                        *ngIf="equipamento" 
+                        [(ngModel)]="equipamento.descricaoEquipamento"
                         formControlName="descricaoEquipamento" rows="5"></textarea>
                         <mdb-error class="text-danger" 
                             *ngIf="descricaoEquipamento.invalid && (descricaoEquipamento.dirty || descricaoEquipamento.touched)">

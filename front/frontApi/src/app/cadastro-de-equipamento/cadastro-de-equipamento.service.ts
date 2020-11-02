@@ -6,6 +6,7 @@ import { CadastroDeEquipamentoComponent } from './cadastro-de-equipamento.compon
 import { environment } from './../../environments/environment';
 import { HistoricoEquipamento } from './historicoEquipamento';
 import { Equipamento } from './equipamento';
+import { TipoEquipamento } from './../cadastro-tipo-equipamento/tipoEquipamento';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class EquipamentoService {
     }
 
     salvar(novoEquipamento: any): Observable<any>{
+        console.log(novoEquipamento);
         return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento), this.httpOptions);        
     }
 
@@ -54,12 +56,16 @@ export class EquipamentoService {
     getTiposEquipamentos(): Observable<any> {
         return this.httpClient.get<any>(environment.URLSERVIDOR + "tipoEquipamentos");
       }
-    
-      getEquipamentos(): Observable<any> {
-        return this.httpClient.get<any>(this.apiUrl);
-      }
 
-      getEquipamento(id: number): Observable<any>{
+    getTipoEquipamento(id: number): Observable<TipoEquipamento> {
+        return this.httpClient.get<TipoEquipamento>(environment.URLSERVIDOR + "tipoEquipamentos" + "/" + id);
+    }
+    
+    getEquipamentos(): Observable<any> {
+        return this.httpClient.get<any>(this.apiUrl);
+    }
+
+    getEquipamento(id: number): Observable<any>{
         return this.httpClient.get<Equipamento>(this.apiUrl + "/" + id);
     }
 
