@@ -30,6 +30,10 @@ export class DoadorService {
         //return this.httpClient.post(this.apiUrl, novoUser);
         
     }
+    atualizar(id: number, doador: any){
+        return this.httpClient.put(`${this.apiUrl}/${id}`, doador)
+        .pipe(retry(2),catchError(this.handleError));
+    }
 
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {

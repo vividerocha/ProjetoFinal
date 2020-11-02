@@ -31,6 +31,10 @@
               <a class="nav-link">{{myNome}}</a>
             </li>
             <li [hidden]="ver" class="nav-item">
+              <a class="nav-link" *ngIf="linkRedirectDoador" routerLink ="/page-doador" [queryParams]="doador">| Meus Dados</a>
+              <a class="nav-link" *ngIf="linkRedirectTec" routerLink ="/cadastro-tecnico" [queryParams]="tecnico">| Meus Dados</a>
+            </li>
+            <li [hidden]="ver" class="nav-item">
               <a class="nav-link">| Sair</a>
             </li>
           </ul>

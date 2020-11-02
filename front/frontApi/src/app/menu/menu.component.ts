@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Doador } from '../pageDoador/form-doador/doador';
+import { Tecnico } from './../cadastro-tecnico/tecnico';
 
 
 @Component({
@@ -19,13 +20,17 @@ export class MenuComponent implements OnInit {
   idUsuario: number;
   myNome: String = "Seu nome aqui";
   ver: boolean = true;
-  
+  doador: Doador;
+  tecnico: Tecnico;
+  linkRedirectDoador: boolean = false;
+  linkRedirectTec:boolean = false;
 
   constructor(private menuService: MenuService,
     private router: Router,
     private alunoService: AlunoService,
     private doadorService: DoadoresService,
-    private tecnicoService: TecnicoService) { }
+    private tecnicoService: TecnicoService
+    ) { }
     
 
   ngOnInit(): void {
@@ -37,9 +42,12 @@ export class MenuComponent implements OnInit {
 
   consultaDoador(id) {
     this.doadorService.getDoadorPorIduser(id)
-      .subscribe(dados => {
-        console.log(dados);
+      .subscribe(dados => {        
+        this.doador = dados;
+        console.log(this.doador)
         this.myNome = dados.nomeCompleto;
+        sessionStorage.setItem('idDoador',dados.id);
+        this.linkRedirectDoador = true;
         this.ver = false;
       }, error => {
         this.consultaTecnico(id)
@@ -50,7 +58,10 @@ export class MenuComponent implements OnInit {
     this.tecnicoService.getTecnicoPorIduser(id)
       .subscribe(dados => {
         console.log(dados);
+        this.tecnico = dados;
         this.myNome = dados.nomeCompleto;
+        sessionStorage.setItem('idTecnico',dados.id);
+        this.linkRedirectTec = true;
         this.ver = false;
       }, error => {
         this.consultaAluno(id)

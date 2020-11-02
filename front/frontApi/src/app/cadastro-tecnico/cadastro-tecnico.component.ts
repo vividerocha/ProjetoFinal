@@ -27,7 +27,7 @@ export class CadastroTecnicoComponent implements OnInit {
 
   ngOnInit(): void {
     if(sessionStorage.getItem('token')!= null){
-      this.router.navigate(['/home'])
+      //this.router.navigate(['/home'])
     }
     this.criaForm();
   }

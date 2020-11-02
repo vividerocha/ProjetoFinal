@@ -16,10 +16,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FormDoadorComponent implements OnInit {
 
- 
+
   formDoador: FormGroup;
   //usuario: any[] = [];
   usuario: Usuario;
+  doador: any;
+  salvaOuEdita:boolean = true;
   formularioInvalido: boolean;
 
   constructor(private router: Router,
@@ -32,11 +34,22 @@ export class FormDoadorComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('token')!= null){
+    //IdDoador é setado no compomente menu, o link traz a informações na URL, se setado,  popula o form.
+    // o else não permite que alguém qeu não esteja vindo pagina de cadastro ou esteja logado acesse esse form.
+    if (sessionStorage.getItem('idDoador') != null) {      
+      this.populaFormulario();
+    } else if (sessionStorage.getItem('idUser') == null) {
       this.router.navigate(['/home'])
     }
     this.formularioInvalido = false;
     this.createForm();
+
+    // verifica se o doador etá vazio, se não ele preenche o formulario
+    if(this.doador != undefined){
+      this.preencheFormEditar(this.doador);
+      this.consultaCep();
+      this.salvaOuEdita = false
+    }
 
   }
 
@@ -52,20 +65,20 @@ export class FormDoadorComponent implements OnInit {
       complemento: new FormControl(''),
       telefone: new FormControl(''),
       celular: new FormControl(null, [Validators.required, Validators.minLength(10)]),
-      
+
     });
   }
 
-  consultaCep(){
+  consultaCep() {
     let cep = this.formDoador.get('cep').value;
     console.log(cep);
-    
-    if(cep != null && cep !== ''){
-        this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
     }
   }
 
-  populaForm(dados){
+  populaForm(dados) {
     this.formDoador.patchValue({
       //cep: dados.cep,
       logradouro: dados.logradouro,
@@ -75,9 +88,29 @@ export class FormDoadorComponent implements OnInit {
     })
   }
 
-  onSubmit(form: NgForm){
+  salva(){
+    const dados =  this.capturaDados();
+    this.doadorService.salvar(dados).subscribe(() => {
+      this.toastService.success("Cadastro realizado com Sucesso!");
+      this.router.navigate(['/login'])
+    });
+  }
 
-    if(this.formDoador.valid){
+  atualiza(){
+    var dados =  this.capturaDados();    
+    console.log(dados);
+    const id: number = this.doador.id;
+    this.doadorService.atualizar(id, dados )
+    .subscribe(()=>{
+      this.toastService.success("Dados atualizados com Sucesso!");
+      sessionStorage.setItem('reiniciaMenu', 'ok')
+      this.router.navigate(['/home'])
+      //location.reload();
+    })
+  }
+
+  capturaDados(){
+    if (this.formDoador.valid) {
       const dados = {
         nomeCompleto: this.formDoador.value.nomeCompleto,
         cep: this.formDoador.value.cep,
@@ -89,33 +122,56 @@ export class FormDoadorComponent implements OnInit {
         complemento: this.formDoador.value.complemento,
         celular: this.formDoador.value.celular,
         telefone: this.formDoador.value.telefone,
-        usuario: sessionStorage.idUser
+        usuario: sessionStorage.idUser || sessionStorage.idUserLogado,
+        id: this.doador.id
       } as Doador
-
-      
-      this.doadorService.salvar(dados).subscribe(() => {
-        this.toastService.success("Cadastro realizado com Sucesso!");
-        this.router.navigate(['/login'])
-      });
-    }else{
+     return dados;    
+    }else {
       this.formularioInvalido = true;
     }
+  }
 
-    //}
-  
-}
+  onSubmit() {
+    if(this.salvaOuEdita){
+      this.salva();
+    }else{
+      this.atualiza();
+     }
+  }
 
 
-  goRota(){
+  populaFormulario() {    
     this.activatedRoute.queryParams
       .subscribe(params => {
-        console.log(params); // { order: "popular" }
-        this.zone.run(() => {
-            this.router.navigate(['/cadastro-equipamento']);
-          });
+        this.doador = {
+          nomeCompleto: params.nomeCompleto,
+          id: params.id,
+          celular: params.celular,
+          cep: params.cep,
+          complemento: params.complemento,
+          telefone: params.telefone,
+          usuario: params.usuario,
+          numeroCasa: params.numeroCasa,
+          cidade: params.cidade,
+          bairro: params.bairro,
+          logradouro: params.logradouro
+        } as Doador
+        
       }
-    );
+      );
 
+  }
+
+  preencheFormEditar(dados) {
+    console.log(dados);
+    this.formDoador.patchValue({
+      nomeCompleto: dados.nomeCompleto,
+      cep: dados.cep,
+      numeroCasa: dados.numeroCasa,
+      complemento: dados.complemento,
+      telefone: dados.telefone,
+      celular: dados.celular
+    })
   }
 
   get nomeCompleto() {
@@ -134,17 +190,17 @@ export class FormDoadorComponent implements OnInit {
     return this.formDoador.get('numeroCasa');
   }
 
-  showSucesso(mensagem: string){
+  showSucesso(mensagem: string) {
     this.toastService.success(mensagem, '', {
-      positionClass : "toast-center",
-      closeButton : false,
-      newestOnTop : false,
-      progressBar : false,
-      timeOut : 5000,
-      extendedTimeOut : 1000,
-      easing : 'ease-in'
-     }
+      positionClass: "toast-center",
+      closeButton: false,
+      newestOnTop: false,
+      progressBar: false,
+      timeOut: 5000,
+      extendedTimeOut: 1000,
+      easing: 'ease-in'
+    }
     );
   }
-  
+
 }
