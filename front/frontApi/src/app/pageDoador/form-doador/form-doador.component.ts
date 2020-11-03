@@ -20,7 +20,7 @@ export class FormDoadorComponent implements OnInit {
   formDoador: FormGroup;
   //usuario: any[] = [];
   usuario: Usuario;
-  doador: any;
+  doador: Doador;
   salvaOuEdita:boolean = true;
   formularioInvalido: boolean;
 
@@ -111,6 +111,22 @@ export class FormDoadorComponent implements OnInit {
 
   capturaDados(){
     if (this.formDoador.valid) {
+      if(this.doador == undefined){
+        const dados = {
+          nomeCompleto: this.formDoador.value.nomeCompleto,
+          cep: this.formDoador.value.cep,
+          logradouro: this.formDoador.value.logradouro,
+          numeroCasa: this.formDoador.value.numeroCasa,
+          bairro: this.formDoador.value.bairro,
+          cidade: this.formDoador.value.cidade,
+          estado: this.formDoador.value.estado,
+          complemento: this.formDoador.value.complemento,
+          celular: this.formDoador.value.celular,
+          telefone: this.formDoador.value.telefone,
+          usuario: sessionStorage.idUser || sessionStorage.idUserLogado          
+        } as Doador
+       return dados;
+      }else{
       const dados = {
         nomeCompleto: this.formDoador.value.nomeCompleto,
         cep: this.formDoador.value.cep,
@@ -125,7 +141,8 @@ export class FormDoadorComponent implements OnInit {
         usuario: sessionStorage.idUser || sessionStorage.idUserLogado,
         id: this.doador.id
       } as Doador
-     return dados;    
+     return dados;
+    }   
     }else {
       this.formularioInvalido = true;
     }
