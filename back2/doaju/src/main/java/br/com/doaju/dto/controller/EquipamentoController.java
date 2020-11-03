@@ -29,7 +29,7 @@ public class EquipamentoController {
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody EquipamentoRequest equipamentoRequest) {	
 		try {
-			
+			equipamentoRequest.setId(null);
 			EquipamentoDTO equipamentoDTO = service.salvar(equipamentoRequest);			
 			return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoDTO);
 		

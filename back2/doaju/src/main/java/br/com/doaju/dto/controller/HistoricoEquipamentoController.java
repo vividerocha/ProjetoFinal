@@ -2,9 +2,6 @@ package br.com.doaju.dto.controller;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
@@ -30,7 +26,7 @@ public class HistoricoEquipamentoController {
 	private HistoricoEquipamentoService service;
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid HistoricoEquipamentoRequest historicoEquipamentoRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody HistoricoEquipamentoRequest historicoEquipamentoRequest) {	
 		try {
 			
 			HistoricoEquipamentoDTO historicoEquipamentoDTO = service.salvar(historicoEquipamentoRequest);			

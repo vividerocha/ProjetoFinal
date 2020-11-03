@@ -75,7 +75,7 @@ public class SituacaoEquipamentoController {
 			return ResponseEntity.ok(tipo);
 		}
 		
-		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+		return ResponseEntity.badRequest().body("Não retornou Situação!");
 	
 	}
 	

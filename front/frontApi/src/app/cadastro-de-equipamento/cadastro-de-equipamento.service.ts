@@ -7,6 +7,7 @@ import { environment } from './../../environments/environment';
 import { HistoricoEquipamento } from './historicoEquipamento';
 import { Equipamento } from './equipamento';
 import { TipoEquipamento } from './../cadastro-tipo-equipamento/tipoEquipamento';
+import { Situacao } from './../cadastro-situacao-equipamento/situacao';
 
 @Injectable({
     providedIn: 'root'
@@ -23,20 +24,12 @@ export class EquipamentoService {
     }
 
     salvar(novoEquipamento: any): Observable<any>{
-        console.log(novoEquipamento);
-        return this.httpClient.post<Equipamento>(this.apiUrl, JSON.stringify(novoEquipamento), this.httpOptions);        
+        return this.httpClient.post<Equipamento>(this.apiUrl, novoEquipamento, this.httpOptions);     
     }
 
-    salvarHistorico(id: string): Observable<any>{
-        const dados = {
-            equipamento: id,
-            situacaoEquipamento: "1"
-        } as HistoricoEquipamento;
-
-        return this.httpClient.post(environment.URLSERVIDOR + "historicoEquipamento" , JSON.stringify(dados), this.httpOptions)
-        .pipe(retry(2),catchError(this.handleError))
-        //return this.httpClient.post(this.apiUrl, novoUser);
-        
+    salvarHistorico(dados: any): Observable<any>{
+        return this.httpClient.post(environment.URLSERVIDOR + "historicoEquipamento" , dados, this.httpOptions)
+        .pipe(retry(2),catchError(this.handleError))        
     }
 
     // Manipulação de erros
@@ -60,7 +53,10 @@ export class EquipamentoService {
     getTipoEquipamento(id: number): Observable<TipoEquipamento> {
         return this.httpClient.get<TipoEquipamento>(environment.URLSERVIDOR + "tipoEquipamentos" + "/" + id);
     }
-    
+    getSituacoes(id: number): Observable<Situacao> {
+        return this.httpClient.get<Situacao>(environment.URLSERVIDOR + "situacaoEquipamento" + "/" + id);
+    }
+
     getEquipamentos(): Observable<any> {
         return this.httpClient.get<any>(this.apiUrl);
     }
