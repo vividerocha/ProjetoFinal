@@ -48,7 +48,7 @@ export class AlunoService {
       }
 
       getAlunoPorIduser(id: number): Observable<any>{
-        return this.httpClient.get<Aluno>(this.apiUrl + "/user/" + id);
+        return this.httpClient.get<any>(this.apiUrl + "/user/" + id);
     }
 
 }

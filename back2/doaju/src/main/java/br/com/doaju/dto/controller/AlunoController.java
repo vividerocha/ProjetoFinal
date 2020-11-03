@@ -1,7 +1,6 @@
 package br.com.doaju.dto.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -52,10 +51,10 @@ public class AlunoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		
-		Optional<Aluno> aluno = service.buscar(id);
+		AlunoDTO aluno = service.buscar(id);
 		
-		if (aluno.isPresent()) {
-			return ResponseEntity.ok(aluno.get());
+		if (aluno != null) {
+			return ResponseEntity.ok(aluno);
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -88,15 +87,15 @@ public class AlunoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@RequestBody @Valid Aluno aluno, @PathVariable Long id) {
+	public ResponseEntity<?> atualizar(@RequestBody AlunoRequest aluno, @PathVariable Long id) {
 		
-		Aluno alunoAtual = service.buscar(id).orElse(null);
+		AlunoDTO alunoAtual = service.buscar(id);
 		
 		if (alunoAtual != null) {
 			BeanUtils.copyProperties(aluno, alunoAtual, "id");
 			
-			service.atualizar(alunoAtual);
-			return ResponseEntity.ok(alunoAtual);
+			service.atualizar(aluno);
+			return ResponseEntity.ok(aluno);
 		}	
 			
 		return ResponseEntity.notFound().build();

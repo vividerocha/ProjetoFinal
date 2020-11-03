@@ -35,7 +35,7 @@ export class FormDoadorComponent implements OnInit {
 
   ngOnInit(): void {
     //IdDoador é setado no compomente menu, o link traz a informações na URL, se setado,  popula o form.
-    // o else não permite que alguém qeu não esteja vindo pagina de cadastro ou esteja logado acesse esse form.
+    // o else não permite que alguém que não esteja vindo pagina de cadastro ou esteja logado acesse esse form.
     if (sessionStorage.getItem('idDoador') != null) {      
       this.populaFormulario();
     } else if (sessionStorage.getItem('idUser') == null) {
@@ -97,7 +97,7 @@ export class FormDoadorComponent implements OnInit {
   }
 
   atualiza(){
-    var dados =  this.capturaDados();    
+    const dados =  this.capturaDados();    
     console.log(dados);
     const id: number = this.doador.id;
     this.doadorService.atualizar(id, dados )

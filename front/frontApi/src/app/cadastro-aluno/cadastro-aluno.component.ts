@@ -1,3 +1,4 @@
+import { TipoEquipamento } from './../cadastro-tipo-equipamento/tipoEquipamento';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { consultaCepService } from './../services/consultaCEP.service';
@@ -14,11 +15,12 @@ import { ToastrService } from 'ngx-toastr';
 export class CadastroAlunoComponent implements OnInit {
   usuarioLogado: string;
   usuarioLogadoEmail: string;
-  idUsuario:Number;
+  idUsuario: Number;
   formAluno: FormGroup;
   formularioInvalido: boolean;
-  equipamentosSelecionados:String [] = new Array();
+  equipamentosSelecionados: String[] = new Array();
   tiposEquipamentos;
+  aluno: any;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -29,16 +31,19 @@ export class CadastroAlunoComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('token')!= null){
+    if (sessionStorage.getItem('idAluno') != null) {
+      this.populaFormulario();
+      console.log(this.aluno);
+    } else if (sessionStorage.getItem('idUser') == null) {
       this.router.navigate(['/home'])
     }
     this.criaForm();
     this.getTiposEquipamentos();
 
   }
-  criaForm(){
+  criaForm() {
     this.formAluno = this.fb.group({
-      nomeCompleto: new FormControl(null,[Validators.required, Validators.minLength(10)]),
+      nomeCompleto: new FormControl(null, [Validators.required, Validators.minLength(10)]),
       cep: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       estado: new FormControl(''),
       logradouro: new FormControl(''),
@@ -54,32 +59,32 @@ export class CadastroAlunoComponent implements OnInit {
       turma: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       declaracao: new FormControl(null, [Validators.required]),
       //tiposEquipamentos : new FormControl(null, [Validators.required]),
-      idUser: new FormControl(sessionStorage.getItem('idUser')), 
+      idUser: new FormControl(sessionStorage.getItem('idUser')),
       checkCelular: new FormControl('')
     });
   }
 
-  consultaCep(){
+  consultaCep() {
     let cep = this.formAluno.get('cep').value;
     console.log(cep);
-    
-    if(cep != null && cep !== ''){
-        this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaEndereco(cep).subscribe(dados => this.populaForm(dados));
     }
   }
 
-  itemSelecionado(ev){
+  itemSelecionado(ev) {
     console.log(ev)
     // se estiver marcado adiciona ao array
-    if(ev.target.checked){
+    if (ev.target.checked) {
       this.equipamentosSelecionados.push(ev.target.value)
-    //se o usuario desmarcar o else tira do array o equipamento
-    }else{
-      this.equipamentosSelecionados.splice(this.equipamentosSelecionados.indexOf(ev.target.value),1)
+      //se o usuario desmarcar o else tira do array o equipamento
+    } else {
+      this.equipamentosSelecionados.splice(this.equipamentosSelecionados.indexOf(ev.target.value), 1)
     }
   }
 
-  populaForm(dados){
+  populaForm(dados) {
     this.formAluno.patchValue({
       logradouro: dados.logradouro,
       estado: dados.uf,
@@ -88,8 +93,8 @@ export class CadastroAlunoComponent implements OnInit {
     })
   }
 
-  onSubmit(form: NgForm){
-    if(this.formAluno.valid){      
+  onSubmit(form: NgForm) {
+    if (this.formAluno.valid) {
       const dados = {
         nomeCompleto: this.formAluno.value.nomeCompleto,
         cep: this.formAluno.value.cep,
@@ -106,16 +111,16 @@ export class CadastroAlunoComponent implements OnInit {
         turno: this.formAluno.value.turno,
         turma: this.formAluno.value.turma,
         termo: this.formAluno.value.declaracao,
-        usuario: this.formAluno.value.idUser,       
-        equipamentos:this.equipamentosSelecionados
+        usuario: this.formAluno.value.idUser,
+        equipamentos: this.equipamentosSelecionados
       } as Aluno
 
-      this.alunoService.salvar(dados).subscribe(() => {        
-        console.log(this.formAluno.value);        
+      this.alunoService.salvar(dados).subscribe(() => {
+        console.log(this.formAluno.value);
         this.showSuccess("Cadastro realizado com Sucesso!");
         this.router.navigate(['/login'])
       });
-    }else{
+    } else {
       this.formularioInvalido = true;
       alert('Por favor, leia e aceite a declação!');
     }
@@ -127,29 +132,56 @@ export class CadastroAlunoComponent implements OnInit {
     });
   }
 
-  get nomeCompleto(){
+  get nomeCompleto() {
     return this.formAluno.get('nomeCompleto');
   }
-  get cep(){
+  get cep() {
     return this.formAluno.get('cep');
   }
-  get turma(){
+  get turma() {
     return this.formAluno.get('turma');
   }
-  get serie(){
+  get serie() {
     return this.formAluno.get('serie');
   }
-  get escola(){
+  get escola() {
     return this.formAluno.get('escola');
   }
-  get celular(){
+  get celular() {
     return this.formAluno.get('celular');
   }
-  get numeroCasa(){
+  get numeroCasa() {
     return this.formAluno.get('numeroCasa');
   }
 
   showSuccess(mensagem: string) {
-      this.toastService.success(mensagem);
+    this.toastService.success(mensagem);
+  }
+  populaFormulario() {
+    this.activatedRoute.queryParams
+      .subscribe(params => {
+        this.aluno = {
+          id: params.id,
+          nomeCompleto: params.nomeCompleto,
+          cep: params.cep,
+          logradouro: params.logradouro,
+          numeroCasa: params.numeroCasa,
+          bairro: params.bairro,
+          cidade: params.cidade,
+          estado: params.estado,
+          complemento: params.complemento,
+          telefone: params.telefone,
+          celular: params.celular,
+          escola: params.escola,
+          serie: params.serie,
+          turno: params.turno,
+          turma: params.turma,
+          termo: params.termo,
+          tiposEquipamentos: params.TipoEquipamento,
+          equipamentos: params.equipamentos,
+          usuario: params.usuario,
+          equipamentoAluno: params.equipamentoAluno
+        }
+      })
   }
 }

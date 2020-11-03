@@ -12,10 +12,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./cadastro-tecnico.component.css']
 })
 export class CadastroTecnicoComponent implements OnInit {
-  
+
   formTecnico: FormGroup;
   formularioInvalido: boolean;
   tiposEquipamentos;
+
+  tecnico: any;
+  salvaOuEdita: boolean = true;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -26,10 +29,15 @@ export class CadastroTecnicoComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('token')!= null){
-      //this.router.navigate(['/home'])
+    if (sessionStorage.getItem('idTecnico') != null) {
+      this.populaFormulario();
+    } else if (sessionStorage.getItem('idUser') == null) {
+      this.router.navigate(['/home'])
     }
     this.criaForm();
+    this.preencheFormEditar(this.tecnico);
+      this.consultaCep();
+      this.salvaOuEdita = false
   }
 
   criaForm() {
@@ -64,31 +72,73 @@ export class CadastroTecnicoComponent implements OnInit {
       cidade: dados.localidade
     })
   }
+  salva(){
+    const dados = this.capturaDados();
+    this.tecnicoService.salvar(dados).subscribe(() => {
+      this.showSuccess("Cadastro realizado com Sucesso!");
+      this.router.navigate(['/login'])
+    });
+  }
+  edita(){
+    const dados = this.capturaDados();
+    const id: number = this.tecnico.id;
+    this.tecnicoService.atualizar(id, dados )
+    .subscribe(()=>{
+      this.toastService.success("Dados atualizados com Sucesso!");
+      sessionStorage.setItem('reiniciaMenu', 'ok')
+      this.router.navigate(['/home'])
+      //location.reload();
+    })
+  }
 
-  onSubmit(form: NgForm) {
+  capturaDados(){
     if (this.formTecnico.valid) {
-      const dados = {
-        nomeCompleto: this.formTecnico.value.nomeCompleto,
-        cep: this.formTecnico.value.cep,
-        logradouro: this.formTecnico.value.logradouro,
-        numeroCasa: this.formTecnico.value.numeroCasa,
-        bairro: this.formTecnico.value.bairro,
-        cidade: this.formTecnico.value.cidade,
-        estado: this.formTecnico.value.estado,
-        complemento: this.formTecnico.value.complemento,
-        telefone: this.formTecnico.value.telefone,
-        celular: this.formTecnico.value.celular,
-        termo: true,
-        usuario: sessionStorage.getItem('idUser')
-      } as Tecnico
-
-      this.tecnicoService.salvar(dados).subscribe(() => {
-        this.showSuccess("Cadastro realizado com Sucesso!");
-        this.router.navigate(['/login'])
-      });
-    } else {
+      if(this.tecnico == undefined){
+        const dados = {
+          nomeCompleto: this.formTecnico.value.nomeCompleto,
+          cep: this.formTecnico.value.cep,
+          logradouro: this.formTecnico.value.logradouro,
+          numeroCasa: this.formTecnico.value.numeroCasa,
+          bairro: this.formTecnico.value.bairro,
+          cidade: this.formTecnico.value.cidade,
+          estado: this.formTecnico.value.estado,
+          complemento: this.formTecnico.value.complemento,
+          telefone: this.formTecnico.value.telefone,
+          celular: this.formTecnico.value.celular,
+          termo: true,
+          usuario: sessionStorage.idUser || sessionStorage.idUserLogado
+        } as Tecnico
+        return dados
+      }else {
+        const dados = {
+          nomeCompleto: this.formTecnico.value.nomeCompleto,
+          cep: this.formTecnico.value.cep,
+          logradouro: this.formTecnico.value.logradouro,
+          numeroCasa: this.formTecnico.value.numeroCasa,
+          bairro: this.formTecnico.value.bairro,
+          cidade: this.formTecnico.value.cidade,
+          estado: this.formTecnico.value.estado,
+          complemento: this.formTecnico.value.complemento,
+          telefone: this.formTecnico.value.telefone,
+          celular: this.formTecnico.value.celular,
+          termo: true,
+          usuario: sessionStorage.idUser || sessionStorage.idUserLogado,
+          id: this.tecnico.id
+        } as Tecnico
+        return dados
+      }
+    }else{
       this.formularioInvalido = true;
     }
+  }
+
+  onSubmit() {
+    if(this.salvaOuEdita){
+      this.salva();
+    }else{
+      this.edita();
+    }
+    
   }
 
   get nomeCompleto() {
@@ -106,5 +156,36 @@ export class CadastroTecnicoComponent implements OnInit {
 
   showSuccess(mensagem: string) {
     this.toastService.success(mensagem);
+  }
+
+  populaFormulario() {
+    this.activatedRoute.queryParams
+      .subscribe(param => {
+        this.tecnico = {
+          id: param.id,
+          nomeCompleto: param.nomeCompleto,
+          cep: param.cep,
+          logradouro: param.logradouro,
+          numeroCasa: param.numeroCasa,
+          bairro: param.bairro,
+          cidade: param.cidade,
+          estado: param.estado,
+          complemento: param.complemento,
+          telefone: param.telefone,
+          celular: param.celular,
+          usuario: param.usuario
+        } as Tecnico
+      })
+  }
+
+  preencheFormEditar(dados){
+    this.formTecnico.patchValue({
+      nomeCompleto: dados.nomeCompleto,
+      cep: dados.cep,
+      numeroCasa: dados.numeroCasa,
+      complemento: dados.complemento,
+      telefone: dados.telefone,
+      celular: dados.celular
+    })
   }
 }

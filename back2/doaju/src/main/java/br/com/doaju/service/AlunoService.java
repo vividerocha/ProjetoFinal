@@ -1,7 +1,6 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -42,8 +41,14 @@ public class AlunoService {
 		return mapper.modelToDTO( repository.save(aluno) );		
 	}
 	
-	public Optional<Aluno> buscar(Long id) {
-		return repository.findById(id);
+	public AlunoDTO buscar(Long id) {
+		try {
+			Aluno aluno = repository.findById(id).get();
+			return mapper.modelToDTO(aluno);
+		} catch (Exception e) {
+			System.out.println("erro ao bucar aluno");
+			return null;
+		}
 	}
 
 	@Transactional
@@ -69,13 +74,19 @@ public class AlunoService {
 	}
 	
 	@Transactional
-	public void atualizar(Aluno aluno) {
-		repository.save(aluno);		
+	public AlunoDTO atualizar(AlunoRequest alunoRequest) {
+		Aluno aluno = mapper.requestToModel(alunoRequest);
+		for (int i = 0; i < aluno.getEquipamentos().size(); i++) {
+			aluno.addTipo(repoEquip.buscarPorEquipamento(alunoRequest.getEquipamentos().get(i)));
+		}
+		aluno.setUsuario(repoUser.findById(alunoRequest.getUsuario()).get());
+		return mapper.modelToDTO( repository.save(aluno) );
 	}
 	
 	public AlunoDTO buscarPorIdUsuario(Long id) {
 		try {
 			Aluno aluno = repository.buscarPorIdUsuario(id);
+			System.out.println(aluno);
 			return mapper.modelToDTO(aluno);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

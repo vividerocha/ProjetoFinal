@@ -1,6 +1,12 @@
 package br.com.doaju.dto;
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 
 @Data
@@ -22,5 +28,7 @@ public class AlunoDTO {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	//private List<String> equipamentos = new ArrayList<>();
+	private Set<TipoEquipamento> equipamentoAluno = new HashSet<>();
 
 }
