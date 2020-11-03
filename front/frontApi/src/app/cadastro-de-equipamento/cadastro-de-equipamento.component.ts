@@ -8,6 +8,8 @@ import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { TipoEquipamento } from './../cadastro-tipo-equipamento/tipoEquipamento';
+import { HistoricoEquipamento } from './historicoEquipamento';
+import { Situacao } from './../cadastro-situacao-equipamento/situacao';
 
 
 @Component({
@@ -20,6 +22,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   displayedColumns: string[] = ['id','tipoEquipamento', 'descricao', 'funcionando',  '-'];
   tiposEquipamentosLista: TipoEquipamento;
   tipoEqui: TipoEquipamento;
+  situacaoEqui: Situacao;
   formEquipamento: FormGroup;
   formDetalhe: FormGroup;
   formularioInvalido: boolean;
@@ -86,6 +89,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
           response => {
             console.log(response);            
             this.showSuccess("Cadastro realizado com Sucesso!");
+            this.salvaHistorico(this.idDoador, response);
             this.formEquipamento.reset();
             this.carregaEquipamentos();
           },
@@ -96,6 +100,30 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     }else{
       this.formularioInvalido = true;
     }
+  }
+
+  salvaHistorico(idUsuario: number, equipamento: Equipamento){
+    //consulta objeto Situacao
+    this.equipamentoService.getSituacoes(1).subscribe(res => {
+      this.situacaoEqui = res;
+      const dados = {
+        equipamento: equipamento,
+        situacao: this.situacaoEqui,
+        idUsuario: idUsuario
+      } as HistoricoEquipamento;
+  
+      console.log(dados);
+      this.equipamentoService.salvarHistorico(dados)
+          .subscribe(
+            response => {
+              console.log(response);
+            },
+            error => {
+              console.log(error);
+              alert(error.error);
+            });
+    });
+    
   }
 
 
@@ -148,6 +176,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
         response => {
           this.showSuccess("Cadastro excluído com Sucesso!");
           this.carregaEquipamentos();
+          this.desisteExcluir();
         },
         error => {
           console.log(error);

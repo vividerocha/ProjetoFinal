@@ -1,17 +1,15 @@
 package br.com.doaju.request;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import br.com.doaju.model.HistoricoEquipamento;
+import javax.validation.constraints.NotBlank;
+
 import lombok.Data;
 
 @Data
 public class SituacaoEquipamentoRequest {
 	
 	private Long id;
+	@NotBlank
 	private String situacao;
-	private List<HistoricoEquipamento> historicoEquipamentos = new ArrayList<>();
-	
 	
 }

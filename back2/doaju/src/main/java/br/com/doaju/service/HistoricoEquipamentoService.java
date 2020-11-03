@@ -15,6 +15,7 @@ import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.HistoricoEquipamentoMapper;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
+import br.com.doaju.model.Usuario;
 import br.com.doaju.repository.HistoricoEquipamentoRepository;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
 
@@ -25,11 +26,18 @@ public class HistoricoEquipamentoService {
 	
 	@Autowired
 	private HistoricoEquipamentoMapper mapper;
+	
+	@Autowired
+	private UsuarioService userService;
 
 	@Transactional
 	public HistoricoEquipamentoDTO salvar(HistoricoEquipamentoRequest historicoEquipamentoRequest) {
 		
+		System.out.print(historicoEquipamentoRequest.getIdUsuario());
+		Usuario usuario = userService.buscarPorId(historicoEquipamentoRequest.getIdUsuario()).get();
 		HistoricoEquipamento historicoEquipamento = mapper.requestToModel(historicoEquipamentoRequest);
+		System.out.print(usuario);
+		historicoEquipamento.setUsuario(usuario);
 	    return mapper.modelToDTO( repository.save(historicoEquipamento) );		
 	}
 	

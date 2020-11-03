@@ -23,7 +23,6 @@ public class EquipamentoService {
 
 	@Transactional
 	public EquipamentoDTO salvar(EquipamentoRequest equipamentoRequest) {
-		
 		Equipamento equipamento = mapper.requestToModel(equipamentoRequest);
 	    return mapper.modelToDTO( repository.save(equipamento) );		
 	}

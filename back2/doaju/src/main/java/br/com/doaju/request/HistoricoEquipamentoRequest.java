@@ -10,11 +10,8 @@ import lombok.Data;
 public class HistoricoEquipamentoRequest {
 	
 	private Long id;
-//	@NotBlank
 	Equipamento equipamento;
-//	@NotBlank
 	SituacaoEquipamento situacao;
-//	@NotBlank
 	private LocalDate dataAlteracao;
-
+	private Long idUsuario;
 }
