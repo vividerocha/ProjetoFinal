@@ -76,7 +76,6 @@ public class DoadorController {
 	public ResponseEntity<?> atualizar(@RequestBody DoadorRequest doadorRequest, @PathVariable Long id) {
 		
 		DoadorDTO doadorAtual = service.buscar(id);
-		System.out.println(doadorRequest);
 		
 		if (doadorAtual != null) {
 			BeanUtils.copyProperties(doadorRequest, doadorAtual, "id");

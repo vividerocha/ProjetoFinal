@@ -83,9 +83,6 @@ public class DoadorService {
 	@Transactional
 	public DoadorDTO atualizar(DoadorRequest doadorRequest) {
 		Doador doador = mapper.requestToModel(doadorRequest);
-		System.out.println(doador);
-		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario()).get()));
-		
 		return mapper.modelToDTO( repository.save(doador) );		
 	}
 
