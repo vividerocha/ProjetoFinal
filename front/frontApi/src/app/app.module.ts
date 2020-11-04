@@ -31,6 +31,7 @@ import { SegurancaComponent } from './seguranca/seguranca.component';
 
 import { AuthService } from './seguranca/auth.service';
 import { MatTableModule } from '@angular/material/table';
+import { QuadroUsuarioComponent } from './quadro-usuario/quadro-usuario.component';
 
 
 
@@ -71,7 +72,8 @@ const appRoutes: Routes = [
     DoadoresComponent,
     TecnicosComponent,
     AlunosComponent,
-    SegurancaComponent
+    SegurancaComponent,
+    QuadroUsuarioComponent
   
   ],
   imports: [

@@ -11,7 +11,7 @@
                 </form>
               </div>
             </div>            
-            <mat-table [dataSource]="dataSource" matSort>
+            <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
               <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
