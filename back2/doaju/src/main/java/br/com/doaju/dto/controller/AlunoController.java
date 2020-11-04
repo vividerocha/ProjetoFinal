@@ -90,7 +90,7 @@ public class AlunoController {
 	public ResponseEntity<?> atualizar(@RequestBody AlunoRequest aluno, @PathVariable Long id) {
 		
 		AlunoDTO alunoAtual = service.buscar(id);
-		
+				
 		if (alunoAtual != null) {
 			BeanUtils.copyProperties(aluno, alunoAtual, "id");
 			

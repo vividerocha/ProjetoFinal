@@ -73,7 +73,7 @@ export class MenuComponent implements OnInit {
     this.alunoService.getAlunoPorIduser(id)
       .subscribe(dados => {
         this.aluno = dados;
-        var equip: String[]               
+        sessionStorage.setItem('equipamentos', JSON.stringify(dados.equipamentoAluno));                     
         this.myNome = dados.nomeCompleto;
         sessionStorage.setItem('idAluno',dados.id);
         this.linkRedirectAluno = true;

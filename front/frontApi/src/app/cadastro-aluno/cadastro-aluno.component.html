@@ -123,7 +123,7 @@
                 <div class="form-row mt-2">                    
                     <div *ngFor="let equip of tiposEquipamentos">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" (click)="itemSelecionado($event)" type="checkbox" id="chk{{equip.id}}" value="{{equip.descricao}}">
+                            <input class="form-check-input" (click)="itemSelecionado($event)" type="checkbox" id="chk{{equip.id}}" value="{{equip.descricao}}" checked="{{equip.equipamentos}}">
                             <label class="form-check-label" for="chk{{equip.id}}">{{equip.descricao}}</label>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">{{salvaOuEdita? "Cadastrar" : "Atualizar"}}</button>&nbsp;&nbsp;
                         <button type="submit" class="btn btn-secondary">Cancelar</button>
                         <br>
                         <mdb-error class="text-danger" *ngIf="formularioInvalido">

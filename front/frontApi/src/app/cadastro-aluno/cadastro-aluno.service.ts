@@ -29,6 +29,11 @@ export class AlunoService {
         
     }
 
+    atualizar(id: number, aluno: any){
+        return this.httpClient.put(`${this.apiUrl}/${id}`, aluno)
+        .pipe(retry(2),catchError(this.handleError));
+    }
+
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {
         let errorMessage = '';

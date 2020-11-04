@@ -21,6 +21,8 @@ export class CadastroAlunoComponent implements OnInit {
   equipamentosSelecionados: String[] = new Array();
   tiposEquipamentos;
   aluno: any;
+  check:boolean = false;
+  salvaOuEdita:boolean = true;
 
   constructor(private router: Router,
     private cepService: consultaCepService,
@@ -33,12 +35,18 @@ export class CadastroAlunoComponent implements OnInit {
   ngOnInit(): void {
     if (sessionStorage.getItem('idAluno') != null) {
       this.populaFormulario();
-      console.log(this.aluno);
+      this.populaEquipamento();      
     } else if (sessionStorage.getItem('idUser') == null) {
       this.router.navigate(['/home'])
     }
     this.criaForm();
     this.getTiposEquipamentos();
+
+    if(this.aluno !=undefined){
+      this.carregaDadosForm(this.aluno);
+      this.consultaCep();
+      this.salvaOuEdita = false;
+    }
 
   }
   criaForm() {
@@ -93,42 +101,100 @@ export class CadastroAlunoComponent implements OnInit {
     })
   }
 
-  onSubmit(form: NgForm) {
-    if (this.formAluno.valid) {
-      const dados = {
-        nomeCompleto: this.formAluno.value.nomeCompleto,
-        cep: this.formAluno.value.cep,
-        logradouro: this.formAluno.value.logradouro,
-        numeroCasa: this.formAluno.value.numeroCasa,
-        bairro: this.formAluno.value.bairro,
-        cidade: this.formAluno.value.cidade,
-        estado: this.formAluno.value.estado,
-        complemento: this.formAluno.value.complemento,
-        telefone: this.formAluno.value.telefone,
-        celular: this.formAluno.value.celular,
-        escola: this.formAluno.value.escola,
-        serie: this.formAluno.value.serie,
-        turno: this.formAluno.value.turno,
-        turma: this.formAluno.value.turma,
-        termo: this.formAluno.value.declaracao,
-        usuario: this.formAluno.value.idUser,
-        equipamentos: this.equipamentosSelecionados
-      } as Aluno
+  salva(){
+    const dados = this.capturaDados();
+    this.alunoService.salvar(dados).subscribe(() => {
+      console.log(this.formAluno.value);
+      this.showSuccess("Cadastro realizado com Sucesso!");
+      this.router.navigate(['/login'])
+    });
+  }
 
-      this.alunoService.salvar(dados).subscribe(() => {
-        console.log(this.formAluno.value);
-        this.showSuccess("Cadastro realizado com Sucesso!");
-        this.router.navigate(['/login'])
-      });
-    } else {
+  atualiza(){
+    const dados = this.capturaDados();
+    const id: number = this.aluno.id;
+    this.alunoService.atualizar(id, dados )
+    .subscribe(()=>{
+      this.toastService.success("Dados atualizados com Sucesso!");
+      sessionStorage.setItem('reiniciaMenu', 'ok')
+      this.router.navigate(['/home'])
+      //location.reload();
+    })
+  }
+
+  capturaDados(){
+    if (this.formAluno.valid) {
+      if(this.aluno ==undefined){        
+        const dados = {
+          nomeCompleto: this.formAluno.value.nomeCompleto,
+          cep: this.formAluno.value.cep,
+          logradouro: this.formAluno.value.logradouro,
+          numeroCasa: this.formAluno.value.numeroCasa,
+          bairro: this.formAluno.value.bairro,
+          cidade: this.formAluno.value.cidade,
+          estado: this.formAluno.value.estado,
+          complemento: this.formAluno.value.complemento,
+          telefone: this.formAluno.value.telefone,
+          celular: this.formAluno.value.celular,
+          escola: this.formAluno.value.escola,
+          serie: this.formAluno.value.serie,
+          turno: this.formAluno.value.turno,
+          turma: this.formAluno.value.turma,
+          termo: this.formAluno.value.declaracao,
+          usuario: this.formAluno.value.idUser,
+          equipamentos: this.equipamentosSelecionados
+        } as Aluno
+        return dados; 
+      }else{
+        const dados = {
+          nomeCompleto: this.formAluno.value.nomeCompleto,
+          cep: this.formAluno.value.cep,
+          logradouro: this.formAluno.value.logradouro,
+          numeroCasa: this.formAluno.value.numeroCasa,
+          bairro: this.formAluno.value.bairro,
+          cidade: this.formAluno.value.cidade,
+          estado: this.formAluno.value.estado,
+          complemento: this.formAluno.value.complemento,
+          telefone: this.formAluno.value.telefone,
+          celular: this.formAluno.value.celular,
+          escola: this.formAluno.value.escola,
+          serie: this.formAluno.value.serie,
+          turno: this.formAluno.value.turno,
+          turma: this.formAluno.value.turma,
+          termo: this.formAluno.value.declaracao,
+          usuario: this.formAluno.value.idUser,
+          equipamentos: this.equipamentosSelecionados,
+          id: this.aluno.id
+        } as Aluno
+        return dados;
+      }
+    }else{
       this.formularioInvalido = true;
       alert('Por favor, leia e aceite a declação!');
+    }
+  }
+
+  onSubmit(form: NgForm) {
+    if(this.salvaOuEdita){
+      this.salva();
+    }else{
+      this.atualiza();
     }
   }
 
   getTiposEquipamentos() {
     this.alunoService.getTiposEquipamentos().subscribe(data => {
       this.tiposEquipamentos = data;
+      //console.log(this.tiposEquipamentos);
+      
+      for (let i = 0; i < this.tiposEquipamentos.length; i++) {
+        for(let j = 0; j < this.equipamentosSelecionados.length; j++){
+          if(this.tiposEquipamentos[i].descricao == this.equipamentosSelecionados[j]){
+            this.tiposEquipamentos[i].equipamentos = true;
+          }
+        }        
+      }
+      console.log(this.tiposEquipamentos);
     });
   }
 
@@ -179,9 +245,30 @@ export class CadastroAlunoComponent implements OnInit {
           termo: params.termo,
           tiposEquipamentos: params.TipoEquipamento,
           equipamentos: params.equipamentos,
-          usuario: params.usuario,
-          equipamentoAluno: params.equipamentoAluno
+          usuario: params.usuario
         }
       })
   }
+populaEquipamento(){
+  const equip = JSON.parse(sessionStorage.getItem('equipamentos'));  
+  for (let i = 0; i < equip.length; i++) {
+    this.equipamentosSelecionados.push(equip[i].descricao);      
+  }
+  console.log(this.equipamentosSelecionados);
+}
+carregaDadosForm(dados){
+  this.formAluno.patchValue({
+    nomeCompleto: dados.nomeCompleto,
+    cep: dados.cep,
+    numeroCasa: dados.numeroCasa,
+    complemento: dados.complemento,
+    telefone: dados.telefone,
+    celular: dados.celular,
+    escola: dados.escola,
+    serie: dados.serie,
+    turma: dados.turma,
+    turno: dados.turno
+  })
+}
+
 }
