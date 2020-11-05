@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
@@ -38,7 +40,9 @@ private static final long serialVersionUID = 1L;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataCadastro = new java.sql.Date(System.currentTimeMillis());
+	
 	@ManyToOne
+	@JsonManagedReference
 	@JoinColumn(name = "usuario_id", nullable = false)
 	private Usuario usuario;
 	

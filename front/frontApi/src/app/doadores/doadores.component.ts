@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, FormControl,  NgForm, Validators } from '@angular/forms';
 import { consultaCepService } from './../services/consultaCEP.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Usuario } from '../cadastro-do-usuario/usuario';
 
 
 
@@ -25,6 +26,7 @@ export class DoadoresComponent implements OnInit {
   formularioInvalido: boolean;
   doador: Doador;
   confirmaExclusao: boolean;
+  usuario: Usuario;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -78,6 +80,8 @@ export class DoadoresComponent implements OnInit {
       this.formDetalhe.get('id').setValue(id);
       this.doadoresService.getDoador(id).subscribe(res => {
         this.doador = res;
+        this.usuario = this.doador.usuario;
+        console.log(this.doador);
       }
       );
     }
@@ -137,12 +141,22 @@ export class DoadoresComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if(this.formDetalhe.valid){
-      let id = this.formDetalhe.get('id').value;      
-      this.doadoresService.atualizar(id, this.formDetalhe.value).subscribe(() => {      
-        
-        //sessionStorage.setItem('isLogado', '');
-        //sessionStorage.setItem('email', '');
-        //this.router.navigateByUrl('/login');
+      let id = this.formDetalhe.get('id').value;
+      const dados = {
+  	      nomeCompleto : this.formDetalhe.get('nomeCompleto').value,
+	        cep : this.formDetalhe.get('cep').value,
+	        logradouro : this.formDetalhe.get('logradouro').value,
+	        numeroCasa : parseInt(this.formDetalhe.get('numeroCasa').value),
+	        bairro : this.formDetalhe.get('bairro').value,
+	        cidade : this.formDetalhe.get('cidade').value,
+	        estado : this.formDetalhe.get('estado').value,
+	        complemento : this.formDetalhe.get('complemento').value,
+	        telefone : this.formDetalhe.get('telefone').value,
+	        celular : this.formDetalhe.get('celular').value,
+	        usuario : this.usuario
+      } as Doador;
+
+      this.doadoresService.atualizar(id, dados).subscribe(() => {      
         this.showSuccess("Cadastro alterado com Sucesso!");
         this.carregaDoadores();
       });

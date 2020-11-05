@@ -133,7 +133,8 @@ export class TecnicosComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if(this.formDetalhe.valid){
-      let id = this.formDetalhe.get('id').value;      
+      let id = this.formDetalhe.get('id').value;   
+      console.log(this.formDetalhe.value);
       this.service.atualizar(id, this.formDetalhe.value).subscribe(() => {      
         
         //sessionStorage.setItem('isLogado', '');

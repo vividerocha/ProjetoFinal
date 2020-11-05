@@ -1,3 +1,4 @@
+import { Usuario } from "src/app/cadastro-do-usuario/usuario";
 
 export interface Doador {
 	id: number,
@@ -12,5 +13,5 @@ export interface Doador {
 	telefone: String,
 	celular: String,
 	termo: String,
-	usuario:number 
+	usuario: Usuario 
   }

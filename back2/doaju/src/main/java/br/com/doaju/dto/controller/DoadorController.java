@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.model.Usuario;
 import br.com.doaju.request.DoadorRequest;
 import br.com.doaju.service.DoadorService;
+import br.com.doaju.service.UsuarioService;
 
 @CrossOrigin
 @RestController
@@ -27,6 +29,8 @@ public class DoadorController {
 	@Autowired
 	private DoadorService service;
 	
+	@Autowired
+	private UsuarioService serviceUser;
 	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody DoadorRequest doadorRequest) {	
@@ -79,7 +83,6 @@ public class DoadorController {
 		
 		if (doadorAtual != null) {
 			BeanUtils.copyProperties(doadorRequest, doadorAtual, "id");
-			
 			service.atualizar(doadorRequest);
 			return ResponseEntity.ok(doadorRequest);
 		}	

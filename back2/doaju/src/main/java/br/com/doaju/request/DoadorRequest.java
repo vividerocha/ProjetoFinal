@@ -2,6 +2,7 @@ package br.com.doaju.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import br.com.doaju.model.Usuario;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,6 @@ public class DoadorRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
-	private Long usuario;
+	private Usuario usuario;
 	
 }

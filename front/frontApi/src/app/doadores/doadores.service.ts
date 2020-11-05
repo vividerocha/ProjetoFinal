@@ -39,8 +39,9 @@ export class DoadoresService {
         return this.httpClient.put<void>(`${this.apiUrl}/${id}`, JSON.stringify(data));
     }*/
 
-    atualizar(id: number, doador: Doador){        
-        console.log(JSON.stringify(doador));
+    atualizar(id: number, doador: any){
+        console.log(doador);
+        console.log(`${this.apiUrl}/${id}`);
         return this.httpClient.put(`${this.apiUrl}/${id}`, doador)
         .pipe(retry(2),catchError(this.handleError));
     }

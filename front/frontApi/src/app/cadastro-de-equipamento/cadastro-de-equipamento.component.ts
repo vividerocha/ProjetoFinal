@@ -211,7 +211,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
           tipoEquipamento: this.tipoEqui
         } as Equipamento;
     
-        console.log(dados);
+        
         if(this.formDetalhe.valid){
           let id = this.formDetalhe.get('id').value;
           this.equipamentoService.atualizar(id, dados).subscribe(() => {      

@@ -11,5 +11,5 @@ export interface Tecnico {
     telefone: String,
     celular: String,
     termo: boolean,
-    usuario: any    
+    usuario: number    
   }
