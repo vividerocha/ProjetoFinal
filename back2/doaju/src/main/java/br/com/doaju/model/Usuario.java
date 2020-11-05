@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -44,8 +47,10 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private Set<Grupo> grupos = new HashSet<>();
 	
-	@OneToOne 
-	@JoinColumn(name = "usuario_id")
+	
+	@OneToMany(mappedBy="usuario")
+	@JsonManagedReference
+	@Transient
 	private HistoricoEquipamento historico;
 	
 }

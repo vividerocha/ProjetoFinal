@@ -58,4 +58,12 @@ public class EquipamentoService {
 		Equipamento equipamento = mapper.requestToModel(equipamentoRequest);
 		return mapper.modelToDTO( repository.save(equipamento) );		
 	}
+	
+	public List<EquipamentoDTO> buscarPorDoador(Long idDoador) {
+		return repository.BuscaEquipamentosDoador(idDoador)
+				.stream()
+				.map(doa -> mapper.modelToDTO(doa))
+				.collect(Collectors.toList()) ;	
+	}
+	
 }

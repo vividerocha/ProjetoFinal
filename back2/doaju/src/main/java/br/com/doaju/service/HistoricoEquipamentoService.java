@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.HistoricoEquipamentoMapper;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.model.Usuario;
+import br.com.doaju.repository.EquipamentoRepository;
 import br.com.doaju.repository.HistoricoEquipamentoRepository;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
 
@@ -23,6 +25,9 @@ import br.com.doaju.request.HistoricoEquipamentoRequest;
 public class HistoricoEquipamentoService {
 	@Autowired
 	private HistoricoEquipamentoRepository repository;
+	
+	@Autowired
+	private EquipamentoRepository repositoryEquip;
 	
 	@Autowired
 	private HistoricoEquipamentoMapper mapper;
@@ -66,5 +71,25 @@ public class HistoricoEquipamentoService {
 				.map(hist -> mapper.modelToDTO(hist))
 				.collect(Collectors.toList());	
 	}
+	
+	public List<HistoricoEquipamentoDTO> buscarHistorico(Long idEquipamento) {
+		
+		Equipamento equipamento = repositoryEquip.findById(idEquipamento).get();
+		return repository.findByEquipamento(equipamento)
+				.stream()
+				.map(hist -> mapper.modelToDTO(hist))
+				.collect(Collectors.toList());	
+	}
+	
+	
+	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaReparoPorRegiao(String regiao) {
+	//consulta os equipamentos disponíveis para retirada do técnico	
+		return repository.buscaEquipamentosParaReparoPorRegiao(regiao)
+				.stream()
+				.map(hist -> mapper.modelToEqDTO(hist))
+				.collect(Collectors.toList());	
+	}
+	
+	
 
 }

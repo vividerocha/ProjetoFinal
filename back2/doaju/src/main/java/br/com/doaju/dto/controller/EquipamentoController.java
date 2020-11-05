@@ -53,7 +53,7 @@ public class EquipamentoController {
 			return ResponseEntity.ok(equipamento);
 		}
 		
-		return ResponseEntity.badRequest().body("Não retornou Usuário!");
+		return ResponseEntity.badRequest().body("Não retornou Equipamento!");
 	
 	}
 	
@@ -75,6 +75,14 @@ public class EquipamentoController {
 	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable Long id) {
 		service.excluir(id);
+	}
+	
+	@GetMapping("/doador/{idDoador}")
+	public List<EquipamentoDTO> buscarPorUsuario(@PathVariable Long idDoador) {
+		
+		//Faz a consulta dos equipamentos relacionados ao doador logado
+		return service.buscarPorDoador(idDoador);
+			
 	}
 
 }

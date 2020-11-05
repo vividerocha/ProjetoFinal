@@ -13,7 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +42,9 @@ public class Equipamento{
     @JsonBackReference
 	private TipoEquipamento tipoEquipamento;
 	
-	@OneToMany(mappedBy = "equipamento")
+	@OneToMany(mappedBy="equipamento")
+	@JsonManagedReference
+	@Transient 
 	private Set<HistoricoEquipamento> historicos;
 	
 }

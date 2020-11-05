@@ -52,41 +52,171 @@
                 <mdb-error class="text-danger" *ngIf="formularioInvalido">
                     Verifique os Campos Obrigatórios</mdb-error>
             </form>
-            <div>
-                <mat-table [dataSource]="dataSource" matSort>
-                    <ng-container matColumnDef="id">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            <div class="form-group row">
+              <div class="col-sm-8">
+                <mat-table [dataSource]="dataSource" matSort style="width: 100%;">
+                  <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="tipoEquipamento">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.tipoEquipamento.descricao}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="tipoEquipamento">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.tipoEquipamento.descricao}} </mat-cell>
-                      </ng-container>
-                    <ng-container matColumnDef="descricao">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> Descricao </mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.descricaoEquipamento}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="funcionando">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> Funcionando </mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.funcionando == 1 ? 'Sim' : 'não'}}</mat-cell>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="-">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
-                      <mat-cell *matCellDef="let element"><button type="button" data-toggle="modal" 
-                        data-target="#modal" class="btn" style="background-color: #F7D358;"
-                        (click)="detalhaItem(element.id)">Detalhe</button></mat-cell>
-                    </ng-container>
-                
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;">
-                    </mat-row>
-                  </mat-table>
+                  <ng-container matColumnDef="descricao">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Descricao </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.descricaoEquipamento}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="funcionando">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Funcionando </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.funcionando == 1 ? 'Sim' : 'não'}}</mat-cell>
+                  </ng-container>
+                  
+                  <ng-container matColumnDef="-">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <button type="button" data-toggle="modal" 
+                      data-target="#modal" class="btn" style="background-color: #F7D358;"
+                      (click)="detalhaItem(element.id)">Detalhe</button>&nbsp;&nbsp;&nbsp;
+                      <button type="button"
+                      class="btn" style="background-color:#61DBE1;"
+                      (click)="detalhaSituacao(element.id)">Situação</button>
+                    </mat-cell>
+                  </ng-container>
+              
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;">
+                  </mat-row>
+                </mat-table>
+              </div>
+              
+              <div class="col-sm-4">
+                <div *ngIf="detalhaS">
+                  <div class="card" style="border:1px solid#FFA500;margin-top: 10px;">
+                    <div class="card-body" style="border-left:0px;">
+                      <h5 class="card-title">Situação</h5>
+                      <!-- HISTORICO EQUIPAMENTO -->
+                      <mat-table [dataSource]="dataSourceH" matSort style="width: 100%;">
+                        <ng-container matColumnDef="id">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                          <mat-cell *matCellDef="let historicoEquipamento"> {{historicoEquipamento.id}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="situacao">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Situacao </mat-header-cell>
+                            <mat-cell *matCellDef="let historicoEquipamento"> {{historicoEquipamento.situacao.situacao}} </mat-cell>
+                          </ng-container>
+                        <ng-container matColumnDef="dataAlteracao">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
+                          <mat-cell *matCellDef="let historicoEquipamento"> {{historicoEquipamento.dataAlteracao | date:'dd/MM/yyyy'}} </mat-cell>
+                        </ng-container>                                            
+                        <mat-header-row *matHeaderRowDef="displayedColumnsH"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsH;">
+                        </mat-row>
+                      </mat-table>
+                      <!-- HISTORICO EQUIPAMENTO -->
+                      <br><br>
+                      <button type="button"
+                      class="btn" style="background-color:#61DBE1;"
+                      (click)="fechaSituacao()">Fechar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+              <form [formGroup]="formDetalhe" #f="ngForm" (ngSubmit)="atualizar(f)">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <label for="id">Id:</label>
+                      <input type="text" class="form-control"
+                      *ngIf="equipamento"
+                      id="id" 
+                      formControlName="id"
+                      readonly>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="tipos">Tipo de Equipamento: <span style="color:red;">*</span></label>
+                        <select class="form-control" formControlName="tiposEquipamentos">
+                            <option *ngFor="let tipoEquipamento of tiposEquipamentosLista" 
+                            [value]="tipoEquipamento.id">
+                                {{tipoEquipamento.descricao}}</option>
+                        </select>
+                                          
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="funcionamento">Está Funcionando? <span style="color:red;">*</span></label> <br>                  
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="funcionando" id="sim" 
+                            [value]="true" *ngIf="equipamento"
+                            formControlName="funcionando" [(ngModel)]="equipamento.funcionando">
+                            <label class="form-check-label" for="sim">
+                              Sim
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" 
+                            name="funcionando" *ngIf="equipamento" id="nao" [value]="false" 
+                            formControlName="funcionando" [(ngModel)]="equipamento.funcionando">
+                            <label class="form-check-label" for="nao">
+                              Não
+                            </label>
+                          </div>                  
+                    </div>     
+                </div>
+    
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Descrição: <span style="color:red;">*</span></label>
+                        <textarea class="form-control" id="descricaoEquipamento"
+                        *ngIf="equipamento" 
+                        [(ngModel)]="equipamento.descricaoEquipamento"
+                        formControlName="descricaoEquipamento" rows="5"></textarea>
+                        <mdb-error class="text-danger" 
+                            *ngIf="descricaoEquipamento.invalid && (descricaoEquipamento.dirty || descricaoEquipamento.touched)">
+                            Descreva o Equipamento</mdb-error> 
+                    </div>
+                </div>
+                
+                <mdb-error class="text-danger" 
+                        *ngIf="formularioInvalido">
+                        Verifique os Campos Obrigatórios</mdb-error>
+                        <div [hidden]="confirmaExclusao">
+                          <div class="alert alert-warning" role="alert">
+                            <label>Tem Certeza de que Deseja Excluir?</label><br>
+                            <button type="button" class="btn btn-secondary" (click)="desisteExcluir();">Não</button>
+                            <button type="button" class="btn btn-danger" (click)="excluir(equipamento.id);">Sim</button>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                          <button type="button" class="btn btn-danger" (click)="confirmaExcluir();">Excluir</button>
+                          <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                        </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
