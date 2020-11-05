@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
+import br.com.doaju.service.DoadorService;
 import br.com.doaju.service.HistoricoEquipamentoService;
 
 @CrossOrigin
@@ -24,6 +28,9 @@ import br.com.doaju.service.HistoricoEquipamentoService;
 public class HistoricoEquipamentoController {
 	@Autowired
 	private HistoricoEquipamentoService service;
+	
+	@Autowired
+	private DoadorService serviceD;
 	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody HistoricoEquipamentoRequest historicoEquipamentoRequest) {	
@@ -52,6 +59,20 @@ public class HistoricoEquipamentoController {
 		}
 		
 		return ResponseEntity.notFound().build();
+	
+	}
+	
+	@GetMapping("/Equipamento/{idEquipamento}")
+	public List<HistoricoEquipamentoDTO> buscarHistoricoEquipamento(@PathVariable Long idEquipamento) {
+		return service.buscarHistorico(idEquipamento);
+	
+	}
+	
+	@GetMapping("/QuadroDoador/{id}")
+	public List<EquipamentosTecnicoRegiaoDTO> buscarEquipamentoParaDoador(@PathVariable Long id) {
+		DoadorDTO doador = serviceD.buscarPorIdUsuario(id);
+		String regiao = doador.getEstado();
+		return service.buscaEquipamentosParaReparoPorRegiao(regiao);
 	
 	}
 

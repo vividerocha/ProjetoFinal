@@ -32,6 +32,10 @@ export class EquipamentoService {
         .pipe(retry(2),catchError(this.handleError))        
     }
 
+    getHistorico(idEquipamento: number) : Observable<any>{
+        return this.httpClient.get<HistoricoEquipamento>(environment.URLSERVIDOR + "historicoEquipamento" + "/Equipamento/" + idEquipamento);
+    }
+
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {
         let errorMessage = '';
@@ -57,8 +61,8 @@ export class EquipamentoService {
         return this.httpClient.get<Situacao>(environment.URLSERVIDOR + "situacaoEquipamento" + "/" + id);
     }
 
-    getEquipamentos(): Observable<any> {
-        return this.httpClient.get<any>(this.apiUrl);
+    getEquipamentos(id: number): Observable<any> {
+        return this.httpClient.get<any>(this.apiUrl + "/doador/" + id);
     }
 
     getEquipamento(id: number): Observable<any>{

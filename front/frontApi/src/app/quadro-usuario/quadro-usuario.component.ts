@@ -7,9 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuadroUsuarioComponent implements OnInit {
 
+  doadorOn: boolean;
+  alunoOn: boolean;
+  tecnicoOn: boolean;
+  usuarioLogado: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.verificaUsuarioLogado();
   }
 
+  verificaUsuarioLogado(){
+    this.usuarioLogado = "Tecnico";
+
+    switch (this.usuarioLogado){
+      case "Doador":
+        this.doadorOn = true;
+        this.alunoOn = false;
+        this.tecnicoOn = false;
+        break;
+      case "Aluno":
+        this.doadorOn = false;
+        this.alunoOn = true;
+        this.tecnicoOn = false;
+        break;
+      case "Tecnico":
+        this.doadorOn = false;
+        this.alunoOn = false;
+        this.tecnicoOn = true;
+        break;
+    }
+  }
 }

@@ -1,1 +1,23 @@
-<p>quadro-usuario works!</p>
+<div class="container2">
+    <div class="card mb-4">            
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="text-primary">
+                Minha Página
+            </h6>
+        </div>
+        <div class="card-body">
+            <!-- DOADORES -->
+            <div *ngIf="doadorOn">
+                <app-cadastro-de-equipamento></app-cadastro-de-equipamento>
+            </div>
+            <!-- TECNICOS -->
+            <div *ngIf="tecnicoOn">
+                <app-quadro-tecnico></app-quadro-tecnico>
+            </div>
+            <!-- ALUNOS -->
+            <div *ngIf="alunoOn">
+                <app-quadro-aluno></app-quadro-aluno>
+            </div>
+        </div>
+    </div>
+</div>

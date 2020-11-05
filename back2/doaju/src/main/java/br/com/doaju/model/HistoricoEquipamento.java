@@ -2,13 +2,11 @@ package br.com.doaju.model;
 
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +26,9 @@ public class HistoricoEquipamento {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="equipamento_id",referencedColumnName="id",nullable=false,unique=true)
+	@ManyToOne
+	@JoinColumn (name="equipamento_id",nullable=false)
+	@JsonBackReference
 	private Equipamento equipamento;
 	
 	@ManyToOne
@@ -40,8 +39,9 @@ public class HistoricoEquipamento {
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataAlteracao = new java.sql.Date(System.currentTimeMillis());
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
+	@ManyToOne
+    @JoinColumn(name="usuario_id", nullable=false)
+    @JsonBackReference
 	private Usuario usuario;
 
 }

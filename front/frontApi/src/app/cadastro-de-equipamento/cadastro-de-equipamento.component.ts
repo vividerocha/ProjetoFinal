@@ -20,16 +20,20 @@ import { Situacao } from './../cadastro-situacao-equipamento/situacao';
 export class CadastroDeEquipamentoComponent implements OnInit {
 
   displayedColumns: string[] = ['id','tipoEquipamento', 'descricao', 'funcionando',  '-'];
+  displayedColumnsH : string[] = ['id','situacao', 'dataAlteracao'];
   tiposEquipamentosLista: TipoEquipamento;
   tipoEqui: TipoEquipamento;
+  historicoEquipamento: HistoricoEquipamento;
   situacaoEqui: Situacao;
   formEquipamento: FormGroup;
   formDetalhe: FormGroup;
   formularioInvalido: boolean;
   equipamento: Equipamento;
   dataSource;
+  dataSourceH;
   elements;
   confirmaExclusao: boolean;
+  detalhaS: boolean;
   //idDoador = sessionStorage.getItem("idUser");
   idDoador = 1;
 
@@ -42,8 +46,9 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   ngOnInit(): void {
     this.criaForm();
     this.getTiposEquipamentos();
-    this.carregaEquipamentos();
+    this.carregaEquipamentos(this.idDoador);
     this.desisteExcluir();
+    this.detalhaS = false;
   }
 
   getTiposEquipamentos() {
@@ -91,7 +96,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
             this.showSuccess("Cadastro realizado com Sucesso!");
             this.salvaHistorico(this.idDoador, response);
             this.formEquipamento.reset();
-            this.carregaEquipamentos();
+            this.carregaEquipamentos(this.idDoador);
           },
           error => {
             console.log(error);
@@ -139,8 +144,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       this.toastService.success(mensagem);
   }
 
-  carregaEquipamentos() {
-    this.equipamentoService.getEquipamentos()
+  carregaEquipamentos(id: number) {
+    this.equipamentoService.getEquipamentos(id)
     .subscribe(res => {
       this.elements = res;
       this.dataSource = new MatTableDataSource(res);
@@ -162,6 +167,18 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       );
     }
   }
+
+  detalhaSituacao(id: number){
+    if(id != 0){
+      this.equipamentoService.getHistorico(id).subscribe(res => {
+        this.historicoEquipamento = res;
+        this.dataSourceH = new MatTableDataSource(res);
+        this.detalhaS = true;
+      }
+      );
+    }
+  }
+
   confirmaExcluir(){
     this.confirmaExclusao = false;
   }
@@ -175,7 +192,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       .subscribe(
         response => {
           this.showSuccess("Cadastro excluído com Sucesso!");
-          this.carregaEquipamentos();
+          this.carregaEquipamentos(this.idDoador);
           this.desisteExcluir();
         },
         error => {
@@ -199,7 +216,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
           let id = this.formDetalhe.get('id').value;
           this.equipamentoService.atualizar(id, dados).subscribe(() => {      
             this.showSuccess("Cadastro alterado com Sucesso!");
-            this.carregaEquipamentos();
+            this.carregaEquipamentos(this.idDoador);
           });
         }else{
           this.formularioInvalido = true;
@@ -209,6 +226,10 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     }, 60);
 
     
+  }
+
+  fechaSituacao(){
+    this.detalhaS = false;
   }
 
   atribuiObjeto(){

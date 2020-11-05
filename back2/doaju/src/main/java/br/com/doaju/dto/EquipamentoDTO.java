@@ -11,5 +11,4 @@ public class EquipamentoDTO {
 	boolean funcionando;
 	TipoEquipamento tipoEquipamento;
 	
-	
 }

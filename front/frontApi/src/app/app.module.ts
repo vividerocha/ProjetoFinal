@@ -32,6 +32,8 @@ import { SegurancaComponent } from './seguranca/seguranca.component';
 import { AuthService } from './seguranca/auth.service';
 import { MatTableModule } from '@angular/material/table';
 import { QuadroUsuarioComponent } from './quadro-usuario/quadro-usuario.component';
+import { QuadroAlunoComponent } from './quadro-aluno/quadro-aluno.component';
+import { QuadroTecnicoComponent } from './quadro-tecnico/quadro-tecnico.component';
 
 
 
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
    { path : 'login', component : LoginComponent },
    { path : 'cadastro-usuario', component : CadastroDoUsuarioComponent},
    { path : 'cadastro-equipamento', component : CadastroDeEquipamentoComponent},
-   { path : 'admin', component : AdminComponent}
+   { path : 'admin', component : AdminComponent},
+   { path : 'quadro', component : QuadroUsuarioComponent}
    
 ];
 
@@ -73,7 +76,9 @@ const appRoutes: Routes = [
     TecnicosComponent,
     AlunosComponent,
     SegurancaComponent,
-    QuadroUsuarioComponent
+    QuadroUsuarioComponent,
+    QuadroAlunoComponent,
+    QuadroTecnicoComponent
   
   ],
   imports: [

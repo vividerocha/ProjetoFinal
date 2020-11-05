@@ -5,5 +5,6 @@ export interface HistoricoEquipamento {
 
 	equipamento: Equipamento,
 	situacao: Situacao,
-    idUsuario: number
+	idUsuario: number,
+	dataAlteracao: string
 }
