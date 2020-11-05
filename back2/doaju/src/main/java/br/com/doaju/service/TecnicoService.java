@@ -77,6 +77,7 @@ public class TecnicoService {
 	@Transactional
 	public TecnicoDTO atualizar(TecnicoRequest tecnicoRequest) {
 		Tecnico tecnico = mapper.requestToModel(tecnicoRequest);
+		tecnico.setUsuario(repoUser.findById(tecnicoRequest.getUsuario()).get());
 		return mapper.modelToDTO( repository.save(tecnico) );		
 	}
 

@@ -125,6 +125,7 @@ export class CadastroTecnicoComponent implements OnInit {
           usuario: sessionStorage.idUser || sessionStorage.idUserLogado,
           id: this.tecnico.id
         } as Tecnico
+        console.log(dados);
         return dados
       }
     }else{

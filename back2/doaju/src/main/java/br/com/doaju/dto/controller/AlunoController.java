@@ -52,13 +52,13 @@ public class AlunoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		
-		Optional<Aluno> aluno = service.buscar(id);
+		AlunoDTO aluno = service.buscar(id);
 		
-		if (aluno.isPresent()) {
-			return ResponseEntity.ok(aluno.get());
+		if (aluno != null) {
+			return ResponseEntity.ok(aluno);
 		}
 		
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.badRequest().body("Não retornou Usuário!");
 	
 	}
 	@GetMapping("/user/{id}")
@@ -88,15 +88,15 @@ public class AlunoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@RequestBody @Valid AlunoRequest aluno, @PathVariable Long id) {
+	public ResponseEntity<?> atualizar(@RequestBody @Valid AlunoRequest alunoRequest, @PathVariable Long id) {
 		
 
 		AlunoDTO alunoAtual = service.buscar(id);
 
 		if (alunoAtual != null) {
-			BeanUtils.copyProperties(aluno, alunoAtual, "id");
+			BeanUtils.copyProperties(alunoRequest, alunoAtual, "id");
 			
-			service.atualizar(aluno);
+			service.atualizar(alunoRequest);
 			return ResponseEntity.ok(alunoAtual);
 		}	
 			

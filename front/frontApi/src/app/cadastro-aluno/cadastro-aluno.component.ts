@@ -113,6 +113,7 @@ export class CadastroAlunoComponent implements OnInit {
   atualiza(){
     const dados = this.capturaDados();
     const id: number = this.aluno.id;
+    console.log(dados);
     this.alunoService.atualizar(id, dados )
     .subscribe(()=>{
       this.toastService.success("Dados atualizados com Sucesso!");
@@ -124,7 +125,8 @@ export class CadastroAlunoComponent implements OnInit {
 
   capturaDados(){
     if (this.formAluno.valid) {
-      if(this.aluno ==undefined){        
+      if(this.aluno ==undefined){
+        console.log("if")       
         const dados = {
           nomeCompleto: this.formAluno.value.nomeCompleto,
           cep: this.formAluno.value.cep,
@@ -146,6 +148,7 @@ export class CadastroAlunoComponent implements OnInit {
         } as Aluno
         return dados; 
       }else{
+        console.log("else") 
         const dados = {
           nomeCompleto: this.formAluno.value.nomeCompleto,
           cep: this.formAluno.value.cep,
@@ -162,7 +165,7 @@ export class CadastroAlunoComponent implements OnInit {
           turno: this.formAluno.value.turno,
           turma: this.formAluno.value.turma,
           termo: this.formAluno.value.declaracao,
-          usuario: this.formAluno.value.idUser,
+          usuario: sessionStorage.idUser || sessionStorage.idUserLogado,
           equipamentos: this.equipamentosSelecionados,
           id: this.aluno.id
         } as Aluno

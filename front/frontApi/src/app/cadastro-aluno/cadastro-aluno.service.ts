@@ -29,7 +29,7 @@ export class AlunoService {
         
     }
 
-    atualizar(id: number, aluno: any){
+    atualizar(id: number, aluno: any){        
         return this.httpClient.put(`${this.apiUrl}/${id}`, aluno)
         .pipe(retry(2),catchError(this.handleError));
     }
@@ -53,7 +53,7 @@ export class AlunoService {
       }
 
       getAlunoPorIduser(id: number): Observable<any>{
-        return this.httpClient.get<any>(this.apiUrl + "/user/" + id);
+        return this.httpClient.get<Aluno>(this.apiUrl + "/user/" + id);
     }
 
 }

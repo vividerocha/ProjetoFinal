@@ -1,6 +1,9 @@
 package br.com.doaju.dto;
 
 
+import java.util.List;
+
+import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 
 @Data
@@ -22,5 +25,6 @@ public class AlunoDTO {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	private List<TipoEquipamento> equipamentoAluno;
 
 }

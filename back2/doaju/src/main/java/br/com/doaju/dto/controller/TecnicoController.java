@@ -75,11 +75,10 @@ public class TecnicoController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@RequestBody TecnicoRequest tecnicoRequest, @PathVariable Long id) {
 		
-		TecnicoDTO tecnicoAtual = service.buscar(id);
+		TecnicoDTO tecnicoAtual = service.buscar(id);		
 		
 		if (tecnicoAtual != null) {
-			BeanUtils.copyProperties(tecnicoRequest, tecnicoAtual, "id");
-			
+			BeanUtils.copyProperties(tecnicoRequest, tecnicoAtual, "id");			
 			service.atualizar(tecnicoRequest);
 			return ResponseEntity.ok(tecnicoRequest);
 		}	

@@ -5,12 +5,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.doaju.dto.AlunoDTO;
+import br.com.doaju.dto.DoadorDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
@@ -42,8 +44,13 @@ public class AlunoService {
 		return mapper.modelToDTO( repository.save(aluno) );		
 	}
 	
-	public Optional<Aluno> buscar(Long id) {
-		return repository.findById(id);
+	public AlunoDTO buscar(Long id) {
+		try {
+			Aluno aluno = repository.findById(id).get();
+			return mapper.modelToDTO(aluno);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Transactional
@@ -69,8 +76,13 @@ public class AlunoService {
 	}
 	
 	@Transactional
-	public void atualizar(Aluno aluno) {
-		repository.save(aluno);		
+	public AlunoDTO atualizar(AlunoRequest alunoRequest) {
+		Aluno aluno = mapper.requestToModel(alunoRequest);
+		for (int i = 0; i < aluno.getEquipamentos().size(); i++) {
+			aluno.addTipo(repoEquip.buscarPorEquipamento(alunoRequest.getEquipamentos().get(i)));
+		}
+		aluno.setUsuario(repoUser.findById(alunoRequest.getUsuario()).get());
+		return mapper.modelToDTO(repository.save(aluno));
 	}
 	
 	public AlunoDTO buscarPorIdUsuario(Long id) {
@@ -82,6 +94,6 @@ public class AlunoService {
 			return null;
 		}
 		
-	}
+	}	
 
 }

@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit {
   consultaTecnico(id) {
     this.tecnicoService.getTecnicoPorIduser(id)
       .subscribe(dados => {
-        this.tecnico = dados;
+        this.tecnico = dados;        
         this.myNome = dados.nomeCompleto;
         sessionStorage.setItem('idTecnico',dados.id);
         this.linkRedirectTec = true;
@@ -73,6 +73,7 @@ export class MenuComponent implements OnInit {
     this.alunoService.getAlunoPorIduser(id)
       .subscribe(dados => {
         this.aluno = dados;
+        console.log(dados);
         sessionStorage.setItem('equipamentos', JSON.stringify(dados.equipamentoAluno));                     
         this.myNome = dados.nomeCompleto;
         sessionStorage.setItem('idAluno',dados.id);
