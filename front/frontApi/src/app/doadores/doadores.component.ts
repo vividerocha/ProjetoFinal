@@ -81,7 +81,6 @@ export class DoadoresComponent implements OnInit {
       this.doadoresService.getDoador(id).subscribe(res => {
         this.doador = res;
         this.usuario = this.doador.usuario;
-        console.log(this.doador);
       }
       );
     }
@@ -116,7 +115,7 @@ export class DoadoresComponent implements OnInit {
       complemento: new FormControl(''),
       telefone: new FormControl(''),
       celular: new FormControl(null, [Validators.required, Validators.minLength(10)]),
-      id_usuario: new FormControl('')
+      usuario: new FormControl('')
     });
   }
 
@@ -153,9 +152,8 @@ export class DoadoresComponent implements OnInit {
 	        complemento : this.formDetalhe.get('complemento').value,
 	        telefone : this.formDetalhe.get('telefone').value,
 	        celular : this.formDetalhe.get('celular').value,
-	        usuario : this.usuario
+	        usuario : this.usuario.id
       } as Doador;
-
       this.doadoresService.atualizar(id, dados).subscribe(() => {      
         this.showSuccess("Cadastro alterado com Sucesso!");
         this.carregaDoadores();

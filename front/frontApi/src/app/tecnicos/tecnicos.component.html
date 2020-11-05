@@ -170,7 +170,13 @@
                       Digite um Telefone</mdb-error>
                   </div>
                   <div class="form-group col-md-6">
-                      <input [hidden]="true" type="text" class="form-control" id="idUsuario" formControlName="id_usuario">
+                      <input [hidden]="true"
+                      type="text"
+                      class="form-control"
+                      id="idUsuario"
+                      formControlName="usuario"
+                      *ngIf="usuarioTec"
+                      [(ngModel)]="usuarioTec.id">
                   </div>
               </div>
               <mdb-error class="text-danger" 

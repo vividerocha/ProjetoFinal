@@ -23,6 +23,7 @@ export class TecnicosComponent implements OnInit {
   formularioInvalido: boolean;
   tecnico: Tecnico;
   confirmaExclusao: boolean;
+  usuarioTec: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -49,6 +50,7 @@ export class TecnicosComponent implements OnInit {
   carregaTodos(){
     this.service.getDoadores()
     .subscribe(res => {
+      console.log(res)
       this.elements = res;
       this.dataSource = new MatTableDataSource(res);
       //this.isLoadingResults = false;
@@ -74,6 +76,8 @@ export class TecnicosComponent implements OnInit {
       this.formDetalhe.get('id').setValue(id);
       this.service.getDoador(id).subscribe(res => {
         this.tecnico = res;
+        this.usuarioTec = this.tecnico.usuario;
+        console.log(this.usuarioTec.id);
       }
       );
     }
@@ -108,7 +112,7 @@ export class TecnicosComponent implements OnInit {
       complemento: new FormControl(''),
       telefone: new FormControl(''),
       celular: new FormControl(null, [Validators.required, Validators.minLength(10)]),
-      id_usuario: new FormControl('')
+      usuario: new FormControl('')
     });
   }
 

@@ -1,6 +1,7 @@
 package br.com.doaju.dto;
 
 
+import br.com.doaju.model.Usuario;
 import lombok.Data;
 
 @Data
@@ -17,4 +18,5 @@ public class TecnicoDTO {
 	private String telefone;
 	private String celular;
 	private boolean termo;
+	private Usuario usuario;
 }
