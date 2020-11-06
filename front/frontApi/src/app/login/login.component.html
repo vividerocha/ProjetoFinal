@@ -37,23 +37,48 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalEsqueciSenha">Recupere sua senha</h5>
+                <h5 class="modal-title" id="modalEsqueciSenha">Cadastro de nova senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form>
+                <form [formGroup]="formLogin" #f="ngForm">
+                  <div class="form-group">
+                    <label for="nomeC">Digite seu nome completo:</label>
+                    <input type="text" class="form-control" id="nomeC" formControlName="nomeCompleto">
+                  </div>
                   <div class="form-group">
                     <label for="email-recuperar">Digite o email cadastrado no DoAju:</label>
-                    <input type="email" class="form-control" id="email-recuperar"
-                      placeholder="emailcadastrado@seudominio.com.br">
+                    <input type="email" class="form-control" id="email-recuperar" formControlName="emailRec">
+                  </div>
+                  <div class="alert alert-danger" role="alert" [hidden]="verErro">
+                    Nome ou email não existem!
+                  </div>
+                  <div class="form-group" [hidden]="ver">
+                    <label for="nvs">Digite a nova senha:</label>
+                    <input type="password"
+                    class="form-control"
+                    id="nvs"
+                    formControlName="novaSenhaRec"
+                    (blur)="capturaSenha($event.target.value)">
+                  </div>
+                  <div class="form-group" [hidden]="ver">
+                    <label for="nvs1">Digite novamente a nova senha</label>
+                    <input type="password"
+                    class="form-control"
+                    id="nvs1"
+                    formControlName="novaSenha2Rec"
+                    (keyup)="compara($event.target.value)">
+                  </div>
+                  <div class="alert alert-danger" role="alert" [hidden]="verErroSenha">
+                    As senhas não são iguais
                   </div>
                 </form>
               </div>
-              <div class="modal-footer">
+              <div  class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Recuperar Senha</button>
+                <button [disabled]="botaoDisable" type="button" class="btn btn-primary" (click)="decide()">{{ver? "Recuperar Senha" : "Alterar Senha"}}</button>
               </div>
             </div>
           </div>

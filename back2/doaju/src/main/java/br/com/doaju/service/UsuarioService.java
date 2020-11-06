@@ -103,7 +103,10 @@ public class UsuarioService {
 	}
     
     @Transactional
-	public void atualizar(Usuario usuario) {
-		repository.save(usuario);		
+	public UsuarioDTO atualizar(UsuarioRequest usuarioRequest) {
+		Usuario user = mapper.dtoRequestToModel(usuarioRequest);
+		user.setSenha(passwordEncoder.encode(usuarioRequest.getSenha()));
+		//user.setGrupos(gruporepository.localizaGrupo(usuarioRequest.getTipoPermissao()));
+		return mapper.modelToDto(repository.save(user));
 	}
 }

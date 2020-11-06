@@ -1,18 +1,15 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.doaju.dto.AlunoDTO;
-import br.com.doaju.dto.DoadorDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
@@ -84,6 +81,7 @@ public class AlunoService {
 		aluno.setUsuario(repoUser.findById(alunoRequest.getUsuario()).get());
 		return mapper.modelToDTO(repository.save(aluno));
 	}
+	
 	
 	public AlunoDTO buscarPorIdUsuario(Long id) {
 		try {

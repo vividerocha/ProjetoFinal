@@ -32,7 +32,7 @@ public class DoadorService {
 	public DoadorDTO salvar(DoadorRequest doadorRequest) {
 		
 		Doador doador = mapper.requestToModel(doadorRequest);
-		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario()).get()));
+		doador.setUsuario(repoUser.findById(doadorRequest.getUsuario().getId()).get());
 		System.out.println(doador.toString());
 	    return mapper.modelToDTO( repository.save(doador) );		
 	}
@@ -84,7 +84,7 @@ public class DoadorService {
 	public DoadorDTO atualizar(DoadorRequest doadorRequest) {
 
 		Doador doador = mapper.requestToModel(doadorRequest);	
-		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario()).get()));
+		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario().getId()).get()));
 
 		return mapper.modelToDTO( repository.save(doador) );		
 	}

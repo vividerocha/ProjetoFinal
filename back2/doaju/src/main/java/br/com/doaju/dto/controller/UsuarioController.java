@@ -18,8 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.UsuarioDTO;
+import br.com.doaju.model.Aluno;
+import br.com.doaju.model.Doador;
 import br.com.doaju.model.Grupo;
+import br.com.doaju.model.Tecnico;
 import br.com.doaju.model.Usuario;
+import br.com.doaju.repository.AlunoRepository;
+import br.com.doaju.repository.DoadorRepository;
+import br.com.doaju.repository.TecnicoRepository;
 import br.com.doaju.request.UsuarioRequest;
 import br.com.doaju.service.UsuarioService;
 
@@ -30,6 +36,13 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private DoadorRepository repoDoador;
+	@Autowired
+	private TecnicoRepository repoTecnico;
+	@Autowired
+	private AlunoRepository repoAluno;
 
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody UsuarioRequest usuario) {
@@ -94,16 +107,14 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@RequestBody Usuario usuario, @PathVariable Long id) {
+	public ResponseEntity<?> atualizar(@RequestBody UsuarioRequest usuarioRequest, @PathVariable Long id) {
 		
 		Usuario usuarioAtual = usuarioService.buscarPorId(id).orElse(null);
 		
-		if (usuarioAtual != null) {
-			usuario.setSenha(usuarioAtual.getSenha());
-			BeanUtils.copyProperties(usuario, usuarioAtual, "id");
-			
-			usuarioService.atualizar(usuarioAtual);
-			return ResponseEntity.ok(usuarioAtual);
+		if (usuarioAtual != null) {			
+			BeanUtils.copyProperties(usuarioRequest, usuarioAtual, "id");			
+			usuarioService.atualizar(usuarioRequest);
+			return ResponseEntity.ok(usuarioRequest);
 		}	
 			
 		return ResponseEntity.notFound().build();
@@ -126,6 +137,52 @@ public class UsuarioController {
 		}
 
 	}
+	
+	@GetMapping("/rec/{dadosUsuario}")
+	public ResponseEntity<?> recupera(@PathVariable String dadosUsuario) {
+		String[] dados = dadosUsuario.split("&");
+		String email = dados[0].toString();
+		String nome = dados[1].toString();
+		String nomeBanco = null;		
+
+		Usuario usuario = usuarioService.buscarEmail(email);
+		Long id = null;
+		if(usuario != null) {
+			id =usuario.getId();
+		}else {
+			return ResponseEntity.badRequest().body("Email não cadastrado na nossa base de dados");
+		}		
+		Aluno aluno = repoAluno.buscarPorIdUsuario(id);
+		if(aluno != null) {
+			nomeBanco = aluno.getNomeCompleto();
+			if (nome.equals(nomeBanco)) {			
+				return ResponseEntity.ok(usuario);
+			}else {			
+				return ResponseEntity.badRequest().body("Nome não confere - doa");
+			}
+		}
+		
+		Doador doador = repoDoador.buscarPorIdUsuario(id);
+		if(doador != null) {
+			nomeBanco = doador.getNomeCompleto();
+			if (nome.equals(nomeBanco)) {			
+				return ResponseEntity.ok(usuario);
+			}else {			
+				return ResponseEntity.badRequest().body("Nome não confere - doa");
+			}
+		}
+		Tecnico tecnico= repoTecnico.buscarPorIdUsuario(id);
+		if(tecnico != null) {
+			nomeBanco = tecnico.getNomeCompleto();
+			if (nome.equals(nomeBanco)) {			
+				return ResponseEntity.ok(usuario);
+			}else {			
+				return ResponseEntity.badRequest().body("Nome não confere - tec");
+			}
+		}		
+		return ResponseEntity.ok(usuario);
+	}
+	
 	@GetMapping("/user/{user}")
 	public ResponseEntity<?> buscarUsuario(@PathVariable String user) {
 		Usuario usuario = usuarioService.buscarUsuario(user);

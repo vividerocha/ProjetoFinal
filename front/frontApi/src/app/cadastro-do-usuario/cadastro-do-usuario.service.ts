@@ -34,7 +34,7 @@ export class CadastroDoUsuarioService {
     verificaUser(user: String): Observable<any>{
         return this.httpClient.get<Usuario>(this.apiUrl + '/user/' + user);
     }
-
+    
     buscaPorId(id: number): Observable<any>{
         return this.httpClient.get<Usuario>(this.apiUrl +'/'+ id);
     }
