@@ -39,7 +39,7 @@
               <a class="nav-link" *ngIf="linkRedirectAluno" routerLink ="/cadastro-aluno" [queryParams]="aluno">| Meus Dados</a>
             </li>
             <li [hidden]="ver" class="nav-item">
-              <a class="nav-link">| Sair</a>
+              <a class="nav-link" (click)="logout()">| Sair</a>
             </li>
           </ul>
         </nav>
