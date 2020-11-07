@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Doador } from '../pageDoador/form-doador/doador';
 import { Tecnico } from './../cadastro-tecnico/tecnico';
 import { Aluno } from './../cadastro-aluno/aluno';
+import { AuthService } from './../seguranca/auth.service';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private alunoService: AlunoService,
     private doadorService: DoadoresService,
-    private tecnicoService: TecnicoService
+    private tecnicoService: TecnicoService,
+    private sair: AuthService
     ) { }
     
 
@@ -88,9 +90,9 @@ export class MenuComponent implements OnInit {
   consulta
 
   logout() {
-    sessionStorage.setItem('isLogado', null);
-    sessionStorage.setItem('user', null);
-    this.router.navigate(['/home']);
+    sessionStorage.clear();
+    location.reload();
+    this.sair.logout();    
   }
 
 }

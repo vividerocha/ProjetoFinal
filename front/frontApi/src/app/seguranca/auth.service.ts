@@ -51,12 +51,13 @@ export class AuthService {
         this.router.navigate(['/']);
       },
       (e) => {
-        console.log(e.error.error_description);      
+        console.log(e.error.error_description);  
+        console.log("deu erro");    
       }); 
   }
 
   limparAccessToken() {
-    sessionStorage.removeItem('token');
+    sessionStorage.clear();
     this.jwtPayload = null;
   }
 
