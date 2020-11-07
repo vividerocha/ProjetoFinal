@@ -98,7 +98,6 @@ export class FormDoadorComponent implements OnInit {
 
   atualiza(){
     const dados =  this.capturaDados();    
-    console.log(dados);
     const id: number = this.doador.id;
     this.doadorService.atualizar(id, dados )
     .subscribe(()=>{
@@ -207,17 +206,8 @@ export class FormDoadorComponent implements OnInit {
     return this.formDoador.get('numeroCasa');
   }
 
-  showSucesso(mensagem: string) {
-    this.toastService.success(mensagem, '', {
-      positionClass: "toast-center",
-      closeButton: false,
-      newestOnTop: false,
-      progressBar: false,
-      timeOut: 5000,
-      extendedTimeOut: 1000,
-      easing: 'ease-in'
-    }
-    );
+  showSuccess(mensagem: string) {
+    this.toastService.success(mensagem);
   }
 
 }

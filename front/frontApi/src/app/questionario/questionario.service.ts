@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { environment } from './../../../environments/environment';
+import { environment } from './../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { FormDoadorComponent } from './form-doador.component';
+import { Aluno } from '../cadastro-aluno/aluno';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class DoadorService {
+export class QuestionarioService {
 
-    apiUrl = environment.URLSERVIDOR + "doadores";
+    apiUrl = environment.URLSERVIDOR + "questionario";
 
     constructor(private httpClient: HttpClient) { }
 
@@ -20,14 +20,17 @@ export class DoadorService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
      }
 
-    salvar(novoDoador: any): Observable<FormDoadorComponent>{
-        return this.httpClient.post<FormDoadorComponent>(this.apiUrl, JSON.stringify(novoDoador), this.httpOptions)
+    salvar(questionario: any): Observable<any>{
+        return this.httpClient.post<any>(this.apiUrl, JSON.stringify(questionario), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))   
     }
-    
-    atualizar(id: number, doador: any){
-        return this.httpClient.put(`${this.apiUrl}/${id}`, doador)
-        .pipe(retry(2),catchError(this.handleError));
+
+    getAluno(id: number): Observable<any>{
+        return this.httpClient.get<Aluno>(environment.URLSERVIDOR + "alunos/user/" + id);
+    }
+
+    getQuestionario(id: number): Observable<any>{
+        return this.httpClient.get<Aluno>(this.apiUrl + "/aluno/" + id);
     }
 
     // Manipulação de erros
@@ -43,6 +46,4 @@ export class DoadorService {
         console.log(errorMessage);
         return throwError(errorMessage);
     };
-
 }
-

@@ -1,0 +1,117 @@
+<div class="card" *ngIf="questionarioRespondido">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 text-primary">
+            Pontuação Questionário: {{ pontuacaoQuestionario }}
+        </h6>
+    </div>
+</div>
+
+
+<!--SE O ALUNO JÁ PREENCHEU O QUESTIONÁRIO, NÃO PERMITIR QUE ELE PREENCHA OU ALTERE-->
+<div class="card" *ngIf="!questionarioRespondido">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 text-primary">
+            Questionário
+        </h6>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" #f="ngForm" (ngSubmit)="onSubmit(f)">  
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="perg1">Quantos carros tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg1">
+                        <option value="0">0</option>
+                        <option value="10">1</option>
+                        <option value="20">2 ou mais</option>
+                    </select>                
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="perg2">Quantas motos tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg2">
+                        <option value="0">0</option>
+                        <option value="5">1</option>
+                        <option value="10">2 ou mais</option>
+                    </select>                
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="perg3">Quantas televisões tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg3">
+                        <option value="0">0</option>
+                        <option value="5">1</option>
+                        <option value="10">2 ou mais</option>
+                    </select>                
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="perg4">Quantas geladeiras tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg4">
+                        <option value="0">0</option>
+                        <option value="5">1</option>
+                        <option value="10">2 ou mais</option>
+                    </select>                
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="perg5">Quantos banheiros tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg5">
+                        <option value="2">1</option>
+                        <option value="5">2</option>
+                        <option value="10">3 ou mais</option>
+                    </select>                
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="perg6">Você mora de aluguel ou casa própria? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg6">
+                        <option value="0">Aluguel</option>
+                        <option value="5">Casa Própria</option>
+                    </select>                
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="perg7">Quantos computadores tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg7">
+                        <option value="0">0</option>
+                        <option value="5">1</option>
+                        <option value="10">2 ou mais</option>
+                    </select>                
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="perg8">Quantos celulares ou tablets tem na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg8">
+                        <option value="0">0</option>
+                        <option value="5">1</option>
+                        <option value="10">2 ou mais</option>
+                    </select>                
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="perg9">Quantas pessoas moram na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg9">
+                        <option value="10">2</option>
+                        <option value="5">3</option>
+                        <option value="2">4 ou mais</option>
+                    </select>                
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="perg10">Tem internet fixa na sua residência? <span style="color:red;">*</span></label><br>
+                    <select class="browser-default custom-select" style="width: 150px;" formControlName="perg10">
+                        <option value="0">Não</option>
+                        <option value="5">Sim</option>
+                    </select>                
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <mdb-error class="text-danger" 
+                    *ngIf="formularioInvalido">
+                    Verifique os Campos Obrigatórios</mdb-error>
+        </form>
+    </div>
+</div>

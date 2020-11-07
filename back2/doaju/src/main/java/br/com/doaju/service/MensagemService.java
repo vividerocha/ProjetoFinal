@@ -1,14 +1,10 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.doaju.dto.MensagemDTO;
 import br.com.doaju.mapper.MensagemMapper;
 import br.com.doaju.model.Mensagem;
@@ -30,8 +26,14 @@ public class MensagemService {
 		return mapper.modelToDTO( repository.save(mensagem) );		
 	}
 	
-	public Optional<Mensagem> buscar(Long id) {
-		return repository.findById(id);
+	public MensagemDTO buscar(Long id) {
+		try {
+			Mensagem mensagem = repository.findById(id).get(); 
+			return mapper.modelToDTO(mensagem);
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 	public List<MensagemDTO> listar() {

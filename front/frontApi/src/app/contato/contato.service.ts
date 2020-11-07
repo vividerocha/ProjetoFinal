@@ -27,6 +27,14 @@ export class ContatoService {
             return this.httpClient.post<Mensagem>(this.apiUrl, mensagem, this.httpOptions);     
         }
 
+        getMensagem(id: number): Observable<any> {
+            return this.httpClient.get<Mensagem>(this.apiUrl + "/" + id);
+        }
+
+        getMensagens(): Observable<any> {
+            return this.httpClient.get<any>(this.apiUrl);
+        }
+
         // Manipulação de erros
         handleError(error: HttpErrorResponse) {
             let errorMessage = '';
