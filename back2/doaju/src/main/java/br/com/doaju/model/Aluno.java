@@ -1,13 +1,14 @@
 package br.com.doaju.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,18 +16,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Aluno implements Serializable{
-	
-private static final long serialVersionUID = 1L;
-	
+public class Aluno{
+		
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -62,6 +64,11 @@ private static final long serialVersionUID = 1L;
 	@JoinTable(name = "aluno_equipamento", joinColumns = @JoinColumn(name = "aluno_id"),
 			inverseJoinColumns = @JoinColumn(name = "equipamento_id"))
 	private Set<TipoEquipamento> equipamentoAluno = new HashSet<>();
+	
+	@OneToOne(mappedBy = "aluno", cascade = CascadeType.ALL, optional = true)
+	@JsonBackReference
+	private Questionario questionario;
+	
 	
 	public void addTipo(TipoEquipamento tipo) {
 		this.equipamentoAluno.add(tipo);

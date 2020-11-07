@@ -1,1 +1,46 @@
-<p>mensagem works!</p>
+<div class="container2">
+    <div class="form-group row">
+        <div class="col-sm-8">
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                    <mat-cell *matCellDef="let elementTipo"> {{elementTipo.id}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="destinatario">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
+                    <mat-cell *matCellDef="let elementTipo"> {{elementTipo.destinatario}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="assunto">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Assunto </mat-header-cell>
+                        <mat-cell *matCellDef="let elementTipo"> {{elementTipo.assunto}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="-">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+                    <mat-cell *matCellDef="let elementTipo"><button type="button" data-toggle="modal" 
+                        data-target="#modal" class="btn" style="background-color: #F7D358;"
+                        (click)="detalhaItem(elementTipo.id)">Detalhe</button></mat-cell>
+                    </ng-container>
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+        </div>
+        <div class="col-sm-4">
+            <div *ngIf="detalhaS">
+                <div class="card" style="border:1px solid#FFA500;margin-top: 10px;">
+                    <div class="card-body" style="border-left:0px;">
+                        <h5 class="card-title">Mensagem</h5>
+                        <p>Destinatário: {{ mensagem.destinatario }}</p>
+                        <p>Assunto: {{ mensagem.assunto }}</p>
+                        <p>Mensagem: {{ mensagem.mensagem }}</p>
+                        <br><br>
+                        <button type="button"
+                        class="btn" style="background-color:#61DBE1;"
+                        (click)="fechaSituacao()">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

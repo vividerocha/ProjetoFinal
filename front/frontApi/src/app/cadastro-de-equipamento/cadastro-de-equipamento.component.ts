@@ -87,7 +87,6 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
 
-    console.log(dados);
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
         .subscribe(

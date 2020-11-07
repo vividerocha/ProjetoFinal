@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuadroAlunoComponent implements OnInit {
 
+  questionarioOn: boolean;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.verificaQuestionario();
+  }
+
+  verificaQuestionario(){
+    //verifica se o aluno já preencheu o questionário, se preencheu não exibe o questionário
+    this.questionarioOn = true;
   }
 
 }

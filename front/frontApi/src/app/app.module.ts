@@ -34,6 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 import { QuadroUsuarioComponent } from './quadro-usuario/quadro-usuario.component';
 import { QuadroAlunoComponent } from './quadro-aluno/quadro-aluno.component';
 import { QuadroTecnicoComponent } from './quadro-tecnico/quadro-tecnico.component';
+import { QuestionarioComponent } from './questionario/questionario.component';
 
 
 
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
     SegurancaComponent,
     QuadroUsuarioComponent,
     QuadroAlunoComponent,
-    QuadroTecnicoComponent
+    QuadroTecnicoComponent,
+    QuestionarioComponent
   
   ],
   imports: [
