@@ -26,6 +26,9 @@ export class ContatoService {
         enviarEmail(mensagem: Mensagem): Observable<any>{
             return this.httpClient.post<Mensagem>(this.apiUrl, mensagem, this.httpOptions);     
         }
+        enviarEmailNovaSenha(mensagem: Mensagem): Observable<any>{
+            return this.httpClient.post<Mensagem>(`${this.apiUrl}/senha`, mensagem, this.httpOptions);     
+        }
 
         getMensagem(id: number): Observable<any> {
             return this.httpClient.get<Mensagem>(this.apiUrl + "/" + id);

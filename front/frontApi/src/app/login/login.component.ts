@@ -1,3 +1,5 @@
+import { ContatoService } from './../contato/contato.service';
+import { Mensagem } from './../contato/mensagem';
 import { Usuario } from './../cadastro-do-usuario/usuario';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
@@ -7,6 +9,7 @@ import { AuthService } from './../seguranca/auth.service'
 import { LoginService } from './login.service';
 import { CadastroDoUsuarioService } from '../cadastro-do-usuario/cadastro-do-usuario.service';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
     private service: AuthService,
     private loginService: LoginService,
     private caduser: CadastroDoUsuarioService,
+    private contatoService: ContatoService,
     private toastService: ToastrService) { }
 
   ngOnInit(): void {  
@@ -79,10 +83,29 @@ export class LoginComponent implements OnInit {
     .subscribe(dados => {
       console.log(dados);
       this.toastService.success("Dados atualizados com Sucesso!");
+      this.enviaEmail();
     },
       error => {
         console.log(error);        
       });
+  }
+  enviaEmail(){
+    const newSenha = this.novaSenhaDigitada;
+    const mens = `O sistema DoaJu alterou sua senha com sucesso. Sua nova senha é: ${newSenha}`
+    const msg = {
+      destinatario: this.user.email,
+      assunto: "Alteração de Senha - Sistema DoAju",
+      mensagem: mens
+    }
+    this.contatoService.enviarEmailNovaSenha(msg)
+    .subscribe(dados =>{
+      console.log(dados)
+    },
+    error => {
+      console.log(error);
+      this.ver = true;
+      this.verErro = false;
+    });
   }
 
   recuperarSenha(){

@@ -72,14 +72,14 @@ public class HistoricoEquipamentoService {
 				.collect(Collectors.toList());	
 	}
 	
-	public List<HistoricoEquipamentoDTO> buscarHistorico(Long idEquipamento) {
-		
-		Equipamento equipamento = repositoryEquip.findById(idEquipamento).get();
-		return repository.findByEquipamento(equipamento)
-				.stream()
-				.map(hist -> mapper.modelToDTO(hist))
-				.collect(Collectors.toList());	
-	}
+//	public List<HistoricoEquipamentoDTO> buscarHistorico(Long idEquipamento) {
+//		
+//		Equipamento equipamento = repositoryEquip.findById(idEquipamento).get();
+//		return repository.findByEquipamento(equipamento)
+//				.stream()
+//				.map(hist -> mapper.modelToDTO(hist))
+//				.collect(Collectors.toList());	
+//	}
 	
 	
 //	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaReparoPorRegiao(String regiao) {

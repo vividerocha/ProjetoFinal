@@ -38,6 +38,15 @@ public class EmailController {
             salvar(mensagemRequest);
         }
         
+        @PostMapping("/senha")
+        public void enviarEmailSenha(@RequestBody MensagemRequest mensagemRequest) {
+        	String destinatario = mensagemRequest.getDestinatario();
+        	String assunto = mensagemRequest.getAssunto();
+        	String mensagem = mensagemRequest.getMensagem();
+        	
+            emailService.sendMail(destinatario, assunto, mensagem);            
+        }
+        
     	public ResponseEntity<?> salvar(MensagemRequest mensagemRequest) {	
     		try {
     			
