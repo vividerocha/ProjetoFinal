@@ -1,0 +1,4 @@
+INSERT INTO `usuario` (`id`, `email`, `senha`, `usuario`) VALUES (NULL, 'admin@local', '$2y$12$uSvTTRsf6sBuWMH4nbMeX.ZRHPaNqZUvqTS7J7HS3hfamZaXmcC2O', 'administrador');
+INSERT INTO `grupo` VALUES (null,'usuarios'),(null,'Admin'),(null,'Alunos'),(null,'Doadores'),(null,'Tecnicos');
+INSERT INTO `permissao` VALUES (null,'Permissões de Doador','PDJDO01'),(null,'Permissoes para todos os usuarios','PDJUS01'),(null,'Permissoes de Administrador','PDJAD01'),(null,'Permissões de Aluno','PDJAL01'),(null,'Permissões de Técnico','PDJTE01');
+INSERT INTO `tipo_equipamento` VALUES (null,'Notebook'),(null,'Celular'),(null,'Tablet'),(null,'PC Desktop'),(null,'Impressora');

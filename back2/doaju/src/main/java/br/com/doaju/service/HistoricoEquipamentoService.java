@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 //import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
