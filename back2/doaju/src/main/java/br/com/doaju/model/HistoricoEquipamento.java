@@ -28,7 +28,7 @@ public class HistoricoEquipamento {
 	
 	@ManyToOne
 	@JoinColumn (name="equipamento_id",nullable=false)
-	@JsonBackReference
+	//@JsonBackReference
 	private Equipamento equipamento;
 	
 	@ManyToOne

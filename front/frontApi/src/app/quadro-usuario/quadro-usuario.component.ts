@@ -19,7 +19,7 @@ export class QuadroUsuarioComponent implements OnInit {
   }
 
   verificaUsuarioLogado(){
-    this.usuarioLogado = "Aluno";
+    this.usuarioLogado = "Tecnico";
 
     switch (this.usuarioLogado){
       case "Doador":

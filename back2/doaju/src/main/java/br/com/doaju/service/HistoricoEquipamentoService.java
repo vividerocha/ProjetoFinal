@@ -47,8 +47,8 @@ public class HistoricoEquipamentoService {
 	    return mapper.modelToDTO( repository.save(historicoEquipamento) );		
 	}
 	
-	public Optional<HistoricoEquipamento> buscar(Equipamento equipamento) {
-		return repository.findByEquipamento(equipamento);
+	public List<HistoricoEquipamento> buscar(Equipamento equipamento) {
+		return repository.findByEquipamento(equipamento.getId());
 	}
 
 	@Transactional
@@ -73,23 +73,23 @@ public class HistoricoEquipamentoService {
 				.collect(Collectors.toList());	
 	}
 	
-//	public List<HistoricoEquipamentoDTO> buscarHistorico(Long idEquipamento) {
-//		
-//		Equipamento equipamento = repositoryEquip.findById(idEquipamento).get();
-//		return repository.findByEquipamento(equipamento)
-//				.stream()
-//				.map(hist -> mapper.modelToDTO(hist))
-//				.collect(Collectors.toList());	
-//	}
+	public List<HistoricoEquipamentoDTO> buscarHistorico(Long idEquipamento) {
+		
+		Equipamento equipamento = repositoryEquip.findById(idEquipamento).get();
+		return repository.findByEquipamento(equipamento.getId())
+				.stream()
+				.map(hist -> mapper.modelToDTO(hist))
+				.collect(Collectors.toList());	
+	}
 	
 	
-//	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaReparoPorRegiao(String regiao) {
-//	//consulta os equipamentos disponíveis para retirada do técnico	
-//		return repository.buscaEquipamentosParaReparoPorRegiao(regiao)
-//				.stream()
-//				.map(hist -> mapper.modelToEqDTO(hist))
-//				.collect(Collectors.toList());	
-//	}
+	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaReparoPorRegiao(String regiao) {
+	//consulta os equipamentos disponíveis para retirada do técnico	
+		return repository.buscaEquipamentosParaReparoPorRegiao(regiao)
+				.stream()
+				.map(hist -> mapper.modelToEqDTO(hist))
+				.collect(Collectors.toList());	
+	}
 	
 	
 
