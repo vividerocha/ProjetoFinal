@@ -78,3 +78,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   .text-primary{
     color: coral;
   }
+
+  .quadro{
+    background-color:#FBFAE6;
+    padding: 10px;
+  }
+
+  .cabecalhoQuadro{
+    background-color: #8DE4ED;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    height: 50px;
+    color:black;
+  }

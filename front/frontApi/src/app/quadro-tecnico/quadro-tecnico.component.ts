@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EquipamentosReparo } from './equipamentosReparo';
+import { QuadroTecnicoService } from './quadro-tecnico.service';
 
 @Component({
   selector: 'app-quadro-tecnico',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuadroTecnicoComponent implements OnInit {
 
-  constructor() { }
+  elementos: EquipamentosReparo;
+  
+
+  constructor(private service: QuadroTecnicoService) { }
 
   ngOnInit(): void {
+    this.buscaEquipamentosParaReparo();
   }
 
+  buscaEquipamentosParaReparo(){
+      this.service.getEquipamentos(parseInt(sessionStorage.getItem('idUserLogado')))
+      .subscribe(res => {
+        this.elementos = res;
+      }, err => {
+        console.log(err);
+      });
+    
+  }
 }

@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 //import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
+import br.com.doaju.dto.TecnicoDTO;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
 import br.com.doaju.service.DoadorService;
 import br.com.doaju.service.HistoricoEquipamentoService;
+import br.com.doaju.service.TecnicoService;
 
 @CrossOrigin
 @RestController
@@ -30,7 +33,7 @@ public class HistoricoEquipamentoController {
 	private HistoricoEquipamentoService service;
 	
 	@Autowired
-	private DoadorService serviceD;
+	private TecnicoService serviceT;
 	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody HistoricoEquipamentoRequest historicoEquipamentoRequest) {	
@@ -52,28 +55,28 @@ public class HistoricoEquipamentoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable Equipamento equipamento) {
 		
-		Optional<HistoricoEquipamento> historicoEquipamento = service.buscar(equipamento);
+		List<HistoricoEquipamento> historicoEquipamento = service.buscar(equipamento);
 		
-		if (historicoEquipamento.isPresent()) {
-			return ResponseEntity.ok(historicoEquipamento.get());
+		if (!historicoEquipamento.isEmpty()) {
+			return ResponseEntity.ok(historicoEquipamento);
 		}
 		
 		return ResponseEntity.notFound().build();
 	
 	}
 	
-//	@GetMapping("/Equipamento/{idEquipamento}")
-//	public List<HistoricoEquipamentoDTO> buscarHistoricoEquipamento(@PathVariable Long idEquipamento) {
-//		return service.buscarHistorico(idEquipamento);
-//	
-//	}
+	@GetMapping("/Equipamento/{idEquipamento}")
+	public List<HistoricoEquipamentoDTO> buscarHistoricoEquipamento(@PathVariable Long idEquipamento) {
+		return service.buscarHistorico(idEquipamento);
 	
-//	@GetMapping("/QuadroDoador/{id}")
-//	public List<EquipamentosTecnicoRegiaoDTO> buscarEquipamentoParaDoador(@PathVariable Long id) {
-//		DoadorDTO doador = serviceD.buscarPorIdUsuario(id);
-//		String regiao = doador.getEstado();
-//		return service.buscaEquipamentosParaReparoPorRegiao(regiao);
-//	
-//	}
+	}
+	
+	@GetMapping("/QuadroTecnico/{id}")
+	public List<EquipamentosTecnicoRegiaoDTO> buscarEquipamentoParaTecnico(@PathVariable Long id) {
+		TecnicoDTO tecnico = serviceT.buscarPoridUser(id);
+		String regiao = tecnico.getEstado();
+		return service.buscaEquipamentosParaReparoPorRegiao(regiao);
+	
+	}
 
 }
