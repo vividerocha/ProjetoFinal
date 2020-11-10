@@ -1,1 +1,26 @@
-<p>quadro-tecnico works!</p>
+
+<div>
+    <div style="width: 95%;">
+        <div class="cabecalhoQuadro">
+            <h6>
+                Equipamentos Disponíveis para Reparo
+            </h6>
+        </div>
+        <div *ngFor="let elemento of elementos">
+            <div class="quadro">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{elemento.tipoEquipamento}}</h5>
+                      <p class="card-text">{{elemento.descricaoEquipamento}}</p>
+                      <p class="card-text">Doador: {{elemento.nomeDoador}}</p>
+                      <p class="card-text">Celular: {{elemento.celularDoador}} / Fixo: {{elemento.telefoneDoador}}</p>
+                      <p class="card-text">Endereço: {{elemento.estadoDoador}} - {{elemento.cidade}}<br>
+                        {{elemento.enderecoDoador}} - Nº {{elemento.casaDoador}}
+                        </p>
+                      <a href="#" class="btn btn-primary">Confirmar que o Equipamento foi Retirado</a>
+                    </div>
+                  </div>
+            </div>
+        </div>          
+    </div>
+</div>

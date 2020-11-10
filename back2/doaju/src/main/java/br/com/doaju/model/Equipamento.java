@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -42,9 +47,9 @@ public class Equipamento{
     @JsonBackReference
 	private TipoEquipamento tipoEquipamento;
 	
-	@OneToMany(mappedBy="equipamento")
-	@JsonManagedReference
-	@Transient 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="equipamento")
+	@Fetch(value=FetchMode.SELECT)
+	//@JsonManagedReference
 	private Set<HistoricoEquipamento> historicos;
 	
 }
