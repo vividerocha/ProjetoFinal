@@ -21,6 +21,7 @@ export class DoadorService {
      }
 
     salvar(novoDoador: any): Observable<FormDoadorComponent>{
+        console.log(novoDoador);
         return this.httpClient.post<FormDoadorComponent>(this.apiUrl, JSON.stringify(novoDoador), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))   
     }

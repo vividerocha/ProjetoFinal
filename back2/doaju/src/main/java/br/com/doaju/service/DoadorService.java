@@ -1,6 +1,7 @@
 package br.com.doaju.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -33,7 +34,7 @@ public class DoadorService {
 		
 		Doador doador = mapper.requestToModel(doadorRequest);
 
-		doador.setUsuario(repoUser.findById(doadorRequest.getUsuario().getId()).get());
+		doador.setUsuario(repoUser.findById(doadorRequest.getUsuario()).get());
 		System.out.println(doador.toString());
 	    return mapper.modelToDTO( repository.save(doador) );		
 	}
@@ -46,6 +47,9 @@ public class DoadorService {
 			return null;
 		}
 		
+	}
+	public Optional<Doador> buscar2(Long id) {
+		return repository.findById(id);		
 	}
 	
 	public DoadorDTO buscarPorIdUsuario(Long id) {
@@ -85,10 +89,14 @@ public class DoadorService {
 	public DoadorDTO atualizar(DoadorRequest doadorRequest) {
 
 		Doador doador = mapper.requestToModel(doadorRequest);
-		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario().getId()).get()));
+		doador.setUsuario((repoUser.findById(doadorRequest.getUsuario()).get()));
 
 
 		return mapper.modelToDTO( repository.save(doador) );		
+	}
+	@Transactional
+	public void atualizar2(Doador doador) {
+		repository.save(doador);				
 	}
 
 }
