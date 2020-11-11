@@ -20,6 +20,6 @@ public class DoadorRequest {
 	private String telefone;
 	private String celular;
 	private boolean termo;
-	private Usuario usuario;
+	private Long usuario;
 	
 }

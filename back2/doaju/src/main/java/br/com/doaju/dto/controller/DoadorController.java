@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.model.Doador;
 import br.com.doaju.request.DoadorRequest;
 import br.com.doaju.service.DoadorService;
 import br.com.doaju.service.UsuarioService;
@@ -34,7 +35,8 @@ public class DoadorController {
 	public ResponseEntity<?> salvar(@RequestBody DoadorRequest doadorRequest) {	
 		try {
 			
-			DoadorDTO doadorDTO = service.salvar(doadorRequest);			
+			DoadorDTO doadorDTO = service.salvar(doadorRequest);
+			System.out.println(doadorRequest);
 			return ResponseEntity.status(HttpStatus.CREATED).body(doadorDTO);
 		
 		}catch(Exception ex) {			
@@ -76,16 +78,14 @@ public class DoadorController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@RequestBody DoadorRequest doadorRequest, @PathVariable Long id) {
-		
-		DoadorDTO doadorAtual = service.buscar(id);
-		
-		if (doadorAtual != null) {
+		Doador doadorAtual = service.buscar2(id).orElse(null);
+		if(doadorAtual != null) {
 			BeanUtils.copyProperties(doadorRequest, doadorAtual, "id");
-			service.atualizar(doadorRequest);
-			return ResponseEntity.ok(doadorRequest);
-		}	
-			
+			service.atualizar2(doadorAtual);
+			return ResponseEntity.ok(doadorAtual);
+		}
 		return ResponseEntity.notFound().build();
+
 	}
 	
 	@DeleteMapping("/{id}")
