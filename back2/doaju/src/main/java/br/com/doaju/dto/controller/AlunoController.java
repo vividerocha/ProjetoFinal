@@ -1,7 +1,6 @@
 package br.com.doaju.dto.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.AlunoDTO;
+import br.com.doaju.dto.controller.swagger.AlunoControllerSwagger;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.request.AlunoRequest;
 import br.com.doaju.service.AlunoService;
@@ -27,13 +27,15 @@ import br.com.doaju.service.AlunoService;
 @CrossOrigin
 @RestController
 @RequestMapping("/alunos")
-public class AlunoController {
+
+public class AlunoController implements AlunoControllerSwagger{
 	
 	@Autowired
-	private AlunoService service;
+	private AlunoService service;	
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid AlunoRequest alunoRequest) {	
+	@Override
+	public ResponseEntity<?> salvar(@RequestBody AlunoRequest alunoRequest) {	
 		try {
 			
 			AlunoDTO alunoDTO = service.salvar(alunoRequest);			
