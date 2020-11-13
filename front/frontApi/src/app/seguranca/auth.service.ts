@@ -2,6 +2,8 @@ import { MenuComponent } from './../menu/menu.component';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AuthRepository } from './auth-repository';
+import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,7 +13,7 @@ export class AuthService {
 
   jwtPayload: any; 
 
-  constructor(public repository: AuthRepository, private router: Router) { 
+  constructor(public repository: AuthRepository, private router: Router, private toastService: ToastrService) { 
     this.carregarToken();
   }
 
@@ -27,7 +29,8 @@ export class AuthService {
         this.router.navigate(['/home']);
       },
         (e) => {
-          console.log(e.error.error_description);      
+          console.log(e.error.error_description);
+          this.toastService.error(e.error.error_description,"Erro", {timeOut:5000, progressBar: true});    
         });    
   }
 
@@ -52,7 +55,8 @@ export class AuthService {
       },
       (e) => {
         console.log(e.error.error_description);  
-        console.log("deu erro");    
+        console.log("deu erro");
+          
       }); 
   }
 
