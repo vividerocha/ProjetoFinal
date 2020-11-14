@@ -4,6 +4,7 @@ package br.com.doaju.dto;
 import java.util.List;
 
 import br.com.doaju.model.TipoEquipamento;
+import br.com.doaju.model.Usuario;
 import lombok.Data;
 
 @Data
@@ -26,5 +27,6 @@ public class AlunoDTO {
 	private String celular;
 	private boolean termo;
 	private List<TipoEquipamento> equipamentoAluno;
+	private Usuario usuario;
 
 }

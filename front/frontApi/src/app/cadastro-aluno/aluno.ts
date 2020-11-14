@@ -16,7 +16,7 @@ export interface Aluno {
       termo: String,
       tiposEquipamentos: String[],
       equipamentos:String[],
-      usuario:number
+      usuario:any
       equipamentoAluno: any
       id: number    
     }

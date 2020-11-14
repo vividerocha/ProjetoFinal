@@ -34,6 +34,18 @@ export class AlunoService {
         .pipe(retry(2),catchError(this.handleError));
     }
 
+    getAlunos(): Observable<any>{
+        return this.httpClient.get<Aluno>(this.apiUrl);
+    }
+
+    getAluno(id: number): Observable<any>{
+        return this.httpClient.get<Aluno>(this.apiUrl + "/" + id);
+    }
+
+    delete(id: number): Observable<any> {
+        return this.httpClient.delete(`${this.apiUrl}/${id}`);
+    }
+
     // Manipulação de erros
     handleError(error: HttpErrorResponse) {
         let errorMessage = '';

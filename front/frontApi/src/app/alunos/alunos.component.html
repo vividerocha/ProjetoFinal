@@ -1,1 +1,159 @@
-<p>alunos works!</p>
+<div>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <form [formGroup]="form">
+          <label for="filter">Pesquisar: </label>
+          <input type="text" class="form-control" id="pesquisa" formControlName="pesquisa"
+            (keyup)="applyFilter($event.target.value)">
+        </form>
+      </div>
+    </div>
+    <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nomeCompleto">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> nome </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nomeCompleto}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="celular">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Celular </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.celular}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="estado">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.estado}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="cidade">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Cidade </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.cidade}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="-">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> - </mat-header-cell>
+        <mat-cell *matCellDef="let element"><button type="button" data-toggle="modal" data-target="#modal" class="btn"
+            style="background-color: #F7D358;" (click)="detalhaItem(element.id)">Detalhe</button></mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formDetalhe" #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="id">Id:</label>
+                <input type="text" class="form-control" *ngIf="aluno" id="id" formControlName="id" readonly>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="nomeCompleto">Nome Completo: <span style="color:red;">*</span></label>
+                <input *ngIf="aluno" type="text" [(ngModel)]="aluno.nomeCompleto" class="form-control" id="nomeCompleto"
+                  formControlName="nomeCompleto" required>
+              </div>
+              <mdb-error class="text-danger" *ngIf="nomeCompleto.invalid && (nomeCompleto.dirty || nomeCompleto.touched)">
+                Digite seu Nome Completo</mdb-error>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="cep">CEP: <span style="color:red;">*</span></label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.cep" maxlength="8" class="form-control" id="cep"
+                  formControlName="cep" (blur)="consultaCep()" onkeypress="return SomenteNumero(event);">
+                <mdb-error class="text-danger" *ngIf="cep.invalid && (cep.dirty || cep.touched)">
+                  Digite seu CEP</mdb-error>
+              </div>
+              <div class="form-group col-md-8">
+                <label for="logradouro">Logradouro: </label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.logradouro" class="form-control" id="logradouro"
+                  formControlName="logradouro" [readonly]="true">
+              </div>
+              <div class="form-group col-md-2">
+                <label for="numeroCasa">Número: <span style="color:red;">*</span></label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.numeroCasa" class="form-control"
+                  formControlName="numeroCasa" id="numero">
+                <mdb-error class="text-danger" *ngIf="numeroCasa.invalid && (numeroCasa.dirty || numeroCasa.touched)">
+                  Digite um Número de Residência</mdb-error>
+              </div>
+            </div>
+  
+  
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="bairro">Bairro: </label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.bairro" class="form-control" id="bairro"
+                  formControlName="bairro" [readonly]="true">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="cidade">Cidade: </label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.cidade" class="form-control" id="cidade"
+                  formControlName="cidade" [readonly]="true">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="estado">Estado: </label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.estado" class="form-control" id="estado"
+                  formControlName="estado" [readonly]="true">
+              </div>
+  
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="complemento">Complemento: </label>
+                <input type="text" *ngIf="aluno" [(ngModel)]="aluno.complemento" class="form-control" id="complemento"
+                  formControlName="complemento">
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="telefone">Telefone Fixo: </label>
+                <input type="tel" *ngIf="aluno" [(ngModel)]="aluno.telefone" class="form-control" id="telefone"
+                  formControlName="telefone" onkeypress="$(this).mask('(00) 0000-00009')">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="celular">Telefone Celular: <span style="color:red;">*</span></label>
+                <input type="tel" *ngIf="aluno" [(ngModel)]="aluno.celular" class="form-control" id="celular"
+                  formControlName="celular" onkeypress="$(this).mask('(00) 0000-00009')">
+                <mdb-error class="text-danger" *ngIf="celular.invalid && (celular.dirty || celular.touched)">
+                  Digite um Telefone</mdb-error>
+              </div>
+              <!-- <div class="form-group col-md-6">
+                <input [hidden]="true" type="text" class="form-control" id="usuario" formControlName="usuario"
+                  [(ngModel)]="aluno.usuario.id" *ngIf="aluno">
+              </div> -->
+            </div>
+            <mdb-error class="text-danger" *ngIf="formularioInvalido">
+              Verifique os Campos Obrigatórios</mdb-error>
+            <div [hidden]="confirmaExclusao">
+              <div class="alert alert-warning" role="alert">
+                <label>Tem Certeza de que Deseja Excluir?</label><br>
+                <button type="button" class="btn btn-secondary" (click)="desisteExcluir();">Não</button>
+                <button type="button" class="btn btn-danger" (click)="excluir(aluno.id);">Sim</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-danger" (click)="confirmaExcluir();">Excluir</button>
+              <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
