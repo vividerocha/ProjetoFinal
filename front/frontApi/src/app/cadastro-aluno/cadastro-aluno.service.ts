@@ -29,7 +29,8 @@ export class AlunoService {
         
     }
 
-    atualizar(id: number, aluno: any){        
+    atualizar(id: number, aluno: any){
+        console.log(aluno);        
         return this.httpClient.put(`${this.apiUrl}/${id}`, aluno)
         .pipe(retry(2),catchError(this.handleError));
     }

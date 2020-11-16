@@ -93,12 +93,12 @@ public class AlunoController implements AlunoControllerSwagger{
 	public ResponseEntity<?> atualizar(@RequestBody @Valid AlunoRequest alunoRequest, @PathVariable Long id) {
 		
 
-		AlunoDTO alunoAtual = service.buscar(id);
+		Aluno alunoAtual = service.buscar2(id).orElse(null);
 
 		if (alunoAtual != null) {
 			BeanUtils.copyProperties(alunoRequest, alunoAtual, "id");
 			
-			service.atualizar(alunoRequest);
+			service.atualizar2(alunoAtual);
 			return ResponseEntity.ok(alunoAtual);
 		}	
 			
