@@ -3,21 +3,38 @@
     <div style="width: 95%;">
         <div class="cabecalhoQuadro">
             <h6>
-                Equipamentos Disponíveis para Reparo
+                Equipamentos
             </h6>
         </div>
         <div *ngFor="let elemento of elementos">
             <div class="quadro">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                      <h5 class="card-title">{{elemento.tipoEquipamento}}</h5>
-                      <p class="card-text">{{elemento.descricaoEquipamento}}</p>
-                      <p class="card-text">Doador: {{elemento.nomeDoador}}</p>
-                      <p class="card-text">Celular: {{elemento.celularDoador}} / Fixo: {{elemento.telefoneDoador}}</p>
-                      <p class="card-text">Endereço: {{elemento.estadoDoador}} - {{elemento.cidade}}<br>
-                        {{elemento.enderecoDoador}} - Nº {{elemento.casaDoador}}
-                        </p>
-                      <a href="#" class="btn btn-primary">Confirmar que o Equipamento foi Retirado</a>
+                            <h5 class="card-title">{{elemento.idEquipamento}} - {{elemento.tipoEquipamento}}</h5>
+                                <p class="card-text">{{elemento.descricaoEquipamento}}</p>
+                                <button type="button" class="btn btn-info" (click)="detalhaEquipamento(elemento.idEquipamento)">Detalhar</button>
+                                <br><br>
+                                <div class="detalhaEquipamento" hidden=true id={{elemento.idEquipamento}}>
+                                    <p class="card-text">Doador: {{elemento.nomeDoador}}</p>
+                                <p class="card-text">Celular: {{elemento.celularDoador}} / Fixo: {{elemento.telefoneDoador}}</p>
+                                <p class="card-text">Endereço: {{elemento.estadoDoador}} - {{elemento.cidade}}<br>
+                                    {{elemento.enderecoDoador}} - Nº {{elemento.casaDoador}}
+                                    </p>
+                                <br>
+                                <div *ngIf="reserva">
+                                    <button type='button' class='btn btn-primary' (click)="alterarHistorico(2, elemento.idEquipamento)">Reservar Equipamento</button>
+                                </div>
+                                <div *ngIf="confirma">
+                                    <button type='button' class='btn btn-success' (click)="alterarHistorico(3, elemento.idEquipamento)">Confirmar a Retirada do Equipamento</button>
+                                </div>
+                                <div *ngIf="disponibilizar">
+                                    <button type='button' class='btn btn-warning' (click)="alterarHistorico(4, elemento.idEquipamento)">Disponibilizar para Distribuição</button>
+                                </div>
+                                <div *ngIf="semAcao">
+                                    <div class='alert alert-info' role='alert'>Não existe ação para esse aparelho!</div>
+                                </div>
+
+                    </div>  
                     </div>
                   </div>
             </div>
