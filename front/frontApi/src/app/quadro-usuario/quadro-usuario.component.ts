@@ -19,8 +19,13 @@ export class QuadroUsuarioComponent implements OnInit {
   }
 
   verificaUsuarioLogado(){
-    this.usuarioLogado = "Tecnico";
-
+    if(sessionStorage.getItem("idAluno") != null && sessionStorage.getItem("idAluno") != undefined){
+      this.usuarioLogado = "Aluno";
+    }else if (sessionStorage.getItem("idTecnico") != null && sessionStorage.getItem("idTecnico") != undefined){
+      this.usuarioLogado = "Tecnico";
+    }else if(sessionStorage.getItem("idDoador") != null && sessionStorage.getItem("idDoador") != undefined){
+      this.usuarioLogado = "Doador";
+    }
     switch (this.usuarioLogado){
       case "Doador":
         this.doadorOn = true;
