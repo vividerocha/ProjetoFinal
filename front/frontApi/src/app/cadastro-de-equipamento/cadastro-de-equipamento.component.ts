@@ -79,14 +79,13 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       func = false;
     }
 
-    console.log(this.formEquipamento.value.tiposEquipamentos);
-    
     const dados = {
       descricaoEquipamento: this.formEquipamento.value.descricaoEquipamento,
       funcionando: func,
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
 
+    console.log(dados);
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
         .subscribe(
@@ -147,11 +146,10 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     this.equipamentoService.getEquipamentos(id)
     .subscribe(res => {
       this.elements = res;
+      console.log(res);
       this.dataSource = new MatTableDataSource(res);
-      //this.isLoadingResults = false;
     }, err => {
       console.log(err);
-      //this.isLoadingResults = false;
     });
   }
 

@@ -24,4 +24,8 @@ export class QuadroTecnicoService {
     getEquipamentos(id: number): Observable<any>{
         return this.httpClient.get<EquipamentosReparo>(this.apiUrl + "/QuadroTecnico/" + id);
     }
+
+    getUltimoHistorico(id: number): Observable<any>{
+        return this.httpClient.get(this.apiUrl + "/UltimoHistorico/" + id);
+    }
 }

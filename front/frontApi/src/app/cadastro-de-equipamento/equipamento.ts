@@ -4,6 +4,5 @@ export interface Equipamento {
     id: number,
     descricaoEquipamento: String,
     funcionando: Boolean,
-    tipoEquipamento: TipoEquipamento,
-    idUsuario: number
+    tipoEquipamento: TipoEquipamento
 }
