@@ -1,5 +1,8 @@
 package br.com.doaju.model;
+import java.util.List;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @NoArgsConstructor
-@Table(name = "SituacaoEquipamento")
+@Entity
 public class SituacaoEquipamento{
 	
 	@Id
@@ -24,9 +26,7 @@ public class SituacaoEquipamento{
 	private Long id;
 	private String situacao;
 	
-	@OneToMany(mappedBy="SituacaoEquipamento")
-	@JsonManagedReference
-	@Transient 
-	private Set<HistoricoEquipamento> historico;
+	@OneToMany(mappedBy = "situacao", cascade = CascadeType.ALL)
+	private List<HistoricoEquipamento> historico;
 
 }

@@ -11,8 +11,5 @@ public class DoajuApplication {
 	
 		SpringApplication.run(DoajuApplication.class, args);
 	}
-	
-	// FAZER MÉTODO PARA INSERIR DADOS INICIAIS NA TABELA DE GRUPO - PERMISSÃO E INSERIR PELO MENOS UM ADMIN
-	// QUANDO INICIALIZAR A APLICAÇÃO PELA PRIMEIRA VEZ
 
 }

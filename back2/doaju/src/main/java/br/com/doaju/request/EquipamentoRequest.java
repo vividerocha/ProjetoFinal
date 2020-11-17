@@ -1,7 +1,11 @@
 package br.com.doaju.request;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
 
+import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.model.TipoEquipamento;
 import lombok.Data;
 import lombok.NoArgsConstructor;

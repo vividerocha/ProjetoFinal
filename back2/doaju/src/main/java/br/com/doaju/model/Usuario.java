@@ -1,8 +1,10 @@
 package br.com.doaju.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -48,9 +51,7 @@ public class Usuario {
 	private Set<Grupo> grupos = new HashSet<>();
 	
 	
-	@OneToMany(mappedBy="usuario")
-	@JsonManagedReference
-	@Transient
-	private HistoricoEquipamento historico;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<HistoricoEquipamento> historico;
 	
 }
