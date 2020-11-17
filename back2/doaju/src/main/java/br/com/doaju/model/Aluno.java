@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -61,13 +62,11 @@ public class Aluno{
 	private Usuario usuario;
 	
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name = "aluno_equipamento", joinColumns = @JoinColumn(name = "aluno_id"),
 			inverseJoinColumns = @JoinColumn(name = "equipamento_id"))
 	private Set<TipoEquipamento> equipamentoAluno = new HashSet<>();
 	
-	@OneToOne(mappedBy = "aluno", cascade = CascadeType.ALL, optional = true)
-	@JsonBackReference
-	private Questionario questionario;
 	
 	
 	public void addTipo(TipoEquipamento tipo) {

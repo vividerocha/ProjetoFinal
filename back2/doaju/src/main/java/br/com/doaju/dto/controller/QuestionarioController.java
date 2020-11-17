@@ -17,9 +17,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.doaju.dto.AlunoDTO;
 import br.com.doaju.dto.QuestionarioDTO;
+import br.com.doaju.dto.RankingDTO;
+import br.com.doaju.mapper.AlunoMapper;
+import br.com.doaju.model.Aluno;
 import br.com.doaju.model.Questionario;
 import br.com.doaju.request.QuestionarioRequest;
+import br.com.doaju.service.AlunoService;
 import br.com.doaju.service.QuestionarioService;
 
 @CrossOrigin
@@ -30,12 +36,19 @@ public class QuestionarioController {
 	@Autowired
 	private QuestionarioService service;
 	
+	@Autowired
+	private AlunoService serviceAl;
+	
+	@Autowired
+	private AlunoMapper mapperAl;
 	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody QuestionarioRequest questionarioRequest) {	
 		try {
 			
-			QuestionarioDTO questionarioDTO = service.salvar(questionarioRequest);			
+			QuestionarioDTO questionarioDTO = service.salvar(questionarioRequest);
+			Aluno aluno = serviceAl.buscar2(questionarioRequest.getAluno()).get();
+			questionarioDTO.setAluno(aluno);
 			return ResponseEntity.status(HttpStatus.CREATED).body(questionarioDTO);
 		
 		}catch(Exception ex) {
@@ -69,6 +82,13 @@ public class QuestionarioController {
 			return ResponseEntity.ok(questionario);
 		}
 		return ResponseEntity.notFound().build();
+	}
+	
+	@GetMapping("/ranking/{regiao}")
+	public List<RankingDTO> listarRanking(@PathVariable String regiao) {
+		
+		return service.buscarRankingRegiao(regiao);
+		
 	}
 	
 	@DeleteMapping("/{id}")

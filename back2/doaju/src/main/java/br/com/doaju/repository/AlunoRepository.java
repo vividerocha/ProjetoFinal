@@ -11,5 +11,6 @@ public interface AlunoRepository  extends JpaRepository<Aluno, Long>{
 	
 	@Query(value = "SELECT a FROM Aluno a WHERE usuario_id = ?1")
 	public Aluno buscaPorIdUsuario(Long id);
-
+	
+	
 }

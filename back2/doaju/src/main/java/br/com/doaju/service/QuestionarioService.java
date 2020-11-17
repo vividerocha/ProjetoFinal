@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.doaju.dto.QuestionarioDTO;
+import br.com.doaju.dto.RankingDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.QuestionarioMapper;
 import br.com.doaju.model.Aluno;
@@ -68,6 +69,13 @@ public class QuestionarioService {
 		return repository.findAll()
 				.stream()
 				.map(ques -> mapper.modelToDTO(ques))
+				.collect(Collectors.toList());	
+	}
+	
+	public List<RankingDTO> buscarRankingRegiao(String regiao){
+		return repository.montaRankingPorRegiao(regiao)
+				.stream()
+				.map(rank -> mapper.modelToRankDTO(rank))
 				.collect(Collectors.toList());	
 	}
 	

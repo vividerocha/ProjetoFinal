@@ -27,9 +27,8 @@ export class QuestionarioComponent implements OnInit {
     this.formularioInvalido = false;
     this.questionarioRespondido = true;
     this.getQuestionario();
-    setTimeout(() => {
-      this.createForm();
-    }, 80);
+    this.createForm();
+    
   }
 
   createForm(){
@@ -70,6 +69,7 @@ export class QuestionarioComponent implements OnInit {
                     parseInt(this.form.value.perg10)),
           } as Questionario
 
+          console.log(dados);
           this.service.salvar(dados).subscribe(() => {
             this.toastService.success("Cadastro realizado com Sucesso!");
             this.questionarioRespondido = true;

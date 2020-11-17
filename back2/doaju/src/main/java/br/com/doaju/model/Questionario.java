@@ -2,6 +2,7 @@ package br.com.doaju.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -25,6 +27,7 @@ public class Questionario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	//Quantos carros tem na sua residência?
 	private Long perg1;
 	//Quantas motos tem na sua residência?
@@ -48,10 +51,8 @@ public class Questionario {
 	
 	private Long pontuacaoTotal;
 	
-	@MapsId
 	@OneToOne
-	@JoinColumn(name = "aluno_id")
-	@JsonBackReference
+    @JoinColumn(name = "aluno_id")
 	private Aluno aluno;
 	
 	@Temporal(TemporalType.TIMESTAMP)     

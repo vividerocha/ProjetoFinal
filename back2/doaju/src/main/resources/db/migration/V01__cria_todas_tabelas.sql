@@ -164,10 +164,9 @@ CREATE TABLE `permissao` (
 --
 
 CREATE TABLE `questionario` (
-  `aluno_id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `data_alteracao` datetime(6) DEFAULT NULL,
   `perg1` bigint(20) DEFAULT NULL,
-  `perg10` bigint(20) DEFAULT NULL,
   `perg2` bigint(20) DEFAULT NULL,
   `perg3` bigint(20) DEFAULT NULL,
   `perg4` bigint(20) DEFAULT NULL,
@@ -176,6 +175,8 @@ CREATE TABLE `questionario` (
   `perg7` bigint(20) DEFAULT NULL,
   `perg8` bigint(20) DEFAULT NULL,
   `perg9` bigint(20) DEFAULT NULL,
+  `perg10` bigint(20) DEFAULT NULL,
+  `aluno_id` bigint(20) DEFAULT NULL,
   `pontuacao_total` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -318,7 +319,7 @@ ALTER TABLE `permissao`
 -- Índices para tabela `questionario`
 --
 ALTER TABLE `questionario`
-  ADD PRIMARY KEY (`aluno_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `situacao_equipamento`
