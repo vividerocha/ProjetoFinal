@@ -1,6 +1,7 @@
 package br.com.doaju.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import br.com.doaju.dto.AlunoDTO;
 import br.com.doaju.exception.EntidadeNaoEncontradaException;
 import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
+import br.com.doaju.model.Doador;
 import br.com.doaju.repository.AlunoRepository;
 import br.com.doaju.repository.TipoEquipamentoRepository;
 import br.com.doaju.repository.UsuarioRepository;
@@ -49,6 +51,10 @@ public class AlunoService {
 			return null;
 		}
 	}
+	
+	public Optional<Aluno> buscar2(Long id) {
+		return repository.findById(id);		
+	}
 
 	@Transactional
 	public void excluir(Long id) {
@@ -80,6 +86,10 @@ public class AlunoService {
 		}
 		aluno.setUsuario(repoUser.findById(alunoRequest.getUsuario()).get());
 		return mapper.modelToDTO(repository.save(aluno));
+	}
+	
+	public void atualizar2(Aluno aluno) {
+		repository.save(aluno);				
 	}
 	
 	
