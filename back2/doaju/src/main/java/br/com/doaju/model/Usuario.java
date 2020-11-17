@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -50,7 +51,7 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private Set<Grupo> grupos = new HashSet<>();
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<HistoricoEquipamento> historico;
 	

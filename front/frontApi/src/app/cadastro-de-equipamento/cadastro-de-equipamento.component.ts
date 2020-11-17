@@ -89,8 +89,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
         .subscribe(
-          response => {
-            console.log(response);            
+          response => {      
             this.showSuccess("Cadastro realizado com Sucesso!");
             this.salvaHistorico(this.idDoador, response);
             this.formEquipamento.reset();
@@ -119,7 +118,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       this.equipamentoService.salvarHistorico(dados)
           .subscribe(
             response => {
-              console.log(response);
+            this.formEquipamento.reset();
+            this.carregaEquipamentos(this.idDoador);
             },
             error => {
               console.log(error);
@@ -146,7 +146,6 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     this.equipamentoService.getEquipamentos(id)
     .subscribe(res => {
       this.elements = res;
-      console.log(res);
       this.dataSource = new MatTableDataSource(res);
     }, err => {
       console.log(err);

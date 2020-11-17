@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -26,6 +27,7 @@ public class SituacaoEquipamento{
 	private Long id;
 	private String situacao;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "situacao", cascade = CascadeType.ALL)
 	private List<HistoricoEquipamento> historico;
 
