@@ -12,6 +12,5 @@ public class HistoricoEquipamentoRequest {
 	private Long id;
 	Equipamento equipamento;
 	SituacaoEquipamento situacao;
-	private LocalDate dataAlteracao;
 	private Long idUsuario;
 }

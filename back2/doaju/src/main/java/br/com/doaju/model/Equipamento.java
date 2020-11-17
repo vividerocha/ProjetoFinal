@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -32,10 +34,12 @@ public class Equipamento{
 	private String descricaoEquipamento;
 	private boolean funcionando;
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "tipoEquipamento_id", nullable = false)
 	private TipoEquipamento tipoEquipamento;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL)
 	private List<HistoricoEquipamento> historico;
 	

@@ -34,8 +34,8 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   elements;
   confirmaExclusao: boolean;
   detalhaS: boolean;
-  //idDoador = sessionStorage.getItem("idUser");
-  idDoador = 1;
+  idDoador = parseInt(sessionStorage.getItem("idUser"));
+  //idDoador = 1;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -85,19 +85,17 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       tipoEquipamento: this.formEquipamento.value.tiposEquipamentos
     } as Equipamento;
 
-    console.log(dados);
     if(this.formEquipamento.valid){
         this.equipamentoService.salvar(dados)
         .subscribe(
           response => {      
             this.showSuccess("Cadastro realizado com Sucesso!");
             this.salvaHistorico(this.idDoador, response);
-            this.formEquipamento.reset();
-            this.carregaEquipamentos(this.idDoador);
+            //this.formEquipamento.reset();
+            //this.carregaEquipamentos(this.idDoador);
           },
           error => {
             console.log(error);
-            alert(error.error);
           });
     }else{
       this.formularioInvalido = true;
@@ -108,6 +106,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     //consulta objeto Situacao
     this.equipamentoService.getSituacoes(1).subscribe(res => {
       this.situacaoEqui = res;
+      console.log(res);
       const dados = {
         equipamento: equipamento,
         situacao: this.situacaoEqui,
@@ -118,12 +117,12 @@ export class CadastroDeEquipamentoComponent implements OnInit {
       this.equipamentoService.salvarHistorico(dados)
           .subscribe(
             response => {
+            console.log(response);
             this.formEquipamento.reset();
             this.carregaEquipamentos(this.idDoador);
             },
             error => {
               console.log(error);
-              alert(error.error);
             });
     });
     

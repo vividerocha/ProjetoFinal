@@ -10,5 +10,4 @@ public class SituacaoEquipamentoDTO {
 
 	private Long id;
 	private String situacao;
-	private List<HistoricoEquipamento> historicoEquipamentos;
 }

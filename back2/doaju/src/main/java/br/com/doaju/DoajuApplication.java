@@ -10,6 +10,7 @@ public class DoajuApplication {
 	public static void main(String[] args) {
 	
 		SpringApplication.run(DoajuApplication.class, args);
+		 
 	}
 
 }
