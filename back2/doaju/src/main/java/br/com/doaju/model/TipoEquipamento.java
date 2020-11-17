@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -31,7 +32,9 @@ public class TipoEquipamento{
 	private String descricao;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "tipoEquipamento", cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy = "tipoEquipamento", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="tipo_equipamento_id")
 	private List<Equipamento> equipamentos;
 		
 }

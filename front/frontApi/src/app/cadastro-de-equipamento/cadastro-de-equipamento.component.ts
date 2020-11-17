@@ -34,7 +34,7 @@ export class CadastroDeEquipamentoComponent implements OnInit {
   elements;
   confirmaExclusao: boolean;
   detalhaS: boolean;
-  idDoador = parseInt(sessionStorage.getItem("idUser"));
+  idDoador: number;
   //idDoador = 1;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -45,10 +45,14 @@ export class CadastroDeEquipamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.criaForm();
-    this.getTiposEquipamentos();
-    this.carregaEquipamentos(this.idDoador);
-    this.desisteExcluir();
-    this.detalhaS = false;
+    this.idDoador = parseInt(sessionStorage.getItem('idUserLogado'));
+    setTimeout(() => {
+      this.getTiposEquipamentos();
+      this.carregaEquipamentos(this.idDoador);
+      this.desisteExcluir();
+      this.detalhaS = false;
+    }, 120);
+    
   }
 
   getTiposEquipamentos() {
@@ -90,9 +94,10 @@ export class CadastroDeEquipamentoComponent implements OnInit {
         .subscribe(
           response => {      
             this.showSuccess("Cadastro realizado com Sucesso!");
-            this.salvaHistorico(this.idDoador, response);
-            //this.formEquipamento.reset();
-            //this.carregaEquipamentos(this.idDoador);
+            setTimeout(() => {
+              this.salvaHistorico(this.idDoador, response);
+            }, 100);
+            
           },
           error => {
             console.log(error);
@@ -106,14 +111,12 @@ export class CadastroDeEquipamentoComponent implements OnInit {
     //consulta objeto Situacao
     this.equipamentoService.getSituacoes(1).subscribe(res => {
       this.situacaoEqui = res;
-      console.log(res);
       const dados = {
         equipamento: equipamento,
         situacao: this.situacaoEqui,
         idUsuario: idUsuario
       } as HistoricoEquipamento;
   
-      console.log(dados);
       this.equipamentoService.salvarHistorico(dados)
           .subscribe(
             response => {

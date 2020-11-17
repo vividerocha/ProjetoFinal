@@ -10,6 +10,5 @@ public class TipoEquipamentoDTO {
 	
 	private Long id;
 	private String descricao;
-	private Set<Equipamento> equipamentos;
 	
 }

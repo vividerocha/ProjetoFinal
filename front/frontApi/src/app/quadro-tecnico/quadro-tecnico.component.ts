@@ -51,8 +51,10 @@ export class QuadroTecnicoComponent implements OnInit {
       document.getElementById(id).hidden = true;
     }
 
+
     this.service.getUltimoHistorico(parseInt(id)).subscribe(cons => {
       this.ultimaSituacao = cons;
+      
       this.serviceSituacao.getSituacao(cons).subscribe(desc => {
         this.situacaoDescricao = desc;
       });
@@ -91,15 +93,17 @@ export class QuadroTecnicoComponent implements OnInit {
   }
 
   alterarHistorico(id: number, idEquipamento: number){
-    this.equipamentoService.getEquipamento(idEquipamento).subscribe(equi =>{
-      this.equipamentoD = equi;
-    });
 
-
-    this.idUsuario = parseInt(sessionStorage.getItem("idTecnico"));
+    
+      this.equipamentoService.getEquipamento(idEquipamento).subscribe(equi =>{
+        this.equipamentoD = equi;
+      });
+    setTimeout(() => {
+      this.idUsuario = parseInt(sessionStorage.getItem("idTecnico"));
       //consulta objeto Situacao
       this.equipamentoService.getSituacoes(id).subscribe(res => {
         this.situacaoEqui = res;
+        console.log(this.equipamentoD);
         const dados = {
           equipamento: this.equipamentoD,
           situacao: this.situacaoEqui,
@@ -116,6 +120,9 @@ export class QuadroTecnicoComponent implements OnInit {
                 console.log(error);
               });
       });
+    }, 120);
+
+    
   }
 
   showSuccess(mensagem: string) {

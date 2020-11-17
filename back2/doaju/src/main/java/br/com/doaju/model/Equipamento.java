@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,11 +37,13 @@ public class Equipamento{
 	
 	@JsonIgnore
 	@ManyToOne
-    @JoinColumn(name = "tipoEquipamento_id", nullable = false)
 	private TipoEquipamento tipoEquipamento;
 	
+	
 	@JsonIgnore
-	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="equipamento_id")
 	private List<HistoricoEquipamento> historico;
 	
 }

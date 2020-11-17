@@ -91,6 +91,8 @@ public class HistoricoEquipamentoService {
 				.collect(Collectors.toList());	
 	}
 	
-	
+	public Long buscaUltimoHistorico(Long id) {
+		return repository.buscaUltimaSituacao(id);
+	}
 
 }

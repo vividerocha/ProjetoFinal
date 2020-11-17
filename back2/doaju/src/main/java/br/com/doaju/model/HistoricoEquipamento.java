@@ -29,20 +29,17 @@ public class HistoricoEquipamento {
 	
 	@JsonIgnore
 	@ManyToOne
-    @JoinColumn(name = "equipamento_id", nullable = false)
 	private Equipamento equipamento;
 	
 	@JsonIgnore
 	@ManyToOne
-    @JoinColumn(name = "situacao_equipamento_id", nullable = false)
-	private SituacaoEquipamento situacao;
+	private SituacaoEquipamento situacaoEquipamento;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date dataAlteracao = new java.sql.Date(System.currentTimeMillis());
 	
 	@JsonIgnore
 	@ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
 	private Usuario usuario;
 
 }

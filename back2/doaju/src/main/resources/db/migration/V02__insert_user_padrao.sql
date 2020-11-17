@@ -22,3 +22,5 @@ INSERT INTO `grupo_permissao` (`grupo_id`, `permissao_id`) VALUES
 (5, 5);
 
 INSERT INTO `tipo_equipamento` VALUES (null,'Notebook'),(null,'Celular'),(null,'Tablet'),(null,'PC Desktop'),(null,'Impressora');
+
+INSERT INTO `situacao_equipamento` VALUES (null,'Cadastrado'),(null,'Reservado pelo Técnico'),(null,'Em manutenção'),(null,'Pronto para Distribuição'),(null,'Distribuído'),(null,'Entregue ao Aluno');

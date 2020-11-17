@@ -22,12 +22,13 @@ public interface HistoricoEquipamentoRepository extends JpaRepository<HistoricoE
 			" from TipoEquipamento a " +
 			" join Equipamento b on a.id = b.tipoEquipamento.id" +		
 			" left join HistoricoEquipamento c on b.id = c.equipamento.id" + 
-			" left join SituacaoEquipamento s on s.id = c.situacao.id"
+			" left join SituacaoEquipamento s on s.id = c.situacaoEquipamento.id"
 			+ " left join Usuario d on d.id = c.usuario.id" +
 			" left join Doador e on e.usuario.id = d.id" +
 			" where b.funcionando = 0 and e.estado = ?1 and s.id = 1")
 	public List<EquipamentosTecnicoRegiao> buscaEquipamentosParaReparoPorRegiao(String regiao);
 	
-	
+	@Query(value="select situacao_equipamento_id from Historico_Equipamento where equipamento_id = :id order by data_alteracao desc limit 1", nativeQuery = true)
+	public Long buscaUltimaSituacao(Long id);
 		
 }

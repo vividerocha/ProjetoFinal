@@ -78,5 +78,10 @@ public class HistoricoEquipamentoController {
 		return service.buscaEquipamentosParaReparoPorRegiao(regiao);
 	
 	}
+	
+	@GetMapping("/UltimoHistorico/{id}")
+	public Long buscarUltimoHistoricoEquipamento(@PathVariable Long id) {
+		return service.buscaUltimoHistorico(id);
+	}
 
 }
