@@ -27,7 +27,7 @@ import br.com.doaju.dto.controller.swagger.AlunoControllerSwagger;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.request.AlunoRequest;
 import br.com.doaju.service.AlunoService;
-
+  
 @CrossOrigin
 @RestController
 @RequestMapping("/alunos")
@@ -95,7 +95,8 @@ public class AlunoController implements AlunoControllerSwagger{
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@RequestBody @Valid AlunoRequest alunoRequest, @PathVariable Long id) {
+	@Override
+	public ResponseEntity<?> atualizar(@RequestBody AlunoRequest alunoRequest, @PathVariable Long id) {
 		
 
 

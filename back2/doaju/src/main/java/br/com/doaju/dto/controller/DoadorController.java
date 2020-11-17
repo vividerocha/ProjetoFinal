@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.DoadorDTO;
+import br.com.doaju.dto.controller.swagger.AlunoControllerSwagger;
+import br.com.doaju.dto.controller.swagger.DoadorControllerSwagger;
 import br.com.doaju.model.Doador;
 import br.com.doaju.request.DoadorRequest;
 import br.com.doaju.service.DoadorService;
@@ -24,14 +26,17 @@ import br.com.doaju.service.UsuarioService;
 @CrossOrigin
 @RestController
 @RequestMapping("/doadores")
-public class DoadorController {
+
+public class DoadorController implements DoadorControllerSwagger{
+	
 	@Autowired
 	private DoadorService service;
 	
 	@Autowired
 	private UsuarioService serviceUser;
-	
+
 	@PostMapping
+	@Override
 	public ResponseEntity<?> salvar(@RequestBody DoadorRequest doadorRequest) {	
 		try {
 			
