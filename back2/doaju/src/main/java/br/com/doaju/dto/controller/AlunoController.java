@@ -1,6 +1,8 @@
 package br.com.doaju.dto.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import javax.validation.Valid;
 
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.AlunoDTO;
+
 import br.com.doaju.dto.controller.swagger.AlunoControllerSwagger;
+
 import br.com.doaju.model.Aluno;
 import br.com.doaju.request.AlunoRequest;
 import br.com.doaju.service.AlunoService;
@@ -28,6 +32,7 @@ import br.com.doaju.service.AlunoService;
 @RestController
 @RequestMapping("/alunos")
 
+
 public class AlunoController implements AlunoControllerSwagger{
 	
 	@Autowired
@@ -35,7 +40,7 @@ public class AlunoController implements AlunoControllerSwagger{
 	
 	@PostMapping
 	@Override
-	public ResponseEntity<?> salvar(@RequestBody AlunoRequest alunoRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody AlunoRequest alunoRequest) {
 		try {
 			
 			AlunoDTO alunoDTO = service.salvar(alunoRequest);			
@@ -93,12 +98,15 @@ public class AlunoController implements AlunoControllerSwagger{
 	public ResponseEntity<?> atualizar(@RequestBody @Valid AlunoRequest alunoRequest, @PathVariable Long id) {
 		
 
+
 		Aluno alunoAtual = service.buscar2(id).orElse(null);
 
+
 		if (alunoAtual != null) {
-			BeanUtils.copyProperties(alunoRequest, alunoAtual, "id");
-			
+			BeanUtils.copyProperties(alunoRequest, alunoAtual, "id");			
+
 			service.atualizar2(alunoAtual);
+
 			return ResponseEntity.ok(alunoAtual);
 		}	
 			

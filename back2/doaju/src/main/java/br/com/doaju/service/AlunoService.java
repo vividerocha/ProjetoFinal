@@ -1,7 +1,9 @@
 package br.com.doaju.service;
 
 import java.util.List;
+
 import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -56,6 +58,7 @@ public class AlunoService {
 		return repository.findById(id);		
 	}
 
+
 	@Transactional
 	public void excluir(Long id) {
 		
@@ -88,10 +91,11 @@ public class AlunoService {
 		return mapper.modelToDTO(repository.save(aluno));
 	}
 	
+
 	public void atualizar2(Aluno aluno) {
 		repository.save(aluno);				
 	}
-	
+
 	
 	public AlunoDTO buscarPorIdUsuario(Long id) {
 		try {
