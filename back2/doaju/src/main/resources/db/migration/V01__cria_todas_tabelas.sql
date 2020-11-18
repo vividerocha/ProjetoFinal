@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10-Nov-2020 às 01:53
+-- Tempo de geração: 18-Nov-2020 às 02:27
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.11
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `doaju`
+-- Banco de dados: `doaju2`
 --
 
 -- --------------------------------------------------------
@@ -90,10 +90,9 @@ CREATE TABLE `doador` (
 
 CREATE TABLE `equipamento` (
   `id` bigint(20) NOT NULL,
-  `data_cadastro` datetime(6) DEFAULT NULL,
   `descricao_equipamento` varchar(255) DEFAULT NULL,
   `funcionando` bit(1) NOT NULL,
-  `tipo_equipamento_id` bigint(20) NOT NULL
+  `tipo_equipamento_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -127,9 +126,9 @@ CREATE TABLE `grupo_permissao` (
 CREATE TABLE `historico_equipamento` (
   `id` bigint(20) NOT NULL,
   `data_alteracao` datetime(6) DEFAULT NULL,
-  `equipamento_id` bigint(20) NOT NULL,
-  `situacao_equipamento_id` bigint(20) NOT NULL,
-  `usuario_id` bigint(20) NOT NULL
+  `equipamento_id` bigint(20) DEFAULT NULL,
+  `situacao_equipamento_id` bigint(20) DEFAULT NULL,
+  `usuario_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -167,6 +166,7 @@ CREATE TABLE `questionario` (
   `id` bigint(20) NOT NULL,
   `data_alteracao` datetime(6) DEFAULT NULL,
   `perg1` bigint(20) DEFAULT NULL,
+  `perg10` bigint(20) DEFAULT NULL,
   `perg2` bigint(20) DEFAULT NULL,
   `perg3` bigint(20) DEFAULT NULL,
   `perg4` bigint(20) DEFAULT NULL,
@@ -175,9 +175,8 @@ CREATE TABLE `questionario` (
   `perg7` bigint(20) DEFAULT NULL,
   `perg8` bigint(20) DEFAULT NULL,
   `perg9` bigint(20) DEFAULT NULL,
-  `perg10` bigint(20) DEFAULT NULL,
-  `aluno_id` bigint(20) DEFAULT NULL,
-  `pontuacao_total` bigint(20) DEFAULT NULL
+  `pontuacao_total` bigint(20) DEFAULT NULL,
+  `aluno_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -319,7 +318,8 @@ ALTER TABLE `permissao`
 -- Índices para tabela `questionario`
 --
 ALTER TABLE `questionario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK31iia34d5pnkaf7h1dg5gfbgq` (`aluno_id`);
 
 --
 -- Índices para tabela `situacao_equipamento`
@@ -397,6 +397,12 @@ ALTER TABLE `mensagem`
 -- AUTO_INCREMENT de tabela `permissao`
 --
 ALTER TABLE `permissao`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `questionario`
+--
+ALTER TABLE `questionario`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --

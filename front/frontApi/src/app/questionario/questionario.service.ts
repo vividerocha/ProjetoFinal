@@ -21,6 +21,7 @@ export class QuestionarioService {
      }
 
     salvar(questionario: any): Observable<any>{
+        console.log(questionario);
         return this.httpClient.post<any>(this.apiUrl, JSON.stringify(questionario), this.httpOptions)
         .pipe(retry(2),catchError(this.handleError))   
     }

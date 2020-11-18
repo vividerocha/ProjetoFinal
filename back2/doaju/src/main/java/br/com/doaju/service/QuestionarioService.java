@@ -34,10 +34,9 @@ public class QuestionarioService {
 	@Transactional
 	public QuestionarioDTO salvar(QuestionarioRequest questionarioRequest) {
 		
-		Questionario questionario = mapper.requestToModel(questionarioRequest);
+		Questionario questionario = mapper.requestToModel(questionarioRequest);		
 		Aluno aluno = repoAluno.findById(questionarioRequest.getAluno()).get();
-		questionario.setAluno(aluno);
-		System.out.println(questionario.getAluno());
+		questionario.setAluno(aluno);		
 		return mapper.modelToDTO(repository.save(questionario));		
 	}
 	

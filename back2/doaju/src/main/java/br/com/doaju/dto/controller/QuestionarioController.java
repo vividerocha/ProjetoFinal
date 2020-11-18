@@ -46,12 +46,11 @@ public class QuestionarioController {
 	public ResponseEntity<?> salvar(@RequestBody QuestionarioRequest questionarioRequest) {	
 		try {
 			
-			QuestionarioDTO questionarioDTO = service.salvar(questionarioRequest);
-			Aluno aluno = serviceAl.buscar2(questionarioRequest.getAluno()).get();
-			questionarioDTO.setAluno(aluno);
+			QuestionarioDTO questionarioDTO = service.salvar(questionarioRequest);			
 			return ResponseEntity.status(HttpStatus.CREATED).body(questionarioDTO);
 		
 		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}		
 	}
