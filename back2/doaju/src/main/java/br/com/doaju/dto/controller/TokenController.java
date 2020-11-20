@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.doaju.dto.controller.swagger.TokenControllerSwagger;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/token")
-public class TokenController {
+public class TokenController implements TokenControllerSwagger{
 
 	@DeleteMapping("/revoke")
 	public void revoke(HttpServletRequest req, HttpServletResponse resp) {

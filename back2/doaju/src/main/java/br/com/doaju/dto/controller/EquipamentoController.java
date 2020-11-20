@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.EquipamentoDTO;
+import br.com.doaju.dto.controller.swagger.EquipamentoControllerSwagger;
 import br.com.doaju.request.EquipamentoRequest;
 import br.com.doaju.service.EquipamentoService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/equipamentos")
-public class EquipamentoController {
+
+public class EquipamentoController implements EquipamentoControllerSwagger {
 	@Autowired
 	private EquipamentoService service;
 	

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.SituacaoEquipamentoDTO;
+import br.com.doaju.dto.controller.swagger.SituacaoEquipamentoControllerSwagger;
 import br.com.doaju.model.SituacaoEquipamento;
 import br.com.doaju.request.SituacaoEquipamentoRequest;
 import br.com.doaju.service.SituacaoEquipamentoService;
@@ -25,13 +26,14 @@ import br.com.doaju.service.SituacaoEquipamentoService;
 @CrossOrigin
 @RestController
 @RequestMapping("/situacaoEquipamento")
-public class SituacaoEquipamentoController {
+
+public class SituacaoEquipamentoController implements SituacaoEquipamentoControllerSwagger {
 	
 	@Autowired
 	private SituacaoEquipamentoService service;
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid SituacaoEquipamentoRequest situacaoEquipamentoRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody SituacaoEquipamentoRequest situacaoEquipamentoRequest) {	
 		try {
 			
 			SituacaoEquipamentoDTO situacaoEquipamentoDTO = service.salvar(situacaoEquipamentoRequest);			
@@ -97,6 +99,12 @@ public class SituacaoEquipamentoController {
 	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable Long id) {
 		service.excluir(id);
+	}
+
+	@Override
+	public ResponseEntity<?> buscarEmail1(String desc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
