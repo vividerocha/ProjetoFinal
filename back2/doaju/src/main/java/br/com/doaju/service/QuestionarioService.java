@@ -16,6 +16,7 @@ import br.com.doaju.mapper.QuestionarioMapper;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.model.Questionario;
 import br.com.doaju.repository.AlunoRepository;
+import br.com.doaju.repository.HistoricoEquipamentoRepository;
 import br.com.doaju.repository.QuestionarioRepository;
 import br.com.doaju.request.QuestionarioRequest;
 
@@ -24,6 +25,9 @@ public class QuestionarioService {
 	
 	@Autowired
 	private QuestionarioRepository repository;
+	
+	@Autowired
+	private HistoricoEquipamentoRepository repositoryH;
 	
 	@Autowired
 	private QuestionarioMapper mapper;
@@ -72,7 +76,8 @@ public class QuestionarioService {
 	}
 	
 	public List<RankingDTO> buscarRankingRegiao(String regiao){
-		return repository.montaRankingPorRegiao(regiao)
+		List<Long> alunos = repositoryH.buscaAlunosContemplados();
+		return repository.montaRankingPorRegiao(regiao, alunos)
 				.stream()
 				.map(rank -> mapper.modelToRankDTO(rank))
 				.collect(Collectors.toList());	

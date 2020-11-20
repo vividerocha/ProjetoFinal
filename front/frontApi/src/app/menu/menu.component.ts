@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit {
   doador: Doador;
   tecnico: Tecnico;
   aluno: Aluno;
+  admin: boolean;
   linkRedirectDoador: boolean = false;
   linkRedirectTec:boolean = false;
   linkRedirectAluno: boolean = false;
@@ -43,6 +44,7 @@ export class MenuComponent implements OnInit {
       this.idUsuario = parseInt(sessionStorage.getItem('idUserLogado'));
       this.consultaDoador(this.idUsuario)
     }
+    this.admin = false;
   }
 
   consultaDoador(id) {
@@ -83,6 +85,7 @@ export class MenuComponent implements OnInit {
         this.ver = false;
       }, error => {
         this.myNome = "Administrador"
+        this.admin = true;
         this.ver = false;
       })
   }

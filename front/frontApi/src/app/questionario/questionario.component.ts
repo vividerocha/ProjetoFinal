@@ -23,7 +23,7 @@ export class QuestionarioComponent implements OnInit {
     private toastService: ToastrService) { }
 
   ngOnInit(): void {
-    this.idUsuario = parseInt(sessionStorage.getItem('idUser'))
+    this.idUsuario = parseInt(sessionStorage.getItem('idUserLogado'))
     this.formularioInvalido = false;
     this.questionarioRespondido = true;
     this.getQuestionario();
@@ -69,10 +69,10 @@ export class QuestionarioComponent implements OnInit {
                     parseInt(this.form.value.perg10)),
           } as Questionario
 
-          console.log(dados);
           this.service.salvar(dados).subscribe(() => {
             this.toastService.success("Cadastro realizado com Sucesso!");
             this.questionarioRespondido = true;
+            this.getQuestionario();
           });
 
           
@@ -83,25 +83,25 @@ export class QuestionarioComponent implements OnInit {
   }
 
   getAluno(){
-    this.service.getAluno(sessionStorage.idUser).subscribe(res => {
+    this.service.getAluno(parseInt(sessionStorage.getItem('idUserLogado'))).subscribe(res => {
       this.aluno = res;
       }
     );
   }
 
   getQuestionario(){
-    this.service.getAluno(sessionStorage.idUser).subscribe(res => {
+    this.service.getAluno(parseInt(sessionStorage.getItem('idUserLogado'))).subscribe(res => {
       this.aluno = res;
       setTimeout(() => {
         let id = this.aluno.id;
-        this.service.getQuestionario(id).subscribe(res => {
+        this.service.getQuestionario(id).subscribe(ques => {
               this.questionarioRespondido = true;
-              this.pontuacaoQuestionario = res.pontuacaoTotal;
+              this.pontuacaoQuestionario = ques.pontuacaoTotal;
           },
           error => {
             this.questionarioRespondido = false;
           });
-      }, 60);
+      }, 30);
     }
     );
   }
