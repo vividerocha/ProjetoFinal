@@ -1,10 +1,6 @@
 package br.com.doaju.dto.controller;
 
 import java.util.List;
-import java.util.Optional;
-
-
-import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.doaju.dto.AlunoDTO;
-
+import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.controller.swagger.AlunoControllerSwagger;
-
 import br.com.doaju.model.Aluno;
 import br.com.doaju.request.AlunoRequest;
 import br.com.doaju.service.AlunoService;
+import br.com.doaju.service.HistoricoEquipamentoService;
   
 @CrossOrigin
 @RestController
@@ -36,7 +31,10 @@ import br.com.doaju.service.AlunoService;
 public class AlunoController implements AlunoControllerSwagger{
 	
 	@Autowired
-	private AlunoService service;	
+	private AlunoService service;
+	
+	@Autowired
+	private HistoricoEquipamentoService serviceH;
 	
 	@PostMapping
 	@Override
@@ -77,6 +75,16 @@ public class AlunoController implements AlunoControllerSwagger{
 			return ResponseEntity.ok(aluno);
 		}
 		return ResponseEntity.notFound().build();
+	}
+	
+	@GetMapping("/equipamento/{id}")
+	public EquipamentosTecnicoRegiaoDTO buscarEquipamento(@PathVariable Long id) {
+		return serviceH.buscaEquipamentoDistribuido(id);
+	}
+	
+	@GetMapping("/tecnico/{id}")
+	public EquipamentosTecnicoRegiaoDTO buscarTecnico(@PathVariable Long id) {
+		return serviceH.buscaTecnico(id);
 	}
 	
 	@DeleteMapping("/{id}")

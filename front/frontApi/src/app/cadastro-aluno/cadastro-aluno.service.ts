@@ -5,6 +5,8 @@ import { CadastroAlunoComponent } from './cadastro-aluno.component';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { EquipamentosReparo } from '../quadro-tecnico/equipamentosReparo';
+
 
 
 @Injectable({
@@ -65,8 +67,16 @@ export class AlunoService {
         return this.httpClient.get<any>(environment.URLSERVIDOR + "tipoEquipamentos");
       }
 
-      getAlunoPorIduser(id: number): Observable<any>{
+    getAlunoPorIduser(id: number): Observable<any>{
         return this.httpClient.get<Aluno>(this.apiUrl + "/user/" + id);
+    }
+
+    getEquipamentoDestinado(id: number): Observable<any>{
+        return this.httpClient.get<EquipamentosReparo>(this.apiUrl + "/equipamento/" + id);
+    }
+
+    getDadosTecnico(id: number): Observable<any>{
+        return this.httpClient.get<EquipamentosReparo>(this.apiUrl + "/tecnico/" + id);
     }
 
 }

@@ -45,6 +45,10 @@ export class QuadroTecnicoComponent implements OnInit {
   }
 
   detalhaEquipamento(id: string){
+    Array.from(document.getElementsByClassName("detalhaEquipamento")).forEach(
+      div => (div.setAttribute("hidden", "true"))
+    );
+
     if(document.getElementById(id).hidden == true){
       document.getElementById(id).hidden = false;
     }else{
@@ -99,22 +103,23 @@ export class QuadroTecnicoComponent implements OnInit {
         this.equipamentoD = equi;
       });
     setTimeout(() => {
-      this.idUsuario = parseInt(sessionStorage.getItem("idTecnico"));
+      this.idUsuario = parseInt(sessionStorage.getItem('idUserLogado'));
       //consulta objeto Situacao
       this.equipamentoService.getSituacoes(id).subscribe(res => {
         this.situacaoEqui = res;
-        console.log(this.equipamentoD);
         const dados = {
           equipamento: this.equipamentoD,
           situacao: this.situacaoEqui,
           idUsuario: this.idUsuario
         } as HistoricoEquipamento;
   
-        console.log(dados);
         this.equipamentoService.salvarHistorico(dados)
             .subscribe(
               response => {
                 this.showSuccess("Ação realizada com Sucesso!");
+                Array.from(document.getElementsByClassName("detalhaEquipamento")).forEach(
+                  div => (div.setAttribute("hidden", "true"))
+                );
               },
               error => {
                 console.log(error);

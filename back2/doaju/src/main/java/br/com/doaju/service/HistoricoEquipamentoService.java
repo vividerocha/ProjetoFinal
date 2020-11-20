@@ -1,7 +1,6 @@
 package br.com.doaju.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -29,6 +28,7 @@ public class HistoricoEquipamentoService {
 	
 	@Autowired
 	private EquipamentoRepository repositoryEquip;
+	
 	
 	@Autowired
 	private HistoricoEquipamentoMapper mapper;
@@ -89,6 +89,25 @@ public class HistoricoEquipamentoService {
 				.stream()
 				.map(hist -> mapper.modelToEqDTO(hist))
 				.collect(Collectors.toList());	
+	}
+	
+	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaDistribuicaoPorRegiao(String regiao) {
+		//consulta os equipamentos disponíveis para Distribuição
+		List<Long> equipamentosDistribuidos = repository.buscaEquipamentosDistribuidos();
+		return repository.buscaEquipamentosParaDistribuicaoPorRegiao(regiao, equipamentosDistribuidos)
+				.stream()
+				.map(hist -> mapper.modelToEqDTO(hist))
+				.collect(Collectors.toList());	
+	}
+	
+	public EquipamentosTecnicoRegiaoDTO buscaEquipamentoDistribuido(Long id){
+		EquipamentosTecnicoRegiaoDTO equip = mapper.modelToEqDTO(repository.buscaEquipamentoDistribuido(id));
+		return equip;
+	}
+	
+	public EquipamentosTecnicoRegiaoDTO buscaTecnico(Long id){
+		EquipamentosTecnicoRegiaoDTO equip = mapper.modelToEqDTO(repository.buscaTecnico(id));
+		return equip;
 	}
 	
 	public Long buscaUltimoHistorico(Long id) {

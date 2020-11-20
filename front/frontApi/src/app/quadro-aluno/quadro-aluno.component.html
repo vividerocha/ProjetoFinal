@@ -1,4 +1,53 @@
-<p>quadro-aluno works!</p>
+<div *ngIf="existeEquipamento">
+    <div *ngIf="elementos">
+        <div class="quadro">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                        <h5 class="card-title">{{elementos.idEquipamento}} - {{elementos.tipoEquipamento}}</h5>
+                            <p class="card-text">{{elementos.descricaoEquipamento}}</p>
+                            <p class="card-text">Aluno: {{elementos.nomeDoador}}</p>
+                            <p class="card-text">Celular: {{elementos.celularDoador}} / Fixo: {{elementos.telefoneDoador}}</p>
+                            <p class="card-text">Endereço: {{elementos.estadoDoador}} - {{elementos.cidade}}<br>
+                                {{elementos.enderecoDoador}} - Nº {{elementos.casaDoador}}
+                                </p>
+                            <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="elements">
+        <div class="quadro">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Dados do Técnico para Retirada</h5>
+                        <p class="card-text">Técnico: {{elements.nomeDoador}}</p>
+                        <p class="card-text">Celular: {{elements.celularDoador}} / Fixo: {{elements.telefoneDoador}}</p>
+                        <p class="card-text">Endereço: {{elements.estadoDoador}} - {{elements.cidade}}<br>
+                            {{elements.enderecoDoador}} - Nº {{elements.casaDoador}}
+                            </p>
+                        <br>
+                        <div *ngIf="exibeBotao">
+                            <button type="button" (click)="confirmaRecebimento(elementos.idEquipamento);" class='btn btn-primary'>Confirmar Recebimento</button>
+                        </div>
+                        <div *ngIf="!exibeBotao">
+                            <div class='alert alert-info' role='alert'>Parabéns! O Equipamento já está em suas mãos! Faça um bom uso!</div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+<div *ngIf="!existeEquipamento">
+    <div class="alert alert-success" role="alert">
+        Desculpe, Ainda não existe um equipamento destinado a você! Aguarde, pois em breve teremos!
+    </div>
+</div>
 
 <div *ngIf="questionarioOn">
     <app-questionario></app-questionario>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quadro-usuario',
@@ -12,7 +13,7 @@ export class QuadroUsuarioComponent implements OnInit {
   tecnicoOn: boolean;
   usuarioLogado: string;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.verificaUsuarioLogado();
@@ -25,6 +26,8 @@ export class QuadroUsuarioComponent implements OnInit {
       this.usuarioLogado = "Tecnico";
     }else if(sessionStorage.getItem("idDoador") != null && sessionStorage.getItem("idDoador") != undefined){
       this.usuarioLogado = "Doador";
+    }else{
+      this.router.navigate(['/home']);
     }
     switch (this.usuarioLogado){
       case "Doador":

@@ -21,16 +21,16 @@
                                     {{elemento.enderecoDoador}} - Nº {{elemento.casaDoador}}
                                     </p>
                                 <br>
-                                <div *ngIf="reserva">
+                                <div *ngIf="reserva" class="detalhes">
                                     <button type='button' class='btn btn-primary' (click)="alterarHistorico(2, elemento.idEquipamento)">Reservar Equipamento</button>
                                 </div>
-                                <div *ngIf="confirma">
+                                <div *ngIf="confirma" class="detalhes">
                                     <button type='button' class='btn btn-success' (click)="alterarHistorico(3, elemento.idEquipamento)">Confirmar a Retirada do Equipamento</button>
                                 </div>
-                                <div *ngIf="disponibilizar">
+                                <div *ngIf="disponibilizar" class="detalhes">
                                     <button type='button' class='btn btn-warning' (click)="alterarHistorico(4, elemento.idEquipamento)">Disponibilizar para Distribuição</button>
                                 </div>
-                                <div *ngIf="semAcao">
+                                <div *ngIf="semAcao" class="detalhes">
                                     <div class='alert alert-info' role='alert'>Não existe ação para esse aparelho!</div>
                                 </div>
 

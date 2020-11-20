@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.doaju.model.Ranking;
+import br.com.doaju.model.Aluno;
 import br.com.doaju.model.Questionario;
 
 public interface QuestionarioRepository extends JpaRepository<Questionario, Long> {
@@ -17,7 +18,9 @@ public interface QuestionarioRepository extends JpaRepository<Questionario, Long
 			" from Usuario d " +
 			" join Aluno e on e.usuario.id = d.id " +
 			" join Questionario q on q.id = e.id " +
-			" where e.estado = ?1 order by q.pontuacaoTotal desc")
-	public List<Ranking> montaRankingPorRegiao(String regiao);
+			" where e.estado = :regiao " +
+			" and e.usuario.id not in (:alunosContemplados) order by q.pontuacaoTotal desc"
+			)
+	public List<Ranking> montaRankingPorRegiao(String regiao, List<Long> alunosContemplados);
 
 }

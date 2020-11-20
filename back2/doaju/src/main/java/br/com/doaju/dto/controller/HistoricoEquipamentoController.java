@@ -85,5 +85,10 @@ public class HistoricoEquipamentoController implements HistoricoEquipamentoContr
 	public Long buscarUltimoHistoricoEquipamento(@PathVariable Long id) {
 		return service.buscaUltimoHistorico(id);
 	}
+	
+	@GetMapping("/Ranking/{regiao}")
+	public List<EquipamentosTecnicoRegiaoDTO> buscarEquipamentoParaTecnico(@PathVariable String regiao) {
+		return service.buscaEquipamentosParaDistribuicaoPorRegiao(regiao);
+	}
 
 }
