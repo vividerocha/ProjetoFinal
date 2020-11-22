@@ -43,6 +43,6 @@ public interface UsuarioControllerSwagger {
 	@ApiOperation("Recupera os dados do usuário")
 	public ResponseEntity<?> recupera(@PathVariable String dadosUsuario);
 	
-	@ApiOperation("Busca o usuário")
+	@ApiOperation("Busca um usuário")
 	public ResponseEntity<?> buscarUsuario(@PathVariable String user);
 }
