@@ -94,6 +94,9 @@ public class HistoricoEquipamentoService {
 	public List<EquipamentosTecnicoRegiaoDTO> buscaEquipamentosParaDistribuicaoPorRegiao(String regiao) {
 		//consulta os equipamentos disponíveis para Distribuição
 		List<Long> equipamentosDistribuidos = repository.buscaEquipamentosDistribuidos();
+		if(equipamentosDistribuidos.size() == 0) {
+			equipamentosDistribuidos.add((long) 0);
+		}
 		return repository.buscaEquipamentosParaDistribuicaoPorRegiao(regiao, equipamentosDistribuidos)
 				.stream()
 				.map(hist -> mapper.modelToEqDTO(hist))

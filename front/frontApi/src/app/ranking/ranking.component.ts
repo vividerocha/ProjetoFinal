@@ -73,21 +73,14 @@ export class RankingComponent implements OnInit {
   }
 
   distribuirEquipamentos(){
-    let i = 0;
-    for(let equi of this.equipamentos){
+    for (let i = 0; i < this.equipamentos.length; i++) {
       setTimeout(() => {
-        this.serviceAluno.getAlunoPorIduser(this.elements[i].idAluno).subscribe(alu => {
-            this.aluno = alu;
-            this.serviceEquipamento.getEquipamento(equi.idEquipamento).subscribe(equi => {
-              this.equipamento = equi;
-              this.salvaHistorico(this.aluno.usuario.id, this.equipamento);
-          });
+        this.serviceAluno.getAluno(this.elements[i].idAluno).subscribe(alu => {          
+          this.serviceEquipamento.getEquipamento(this.equipamentos[i].idEquipamento).subscribe(equi => {
+            this.salvaHistorico(alu.usuario.id, equi);
+            });
         });
-
-      
-      },30);     
-     
-      i++;
+    }, 60);       
     }
   }
 
