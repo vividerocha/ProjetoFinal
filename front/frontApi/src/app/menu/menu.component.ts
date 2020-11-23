@@ -43,6 +43,8 @@ export class MenuComponent implements OnInit {
     if (sessionStorage.getItem('idUserLogado') != null ){
       this.idUsuario = parseInt(sessionStorage.getItem('idUserLogado'));
       this.consultaDoador(this.idUsuario)
+    }else{
+      this.router.navigate(['/home']);
     }
     this.admin = false;
   }
@@ -95,7 +97,8 @@ export class MenuComponent implements OnInit {
   logout() {
     sessionStorage.clear();
     location.reload();
-    this.sair.logout();    
+    this.sair.logout(); 
+    this.router.navigate(['/home']);   
   }
 
 }
