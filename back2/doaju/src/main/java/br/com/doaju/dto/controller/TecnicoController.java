@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.TecnicoDTO;
+import br.com.doaju.dto.controller.swagger.TecnicoControllerSwagger;
 import br.com.doaju.request.TecnicoRequest;
 import br.com.doaju.service.TecnicoService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/tecnicos")
-public class TecnicoController {
+public class TecnicoController implements TecnicoControllerSwagger {
 	@Autowired
 	private TecnicoService service;
 	

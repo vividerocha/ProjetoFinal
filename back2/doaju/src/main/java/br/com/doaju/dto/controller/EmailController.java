@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.MensagemDTO;
+import br.com.doaju.dto.controller.swagger.EmailControllerSwagger;
 import br.com.doaju.request.MensagemRequest;
 import br.com.doaju.service.EmailService;
 import br.com.doaju.service.MensagemService;
@@ -20,7 +21,8 @@ import br.com.doaju.service.MensagemService;
 @CrossOrigin
 @RestController
 @RequestMapping("/emailSend")
-public class EmailController {
+
+public class EmailController implements EmailControllerSwagger{
 
     	@Autowired
         private EmailService emailService;

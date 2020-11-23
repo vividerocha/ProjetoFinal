@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.UsuarioDTO;
+import br.com.doaju.dto.controller.swagger.UsuarioControllerSwagger;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.model.Doador;
 import br.com.doaju.model.Grupo;
@@ -32,7 +33,7 @@ import br.com.doaju.service.UsuarioService;
 @CrossOrigin
 @RequestMapping("/usuarios")
 @RestController
-public class UsuarioController {
+public class UsuarioController implements UsuarioControllerSwagger {
 
 	@Autowired
 	private UsuarioService usuarioService;

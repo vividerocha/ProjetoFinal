@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doaju.dto.TipoEquipamentoDTO;
+import br.com.doaju.dto.controller.swagger.TipoEquipamentoControllerSwagger;
 import br.com.doaju.model.TipoEquipamento;
 import br.com.doaju.request.TipoEquipamentoRequest;
 import br.com.doaju.service.TipoEquipamentoService;
@@ -26,12 +27,12 @@ import br.com.doaju.service.TipoEquipamentoService;
 @CrossOrigin
 @RestController
 @RequestMapping("/tipoEquipamentos")
-public class TipoEquipamentoController {
+public class TipoEquipamentoController implements TipoEquipamentoControllerSwagger{
 	@Autowired
 	private TipoEquipamentoService service;
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid TipoEquipamentoRequest tipoEquipamentoRequest) {	
+	public ResponseEntity<?> salvar(@RequestBody TipoEquipamentoRequest tipoEquipamentoRequest) {	
 		try {
 			
 			TipoEquipamentoDTO tipoEquipamentoDTO = service.salvar(tipoEquipamentoRequest);			

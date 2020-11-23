@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.doaju.dto.AlunoDTO;
 import br.com.doaju.dto.QuestionarioDTO;
 import br.com.doaju.dto.RankingDTO;
+import br.com.doaju.dto.controller.swagger.QuestionarioControllerSwagger;
 import br.com.doaju.mapper.AlunoMapper;
 import br.com.doaju.model.Aluno;
 import br.com.doaju.model.Questionario;
@@ -31,7 +31,8 @@ import br.com.doaju.service.QuestionarioService;
 @CrossOrigin
 @RestController
 @RequestMapping("/questionario")
-public class QuestionarioController {
+
+public class QuestionarioController implements QuestionarioControllerSwagger {
 	
 	@Autowired
 	private QuestionarioService service;
@@ -106,7 +107,8 @@ public class QuestionarioController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@RequestBody @Valid QuestionarioRequest questionarioRequest, @PathVariable Long id) {
+	
+	public ResponseEntity<?> atualizar(@RequestBody QuestionarioRequest questionarioRequest, @PathVariable Long id) {
 		
 
 		QuestionarioDTO questionarioAtual = service.buscar(id);

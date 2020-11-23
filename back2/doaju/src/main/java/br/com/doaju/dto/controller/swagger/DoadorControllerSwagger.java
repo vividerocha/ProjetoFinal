@@ -28,4 +28,13 @@ public interface DoadorControllerSwagger {
 	@ApiOperation("Busca um doador por id")
 	public ResponseEntity<?> buscar(@PathVariable Long id);
 	
+	@ApiOperation("Atualiza um doador por id")
+	public ResponseEntity<?> atualizar(@RequestBody DoadorRequest doadorRequest, @PathVariable Long id);
+	
+	@ApiOperation("Deleta um doador por id")
+	public void excluir(@PathVariable Long id);
+	
+	@ApiOperation("Busca um doador por id do doador")
+	public ResponseEntity<?> buscarPorIdUser(@PathVariable Long id);
+	
 }

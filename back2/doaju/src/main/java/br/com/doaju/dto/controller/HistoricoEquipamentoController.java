@@ -18,6 +18,7 @@ import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 //import br.com.doaju.dto.EquipamentosTecnicoRegiaoDTO;
 import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.dto.TecnicoDTO;
+import br.com.doaju.dto.controller.swagger.HistoricoEquipamentoControllerSwagger;
 import br.com.doaju.model.Equipamento;
 import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.request.HistoricoEquipamentoRequest;
@@ -28,7 +29,8 @@ import br.com.doaju.service.TecnicoService;
 @CrossOrigin
 @RestController
 @RequestMapping("/historicoEquipamento")
-public class HistoricoEquipamentoController {
+
+public class HistoricoEquipamentoController implements HistoricoEquipamentoControllerSwagger{
 	@Autowired
 	private HistoricoEquipamentoService service;
 	
