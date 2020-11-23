@@ -43,7 +43,7 @@ public class Equipamento{
 	@JsonIgnore
 	//@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL)
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="equipamento_id")
+	@JoinColumn(name="equipamento")
 	private List<HistoricoEquipamento> historico;
 	
 }
