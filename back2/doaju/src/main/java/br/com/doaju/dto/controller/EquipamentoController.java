@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doaju.dto.EquipamentoDTO;
+import br.com.doaju.dto.HistoricoEquipamentoDTO;
 import br.com.doaju.dto.controller.swagger.EquipamentoControllerSwagger;
+import br.com.doaju.model.HistoricoEquipamento;
 import br.com.doaju.request.EquipamentoRequest;
 import br.com.doaju.service.EquipamentoService;
+import br.com.doaju.service.HistoricoEquipamentoService;
 
 @CrossOrigin
 @RestController
@@ -27,6 +30,9 @@ import br.com.doaju.service.EquipamentoService;
 public class EquipamentoController implements EquipamentoControllerSwagger {
 	@Autowired
 	private EquipamentoService service;
+	
+	@Autowired
+	private HistoricoEquipamentoService serviceH;
 	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody EquipamentoRequest equipamentoRequest) {	
@@ -76,7 +82,16 @@ public class EquipamentoController implements EquipamentoControllerSwagger {
 	
 	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable Long id) {
-		service.excluir(id);
+		try {
+			List<HistoricoEquipamentoDTO> hist = serviceH.buscarHistorico(id);
+			for(int i = 0; i < hist.size(); i++) {
+				serviceH.excluir(hist.get(i).getId());
+			}
+			service.excluir(id);
+		}catch(Exception e){
+			
+		}
+
 	}
 	
 	@GetMapping("/doador/{idDoador}")
