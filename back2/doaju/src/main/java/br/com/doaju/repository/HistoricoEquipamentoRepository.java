@@ -29,7 +29,7 @@ public interface HistoricoEquipamentoRepository extends JpaRepository<HistoricoE
 			" where e.estado = ?1 and s.id = 1")
 	public List<EquipamentosTecnicoRegiao> buscaEquipamentosParaReparoPorRegiao(String regiao);
 	
-	@Query(value="select situacao_equipamento_id from Historico_Equipamento where equipamento_id = :id order by data_alteracao desc limit 1", nativeQuery = true)
+	@Query(value="select situacao_equipamento_id from historico_equipamento where equipamento_id = :id order by data_alteracao desc limit 1", nativeQuery = true)
 	public Long buscaUltimaSituacao(Long id);
 	
 	@Query("select new br.com.doaju.model.EquipamentosTecnicoRegiao(b.id as idEquipamento, a.descricao as tipoEquipamento, b.descricaoEquipamento, b.funcionando,  " +
