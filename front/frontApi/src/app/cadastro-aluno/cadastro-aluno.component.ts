@@ -106,6 +106,7 @@ export class CadastroAlunoComponent implements OnInit {
     this.alunoService.salvar(dados).subscribe(() => {
       console.log(this.formAluno.value);
       this.showSuccess("Cadastro realizado com Sucesso!");
+      sessionStorage.clear();
       this.router.navigate(['/login'])
     });
   }

@@ -92,6 +92,7 @@ export class FormDoadorComponent implements OnInit {
     const dados =  this.capturaDados();
     this.doadorService.salvar(dados).subscribe(() => {
       this.toastService.success("Cadastro realizado com Sucesso!");
+      sessionStorage.clear();
       this.router.navigate(['/login'])
     });
   }

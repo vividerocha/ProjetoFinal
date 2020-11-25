@@ -76,6 +76,7 @@ export class CadastroTecnicoComponent implements OnInit {
     const dados = this.capturaDados();
     this.tecnicoService.salvar(dados).subscribe(() => {
       this.showSuccess("Cadastro realizado com Sucesso!");
+      sessionStorage.clear();
       this.router.navigate(['/login'])
     });
   }
