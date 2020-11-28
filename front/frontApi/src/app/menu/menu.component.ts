@@ -88,7 +88,7 @@ export class MenuComponent implements OnInit {
       }, error => {
         this.myNome = "Administrador"
         this.admin = true;
-        this.ver = true;
+        this.ver = false;
       })
   }
 
